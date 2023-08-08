@@ -1,0 +1,17 @@
+apiVersion: skaffold/v4beta6
+kind: Config
+metadata:
+  name: e-commerce
+build:
+  artifacts:
+    - image: customer-service
+      context: customer-service
+      docker:
+        dockerfile: Dockerfile
+      sync:
+        manual:
+          - dest: "**/*"
+            src: .
+manifests:
+  rawYaml:
+    - k8s/*.yaml

@@ -1,0 +1,76 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: customers
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: customers
+  template:
+    metadata:
+      labels:
+        app: customers
+    spec:
+      containers:
+        - name: customers
+          image: customer-service
+          imagePullPolicy: Never
+          resources:
+            limits:
+              memory: 512Mi
+              cpu: "1"
+          env:
+            - name: APP_ENV
+              valueFrom:
+                secretKeyRef:
+                  name: secrets
+                  key: APP_ENV
+            - name: PORT
+              valueFrom:
+                secretKeyRef:
+                  name: secrets
+                  key: CUSTOMER_SERVICE_PORT
+            - name: MONGO_URI
+              valueFrom:
+                secretKeyRef:
+                  name: secrets
+                  key: CUSTOMER_SERVICE_MONGO_URI
+            - name: REDIS_URI
+              valueFrom:
+                secretKeyRef:
+                  name: secrets
+                  key: REDIS_CUSTOMER_SERVICE_REDIS_URI
+            - name: DATABASE_NAME
+              valueFrom:
+                secretKeyRef:
+                  name: secrets
+                  key: CUSTOMER_SERVICE_USER_DATABASE
+            - name: CUSTOMER_COLLECTION
+              valueFrom:
+                secretKeyRef:
+                  name: secrets
+                  key: CUSTOMER_SERVICE_USER_COLLECTION
+            - name: ADDRESS_COLLECTION
+              valueFrom:
+                secretKeyRef:
+                  name: secrets
+                  key: CUSTOMER_SERVICE_ADDRESS_COLLECTION
+            - name: CARD_COLLECTION
+              valueFrom:
+                secretKeyRef:
+                  name: secrets
+                  key: CUSTOMER_SERVICE_CARD_COLLECTION
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: customers-srv
+spec:
+  type: ClusterIP
+  selector:
+    app: customers
+  ports:
+    - name: http
+      port: 3000
+      targetPort: 3000
