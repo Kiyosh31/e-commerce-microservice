@@ -8,15 +8,14 @@ import (
 	"go.mongodb.org/mongo-driver/bson/primitive"
 )
 
-func (s *Service) createCard(c *gin.Context) {
-	var req types.Card
-
+func (s *Service) createAddress(c *gin.Context) {
+	var req types.Address
 	if err := c.BindJSON(&req); err != nil {
 		c.JSON(http.StatusBadRequest, errorResponse(err))
 		return
 	}
 
-	card, err := s.cardStore.CreateCard(c, req)
+	card, err := s.addresStore.CreateAddress(c, req)
 	if err != nil {
 		c.JSON(http.StatusInternalServerError, errorResponse(err))
 		return
@@ -25,83 +24,82 @@ func (s *Service) createCard(c *gin.Context) {
 	c.JSON(http.StatusCreated, card)
 }
 
-func (s *Service) getCard(c *gin.Context) {
-	mongoId, err := primitive.ObjectIDFromHex(c.Param("cardId"))
+func (s *Service) getAddress(c *gin.Context) {
+	mongoId, err := primitive.ObjectIDFromHex(c.Param("addressId"))
 	if err != nil {
 		c.JSON(http.StatusInternalServerError, errorResponse(err))
 		return
 	}
 
-	card, err := s.cardStore.GetCard(c, mongoId)
+	address, err := s.addresStore.GetAddress(c, mongoId)
 	if err != nil {
 		c.JSON(http.StatusInternalServerError, errorResponse(err))
 		return
 	}
 
-	c.JSON(http.StatusOK, card)
+	c.JSON(http.StatusOK, address)
 }
 
-func (s *Service) getAllCards(c *gin.Context) {
+func (s *Service) getAllAddress(c *gin.Context) {
 	mongoId, err := primitive.ObjectIDFromHex(c.Param("userId"))
 	if err != nil {
 		c.JSON(http.StatusInternalServerError, errorResponse(err))
 		return
 	}
 
-	cards, err := s.cardStore.GetAllCards(c, mongoId)
+	address, err := s.addresStore.GetAllAddress(c, mongoId)
 	if err != nil {
 		c.JSON(http.StatusInternalServerError, errorResponse(err))
 		return
 	}
 
-	c.JSON(http.StatusOK, cards)
+	c.JSON(http.StatusOK, address)
 }
 
-func (s *Service) updateCard(c *gin.Context) {
-	cardMongoId, err := primitive.ObjectIDFromHex(c.Param("cardId"))
+func (s *Service) updateAddress(c *gin.Context) {
+	cardMongoId, err := primitive.ObjectIDFromHex(c.Param("addressId"))
 	if err != nil {
 		c.JSON(http.StatusInternalServerError, errorResponse(err))
 		return
 	}
 
-	var req types.Card
+	var req types.Address
 	if err := c.BindJSON(&req); err != nil {
 		c.JSON(http.StatusBadRequest, errorResponse(err))
 		return
 	}
 
-	cardToUpdate := types.Card{
+	cardToUpdate := types.Address{
 		ID:         cardMongoId,
 		UserId:     req.UserId,
 		Name:       req.Name,
-		Number:     req.Number,
-		SecretCode: req.SecretCode,
-		Expiration: req.Expiration,
-		Type:       req.Type,
+		Address:    req.Address,
+		PostalCode: req.PostalCode,
+		Phone:      req.Phone,
 		Default:    req.Default,
 	}
 
-	updatedCard, err := s.cardStore.UpdateCard(c, cardToUpdate)
+	updatedAddress, err := s.addresStore.UpdateAddress(c, cardToUpdate)
 	if err != nil {
 		c.JSON(http.StatusInternalServerError, errorResponse(err))
 		return
 	}
 
-	c.JSON(http.StatusOK, updatedCard)
+	c.JSON(http.StatusOK, updatedAddress)
 }
 
-func (s *Service) deleteCard(c *gin.Context) {
-	mongoId, err := primitive.ObjectIDFromHex(c.Param("cardId"))
+func (s *Service) deleteAddress(c *gin.Context) {
+	mongoId, err := primitive.ObjectIDFromHex(c.Param("addressId"))
 	if err != nil {
 		c.JSON(http.StatusBadRequest, errorResponse(err))
 		return
 	}
 
-	deletedCard, err := s.cardStore.DeleteCard(c, mongoId)
+	deletedAddress, err := s.addresStore.DeleteAddress(c, mongoId)
 	if err != nil {
 		c.JSON(http.StatusInternalServerError, errorResponse(err))
 		return
 	}
 
-	c.JSON(http.StatusOK, deletedCard)
+	c.JSON(http.StatusOK, deletedAddress)
 }

@@ -3,7 +3,7 @@ package types
 import "go.mongodb.org/mongo-driver/bson/primitive"
 
 type Address struct {
-	ID         primitive.ObjectID `bson:"_id"`
+	ID         primitive.ObjectID `bson:"_id,omitempty"`
 	UserId     primitive.ObjectID `bson:"userId"`
 	Name       string             `bson:"name"`
 	Address    string             `bson:"address"`
