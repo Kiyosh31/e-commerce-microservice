@@ -35,13 +35,13 @@ func (s *Service) createUser(c *gin.Context) {
 }
 
 func (s *Service) getUser(c *gin.Context) {
-	id, err := primitive.ObjectIDFromHex(c.Param("id"))
+	mongoId, err := primitive.ObjectIDFromHex(c.Param("id"))
 	if err != nil {
 		c.JSON(http.StatusBadRequest, errorResponse(err))
 		return
 	}
 
-	user, err := s.userStore.GetOneUser(c, id)
+	user, err := s.userStore.GetOneUser(c, mongoId)
 	if err != nil {
 		c.JSON(http.StatusInternalServerError, errorResponse(err))
 		return

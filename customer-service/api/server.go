@@ -7,13 +7,15 @@ import (
 
 type Service struct {
 	userStore  store.UserStore
+	cardStore  store.CardStore
 	listenAddr string
 	router     *gin.Engine
 }
 
-func NewService(userStore store.UserStore, listenAddr string) *Service {
+func NewService(userStore store.UserStore, cardStore store.CardStore, listenAddr string) *Service {
 	server := &Service{
 		userStore:  userStore,
+		cardStore:  cardStore,
 		listenAddr: listenAddr,
 	}
 	router := gin.Default()
@@ -31,6 +33,15 @@ func registerRoutes(router *gin.Engine, service *Service) {
 		user.GET("/:id", service.getUser)
 		user.PUT("/:id", service.updateUser)
 		user.DELETE("/:id", service.deleteUser)
+
+		card := user.Group("/card")
+		{
+			card.POST("/", service.createCard)
+			card.GET("/:cardId", service.getCard)
+			card.GET("/all/:userId", service.getAllCards)
+			card.PUT("/:cardId", service.updateCard)
+			card.DELETE("/:cardId", service.deleteCard)
+		}
 	}
 }
 

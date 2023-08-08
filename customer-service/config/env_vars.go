@@ -1,6 +1,9 @@
 package config
 
-import "github.com/Kiyosh31/e-commerce-microservice-common/utils"
+import (
+	"github.com/Kiyosh31/e-commerce-microservice-common/utils"
+	"go.mongodb.org/mongo-driver/mongo"
+)
 
 var (
 	ListenPort, _         = utils.GetEnvVar("PORT")
@@ -9,4 +12,9 @@ var (
 	CustomerCollection, _ = utils.GetEnvVar("CUSTOMER_COLLECTION")
 	AddressCollection, _  = utils.GetEnvVar("ADDRESS_COLLECTION")
 	CardCollection, _     = utils.GetEnvVar("CARD_COLLECTION")
+)
+
+var (
+	MongoClient *mongo.Client
+	log         = utils.NewLogger()
 )
