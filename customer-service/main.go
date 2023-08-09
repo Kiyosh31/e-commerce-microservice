@@ -24,15 +24,15 @@ func main() {
 	}
 	defer database.DisconnectOfDB(config.MongoClient)
 
-	runGrpcServer()
+	userStore := store.NewUserStore(config.MongoClient, config.EnvVar.DatabaseName, config.EnvVar.CustomerCollection)
+	cardStore := store.NewCardStore(config.MongoClient, config.EnvVar.DatabaseName, config.EnvVar.CardCollection)
+	addressStore := store.NewAddressStore(config.MongoClient, config.EnvVar.DatabaseName, config.EnvVar.AddressCollection)
+
+	runGrpcServer(*userStore, *addressStore, *cardStore)
 }
 
-func runGrpcServer() {
-	user_store := store.NewUserStore(config.MongoClient, config.EnvVar.DatabaseName, config.EnvVar.CustomerCollection)
-	card_store := store.NewCardStore(config.MongoClient, config.EnvVar.DatabaseName, config.EnvVar.CardCollection)
-	address_store := store.NewAddressStore(config.MongoClient, config.EnvVar.DatabaseName, config.EnvVar.AddressCollection)
-
-	service, err := grpcserver.NewService(*user_store, *address_store, *card_store)
+func runGrpcServer(userStore store.UserStore, addressStore store.AddressStore, cardStore store.CardStore) {
+	service, err := grpcserver.NewService(userStore, addressStore, cardStore)
 	if err != nil {
 		log.Fatalf("Error creating service: %v", err)
 	}
@@ -54,12 +54,9 @@ func runGrpcServer() {
 	log.Printf("gRPC server stared at: %v", list.Addr().String())
 }
 
-func runGinService() {
-	user_store := store.NewUserStore(config.MongoClient, config.EnvVar.DatabaseName, config.EnvVar.CustomerCollection)
-	card_store := store.NewCardStore(config.MongoClient, config.EnvVar.DatabaseName, config.EnvVar.CardCollection)
-	address_store := store.NewAddressStore(config.MongoClient, config.EnvVar.DatabaseName, config.EnvVar.AddressCollection)
+func runGinService(userStore store.UserStore, addressStore store.AddressStore, cardStore store.CardStore) {
 
-	service, err := api.NewService(*user_store, *card_store, *address_store, config.EnvVar.GrpcPort)
+	service, err := api.NewService(userStore, cardStore, addressStore, config.EnvVar.GrpcPort)
 	if err != nil {
 		log.Fatalf("Error creating service: %v", err)
 	}
