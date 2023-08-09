@@ -15,6 +15,10 @@ setup-linux:
 	chmod +x setup-linux.sh
 	./setup-linux.sh
 
+dev-tools:
+	chmod +x linux-dev-tools.sh
+	./linux-dev-tools.sh
+
 customer-proto:
 	rm -rf ${CUSTOMER_SERVICE_USER_PB_DIR}
 	mkdir ${CUSTOMER_SERVICE_USER_PB_DIR}
