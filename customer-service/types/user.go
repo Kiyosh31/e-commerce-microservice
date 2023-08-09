@@ -10,3 +10,12 @@ type User struct {
 	Email    string             `bson:"email" binding:"required"`
 	Password string             `bson:"password" binding:"required"`
 }
+
+type SigninUserRequest struct {
+	Email    string `bson:"email"`
+	Password string `bson:"password"`
+}
+
+type UserTokenResponse struct {
+	Token string `bson:"token"`
+}

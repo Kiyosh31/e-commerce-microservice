@@ -10,19 +10,23 @@ import (
 )
 
 func main() {
+	config.LoadEnvVars()
 	var err error
 
-	config.MongoClient, err = database.ConnectToDB(config.MongoUri)
+	config.MongoClient, err = database.ConnectToDB(config.EnvVar.MongoUri)
 	if err != nil {
 		log.Fatalf("Could not connect to database: %v", err)
 	}
 	defer database.DisconnectOfDB(config.MongoClient)
 
-	user_store := store.NewUserStore(config.MongoClient, config.DatabaseName, config.CustomerCollection)
-	card_store := store.NewCardStore(config.MongoClient, config.DatabaseName, config.CardCollection)
-	address_store := store.NewAddressStore(config.MongoClient, config.DatabaseName, config.AddressCollection)
+	user_store := store.NewUserStore(config.MongoClient, config.EnvVar.DatabaseName, config.EnvVar.CustomerCollection)
+	card_store := store.NewCardStore(config.MongoClient, config.EnvVar.DatabaseName, config.EnvVar.CardCollection)
+	address_store := store.NewAddressStore(config.MongoClient, config.EnvVar.DatabaseName, config.EnvVar.AddressCollection)
 
-	service := api.NewService(*user_store, *card_store, *address_store, config.ListenPort)
+	service, err := api.NewService(*user_store, *card_store, *address_store, config.EnvVar.ListenPort)
+	if err != nil {
+		log.Fatalf("Error creating service: %v", err)
+	}
 
 	err = service.Start()
 	if err != nil {

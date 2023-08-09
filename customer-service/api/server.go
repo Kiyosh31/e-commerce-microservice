@@ -13,47 +13,51 @@ type Service struct {
 	router      *gin.Engine
 }
 
-func NewService(userStore store.UserStore, cardStore store.CardStore, addressStore store.AddressStore, listenAddr string) *Service {
+func NewService(userStore store.UserStore, cardStore store.CardStore, addressStore store.AddressStore, listenAddr string) (*Service, error) {
 	server := &Service{
 		userStore:   userStore,
 		cardStore:   cardStore,
 		addresStore: addressStore,
 		listenAddr:  listenAddr,
 	}
-	router := gin.Default()
-	registerRoutes(router, server)
-	server.router = router
 
-	return server
+	server.registerRoutes()
+	return server, nil
 }
 
-func registerRoutes(router *gin.Engine, service *Service) {
+func (s *Service) registerRoutes() {
+	router := gin.Default()
+	router.Use(gin.Recovery())
+
 	api := router.Group("/api")
 	user := api.Group("/user")
 	{
-		user.POST("/", service.createUser)
-		user.GET("/:id", service.getUser)
-		user.PUT("/:id", service.updateUser)
-		user.DELETE("/:id", service.deleteUser)
+		user.POST("/signin", s.signinUser)
+		user.POST("/", s.createUser)
+		user.GET("/:userId", authMiddleware(s.userStore), s.getUser)
+		user.PUT("/:userId", authMiddleware(s.userStore), s.updateUser)
+		user.DELETE("/:userId", authMiddleware(s.userStore), s.deleteUser)
 
-		card := user.Group("/card")
+		card := user.Group("/card").Use(authMiddleware(s.userStore))
 		{
-			card.POST("/", service.createCard)
-			card.GET("/:cardId", service.getCard)
-			card.GET("/all/:userId", service.getAllCards)
-			card.PUT("/:cardId", service.updateCard)
-			card.DELETE("/:cardId", service.deleteCard)
+			card.POST("/", s.createCard)
+			card.GET("/:cardId", s.getCard)
+			card.GET("/all/:userId", s.getAllCards)
+			card.PUT("/:cardId", s.updateCard)
+			card.DELETE("/:cardId", s.deleteCard)
 		}
 
-		address := user.Group("/address")
+		address := user.Group("/address").Use(authMiddleware(s.userStore))
 		{
-			address.POST("/", service.createAddress)
-			address.GET("/:addressId", service.getAddress)
-			address.GET("/all/:userId", service.getAllAddress)
-			address.PUT("/:addressId", service.updateAddress)
-			address.DELETE("/:addressId", service.deleteAddress)
+			address.POST("/", s.createAddress)
+			address.GET("/:addressId", s.getAddress)
+			address.GET("/all/:userId", s.getAllAddress)
+			address.PUT("/:addressId", s.updateAddress)
+			address.DELETE("/:addressId", s.deleteAddress)
 		}
 	}
+
+	s.router = router
 }
 
 func (s *Service) Start() error {

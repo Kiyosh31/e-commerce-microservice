@@ -26,6 +26,19 @@ func (store *UserStore) getUserCollection() *mongo.Collection {
 	return store.client.Database(store.database).Collection(store.collection)
 }
 
+func (store *UserStore) SigningUser(ctx context.Context, email string) (types.User, error) {
+	col := store.getUserCollection()
+	filter := bson.D{{Key: "email", Value: email}}
+
+	var user types.User
+	err := col.FindOne(ctx, filter).Decode(&user)
+	if err != nil {
+		return types.User{}, err
+	}
+
+	return user, nil
+}
+
 func (store *UserStore) CreateUser(ctx context.Context, user types.User) (*mongo.InsertOneResult, error) {
 	col := store.getUserCollection()
 
