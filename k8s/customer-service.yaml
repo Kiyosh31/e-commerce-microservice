@@ -26,6 +26,16 @@ spec:
                 secretKeyRef:
                   name: secrets
                   key: APP_ENV
+            - name: TOKEN_EXPIRATION
+              valueFrom:
+                secretKeyRef:
+                  name: secrets
+                  key: TOKEN_EXPIRATION
+            - name: TOKEN_SECRET
+              valueFrom:
+                secretKeyRef:
+                  name: secrets
+                  key: TOKEN_SECRET
             - name: PORT
               valueFrom:
                 secretKeyRef:
