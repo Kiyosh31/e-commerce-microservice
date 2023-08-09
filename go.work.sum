@@ -4,11 +4,12 @@ github.com/Kiyosh31/e-commerce-microservice-common v1.0.14 h1:4K+EEi7mHuvwZK2f4/
 github.com/Kiyosh31/e-commerce-microservice-common v1.0.14/go.mod h1:SogiSokyUt6PCXQkdmjYuC80bYx+f7d/ksDPOABn2Gc=
 github.com/Kiyosh31/e-commerce-microservice-common v1.0.17 h1:bIrQz6l0xrS517c6kUkwTV8QQXTSlskpGfQcJWKPJzg=
 github.com/Kiyosh31/e-commerce-microservice-common v1.0.17/go.mod h1:SogiSokyUt6PCXQkdmjYuC80bYx+f7d/ksDPOABn2Gc=
-github.com/Kiyosh31/e-commerce-microservice-common v1.0.22 h1:KNuuXLpz5V4eFQRP21MDc9WLeAOXJS4WZIjGc33cXRc=
-github.com/Kiyosh31/e-commerce-microservice-common v1.0.22/go.mod h1:Nk/2zNNDytGd2G8t4soDrEz3Qden7EpBBAEDK3733Ig=
+github.com/Kiyosh31/e-commerce-microservice-common v1.0.23 h1:gvl0LQtqgdJvD+GuJ0z3Vb2+gtIB7UCD2C4cNOYmLp8=
+github.com/Kiyosh31/e-commerce-microservice-common v1.0.23/go.mod h1:Nk/2zNNDytGd2G8t4soDrEz3Qden7EpBBAEDK3733Ig=
 golang.org/x/mod v0.8.0/go.mod h1:iBbtSCu2XBx23ZKBPSOrRkjjQPZFPuis4dIYUhu/chs=
 golang.org/x/net v0.10.0/go.mod h1:0qNGK6F8kojg2nk9dLZ2mShWaEBan6FAoqfSigmmuDg=
 golang.org/x/sync v0.1.0 h1:wsuoTGHzEhffawBOhz5CYhcrV4IdKZbEyZjBMuTp12o=
 golang.org/x/sync v0.1.0/go.mod h1:RxMgew5VJxzue5/jJTE5uejpjVlOe/izrB70Jof72aM=
 golang.org/x/term v0.11.0/go.mod h1:zC9APTIj3jG3FdV/Ons+XE1riIZXG4aZ4GTHiPZJPIU=
 golang.org/x/tools v0.6.0/go.mod h1:Xwgl3UAJ/d3gWutnCtw505GrjyAbvKui8lOU390QaIU=
+google.golang.org/genproto v0.0.0-20230526161137-0005af68ea54 h1:9NWlQfY2ePejTmfwUH1OWwmznFa+0kKcHGPDvcPza9M=

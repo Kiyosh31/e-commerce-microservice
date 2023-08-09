@@ -3,9 +3,9 @@ package api
 import (
 	"net/http"
 
+	"github.com/Kiyosh31/e-commerce-microservice-common/utils"
 	"github.com/Kiyosh31/e-commerce-microservice/customer/types"
 	"github.com/gin-gonic/gin"
-	"go.mongodb.org/mongo-driver/bson/primitive"
 )
 
 func (s *Service) createAddress(c *gin.Context) {
@@ -25,7 +25,7 @@ func (s *Service) createAddress(c *gin.Context) {
 }
 
 func (s *Service) getAddress(c *gin.Context) {
-	mongoId, err := primitive.ObjectIDFromHex(c.Param("addressId"))
+	mongoId, err := utils.GetMongoId(c.Param("addressId"))
 	if err != nil {
 		c.JSON(http.StatusInternalServerError, errorResponse(err))
 		return
@@ -41,7 +41,8 @@ func (s *Service) getAddress(c *gin.Context) {
 }
 
 func (s *Service) getAllAddress(c *gin.Context) {
-	mongoId, err := primitive.ObjectIDFromHex(c.Param("userId"))
+
+	mongoId, err := utils.GetMongoId(c.Param("userId"))
 	if err != nil {
 		c.JSON(http.StatusInternalServerError, errorResponse(err))
 		return
@@ -57,7 +58,7 @@ func (s *Service) getAllAddress(c *gin.Context) {
 }
 
 func (s *Service) updateAddress(c *gin.Context) {
-	cardMongoId, err := primitive.ObjectIDFromHex(c.Param("addressId"))
+	cardMongoId, err := utils.GetMongoId(c.Param("addressId"))
 	if err != nil {
 		c.JSON(http.StatusInternalServerError, errorResponse(err))
 		return
@@ -89,7 +90,7 @@ func (s *Service) updateAddress(c *gin.Context) {
 }
 
 func (s *Service) deleteAddress(c *gin.Context) {
-	mongoId, err := primitive.ObjectIDFromHex(c.Param("addressId"))
+	mongoId, err := utils.GetMongoId(c.Param("addressId"))
 	if err != nil {
 		c.JSON(http.StatusBadRequest, errorResponse(err))
 		return

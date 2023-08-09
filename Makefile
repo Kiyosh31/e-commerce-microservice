@@ -1,9 +1,11 @@
+CUSTOMER_SERVICE_PROTO_DIR = customer-service/proto
+CUSTOMER_SERVICE_USER_PB_DIR = customer-service/proto/pb
+
 dev:
 	skaffold dev
 
 dependencies:
-	@cd customer-service
-	@go mod tidy
+	
 
 common:
 	chmod +x update-common.sh
@@ -13,9 +15,9 @@ setup-linux:
 	chmod +x setup-linux.sh
 	./setup-linux.sh
 
-config-linux:
-	minikube start
-	eval $(minikube docker-env)
-	minikube addons enable ingress
-	minikube addons enable ingress-dns
-	sudo chmod 666 /var/run/docker.sock
+customer-proto:
+	rm -rf ${CUSTOMER_SERVICE_USER_PB_DIR}
+	mkdir ${CUSTOMER_SERVICE_USER_PB_DIR}
+	protoc --proto_path=${CUSTOMER_SERVICE_PROTO_DIR} --go_out=${CUSTOMER_SERVICE_USER_PB_DIR} --go_opt=paths=source_relative \
+    --go-grpc_out=${CUSTOMER_SERVICE_USER_PB_DIR} --go-grpc_opt=paths=source_relative \
+    ${CUSTOMER_SERVICE_PROTO_DIR}/*.proto

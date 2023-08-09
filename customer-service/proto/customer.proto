@@ -1,0 +1,36 @@
+syntax = "proto3";
+
+package userPb;
+
+option go_package="github.com/Kiyosh31/e-commerce-microservice/customer/proto/pb";
+
+message User {
+  string id = 1;
+  string name = 2;
+  string lasName = 3;
+  string birth = 4;
+  string email = 5;
+  string password = 6;
+}
+
+message CreateUserRequest {
+  User user = 1;
+}
+
+message CreateUserResponse {
+  string insertedID = 1;
+}
+
+message SigninUserRequest {
+  string email = 1;
+  string password = 2;
+}
+
+message SigninUserResponse {
+  string token = 1;
+}
+
+service CustomerService {
+  rpc CreateUser(CreateUserRequest) returns (CreateUserResponse);
+  rpc SigninUser(SigninUserRequest) returns (SigninUserResponse);
+}

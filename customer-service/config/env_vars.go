@@ -8,7 +8,8 @@ import (
 )
 
 type ConfigStruct struct {
-	ListenPort         string
+	HttpPort           string
+	GrpcPort           string
 	MongoUri           string
 	DatabaseName       string
 	CustomerCollection string
@@ -16,6 +17,7 @@ type ConfigStruct struct {
 	CardCollection     string
 	TokenSecret        string
 	TokenExpiration    string
+	Protocol           string
 }
 
 var (
@@ -30,7 +32,13 @@ func handleMissingEnv(err error) {
 }
 
 func LoadEnvVars() {
-	port, err := utils.GetEnvVar("PORT")
+	httpPort, err := utils.GetEnvVar("HTTP_PORT")
+	handleMissingEnv(err)
+
+	grpcPort, err := utils.GetEnvVar("GRPC_PORT")
+	handleMissingEnv(err)
+
+	grpcProtoc, err := utils.GetEnvVar("PROTOCOL")
 	handleMissingEnv(err)
 
 	mongoUri, err := utils.GetEnvVar("MONGO_URI")
@@ -55,7 +63,8 @@ func LoadEnvVars() {
 	handleMissingEnv(err)
 
 	EnvVar = &ConfigStruct{
-		ListenPort:         port,
+		HttpPort:           httpPort,
+		GrpcPort:           grpcPort,
 		MongoUri:           mongoUri,
 		DatabaseName:       dbName,
 		CustomerCollection: custColl,
@@ -63,5 +72,6 @@ func LoadEnvVars() {
 		CardCollection:     cardColl,
 		TokenSecret:        tokSec,
 		TokenExpiration:    tokEx,
+		Protocol:           grpcProtoc,
 	}
 }

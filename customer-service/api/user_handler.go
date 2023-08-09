@@ -1,7 +1,6 @@
 package api
 
 import (
-	"log"
 	"net/http"
 
 	"github.com/Kiyosh31/e-commerce-microservice-common/token"
@@ -9,7 +8,6 @@ import (
 	"github.com/Kiyosh31/e-commerce-microservice/customer/config"
 	"github.com/Kiyosh31/e-commerce-microservice/customer/types"
 	"github.com/gin-gonic/gin"
-	"go.mongodb.org/mongo-driver/bson/primitive"
 )
 
 func (s *Service) signinUser(c *gin.Context) {
@@ -25,10 +23,8 @@ func (s *Service) signinUser(c *gin.Context) {
 		c.JSON(http.StatusInternalServerError, errorResponse(err))
 		return
 	}
-	log.Printf("user: %v", user)
 
 	err = utils.CheckPassword(user.Password, req.Password)
-	log.Printf("err: %v", err)
 	if err != nil {
 		c.JSON(http.StatusUnauthorized, errorResponse(err))
 		return
@@ -79,7 +75,7 @@ func (s *Service) createUser(c *gin.Context) {
 }
 
 func (s *Service) getUser(c *gin.Context) {
-	mongoId, err := primitive.ObjectIDFromHex(c.Param("userId"))
+	mongoId, err := utils.GetMongoId(c.Param("userId"))
 	if err != nil {
 		c.JSON(http.StatusBadRequest, errorResponse(err))
 		return
@@ -95,7 +91,7 @@ func (s *Service) getUser(c *gin.Context) {
 }
 
 func (s *Service) updateUser(c *gin.Context) {
-	mongoId, err := primitive.ObjectIDFromHex(c.Param("userId"))
+	mongoId, err := utils.GetMongoId(c.Param("userId"))
 	if err != nil {
 		c.JSON(http.StatusBadRequest, errorResponse(err))
 		return
@@ -127,7 +123,7 @@ func (s *Service) updateUser(c *gin.Context) {
 }
 
 func (s *Service) deleteUser(c *gin.Context) {
-	mongoId, err := primitive.ObjectIDFromHex(c.Param("userId"))
+	mongoId, err := utils.GetMongoId(c.Param("userId"))
 	if err != nil {
 		c.JSON(http.StatusBadRequest, errorResponse(err))
 		return

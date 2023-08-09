@@ -36,11 +36,21 @@ spec:
                 secretKeyRef:
                   name: secrets
                   key: TOKEN_SECRET
-            - name: PORT
+            - name: HTTP_PORT
               valueFrom:
                 secretKeyRef:
                   name: secrets
-                  key: CUSTOMER_SERVICE_PORT
+                  key: CUSTOMER_SERVICE_HTTP_PORT
+            - name: GRPC_PORT
+              valueFrom:
+                secretKeyRef:
+                  name: secrets
+                  key: CUSTOMER_SERVICE_GRPC
+            - name: PROTOCOL
+              valueFrom:
+                secretKeyRef:
+                  name: secrets
+                  key: CUSTOMER_SERVICE_GRPC_PROTOCOL
             - name: MONGO_URI
               valueFrom:
                 secretKeyRef:

@@ -19,27 +19,21 @@ This project was made entirely on ubuntu which could make not work in other plat
    make setup-linux
    ```
 
-3. Setup minikube and enable all necessary tools to communicate
-
-   ```console
-   make config-linux
-   ```
-
-4. Install dependencies
+3. Install dependencies
 
    ```console
    make dependencies
    ```
 
-5. In folder `/k8s` create a `secrets.yaml` like the example file, this file contains all the needed secrets for the project to run
+4. In folder `/k8s` create a `secrets.yaml` like the example file, this file contains all the needed secrets for the project to run
 
-6. Run te project
+5. Run te project
 
    ```console
    make dev
    ```
 
-7. Open a new terminal and run
+6. Open a new terminal and run
 
    ```console
    minikube tunnel

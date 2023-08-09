@@ -8,10 +8,10 @@ import (
 	"strings"
 
 	"github.com/Kiyosh31/e-commerce-microservice-common/token"
+	"github.com/Kiyosh31/e-commerce-microservice-common/utils"
 	"github.com/Kiyosh31/e-commerce-microservice/customer/config"
 	"github.com/Kiyosh31/e-commerce-microservice/customer/store"
 	"github.com/gin-gonic/gin"
-	"go.mongodb.org/mongo-driver/bson/primitive"
 )
 
 const (
@@ -59,7 +59,7 @@ func authMiddleware(userStore store.UserStore) gin.HandlerFunc {
 
 		// checking the userId matched token id this means the user is modifyng it's own info
 		// otherwise this request has no permission to continue
-		mongoId, err := primitive.ObjectIDFromHex(fmt.Sprint(tokenUserId))
+		mongoId, err := utils.GetMongoId(fmt.Sprint(tokenUserId))
 		if err != nil {
 			c.AbortWithStatusJSON(http.StatusUnauthorized, errorResponse(err))
 			return
