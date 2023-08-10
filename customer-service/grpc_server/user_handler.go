@@ -2,12 +2,14 @@ package grpcserver
 
 import (
 	"context"
+	"log"
 
 	"github.com/Kiyosh31/e-commerce-microservice-common/token"
 	"github.com/Kiyosh31/e-commerce-microservice-common/utils"
 	"github.com/Kiyosh31/e-commerce-microservice/customer/config"
 	"github.com/Kiyosh31/e-commerce-microservice/customer/proto/pb"
 	"github.com/Kiyosh31/e-commerce-microservice/customer/types"
+	"go.mongodb.org/mongo-driver/bson/primitive"
 )
 
 func (svc *Service) CreateUser(ctx context.Context, in *pb.CreateUserRequest) (*pb.CreateUserResponse, error) {
@@ -15,27 +17,23 @@ func (svc *Service) CreateUser(ctx context.Context, in *pb.CreateUserRequest) (*
 	if err != nil {
 		return nil, errorResponse("Failed to hash password", err)
 	}
-	mongoId, err := utils.GetMongoId(in.GetUser().GetId())
-	if err != nil {
-		return nil, errorResponse("Failed to parse mongoId", err)
-	}
 
 	newUser := types.User{
-		ID:       mongoId,
 		Name:     in.GetUser().GetName(),
-		LastName: in.GetUser().GetLasName(),
+		LastName: in.GetUser().GetLastName(),
 		Birth:    in.GetUser().GetBirth(),
 		Email:    in.GetUser().GetEmail(),
 		Password: hashedPassword,
 	}
 
 	createdUser, err := svc.userStore.CreateUser(ctx, newUser)
+	log.Printf("createdUser: %v", createdUser)
 	if err != nil {
 		return nil, errorResponse("Could not create user in database", err)
 	}
 
 	res := &pb.CreateUserResponse{
-		InsertedID: createdUser.InsertedID.(string),
+		InsertedID: createdUser.InsertedID.(primitive.ObjectID).Hex(),
 	}
 
 	return res, nil

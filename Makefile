@@ -29,4 +29,5 @@ customer-proto:
 	mkdir ${CUSTOMER_SERVICE_PB_DIR}
 	protoc --proto_path=${CUSTOMER_SERVICE_PROTO_DIR} --go_out=${CUSTOMER_SERVICE_PB_DIR} --go_opt=paths=source_relative \
     --go-grpc_out=${CUSTOMER_SERVICE_PB_DIR} --go-grpc_opt=paths=source_relative \
+		--grpc-gateway_out=${CUSTOMER_SERVICE_PB_DIR} --grpc-gateway_opt=paths=source_relative \
     ${CUSTOMER_SERVICE_PROTO_DIR}/*.proto

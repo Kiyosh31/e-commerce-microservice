@@ -4,10 +4,12 @@ package pb;
 
 option go_package="github.com/Kiyosh31/e-commerce-microservice/customer/proto/pb";
 
+import "google/api/annotations.proto";
+
 message User {
   string id = 1;
   string name = 2;
-  string lasName = 3;
+  string lastName = 3;
   string birth = 4;
   string email = 5;
   string password = 6;
@@ -31,6 +33,16 @@ message SigninUserResponse {
 }
 
 service CustomerService {
-  rpc CreateUser(CreateUserRequest) returns (CreateUserResponse);
-  rpc SigninUser(SigninUserRequest) returns (SigninUserResponse);
+  rpc CreateUser(CreateUserRequest) returns (CreateUserResponse) {
+    option (google.api.http) = {
+      post: "/api/user"
+      body: "*"
+    };
+  }
+  rpc SigninUser(SigninUserRequest) returns (SigninUserResponse) {
+    option (google.api.http) = {
+      post: "/api/user/signin"
+      body: "*"
+    };
+  }
 }
