@@ -1,11 +1,16 @@
 CUSTOMER_SERVICE_PROTO_DIR = customer-service/proto
-CUSTOMER_SERVICE_USER_PB_DIR = customer-service/proto/pb
+CUSTOMER_SERVICE_PB_DIR = customer-service/proto/pb
 
 dev:
 	skaffold dev
 
+start-minikube:
+	minikube start
+	minikube tunnel
+
 dependencies:
-	
+	cd customer-service
+	go mod download
 
 common:
 	chmod +x update-common.sh
@@ -20,8 +25,8 @@ dev-tools:
 	./linux-dev-tools.sh
 
 customer-proto:
-	rm -rf ${CUSTOMER_SERVICE_USER_PB_DIR}
-	mkdir ${CUSTOMER_SERVICE_USER_PB_DIR}
-	protoc --proto_path=${CUSTOMER_SERVICE_PROTO_DIR} --go_out=${CUSTOMER_SERVICE_USER_PB_DIR} --go_opt=paths=source_relative \
-    --go-grpc_out=${CUSTOMER_SERVICE_USER_PB_DIR} --go-grpc_opt=paths=source_relative \
+	rm -rf ${CUSTOMER_SERVICE_PB_DIR}
+	mkdir ${CUSTOMER_SERVICE_PB_DIR}
+	protoc --proto_path=${CUSTOMER_SERVICE_PROTO_DIR} --go_out=${CUSTOMER_SERVICE_PB_DIR} --go_opt=paths=source_relative \
+    --go-grpc_out=${CUSTOMER_SERVICE_PB_DIR} --go-grpc_opt=paths=source_relative \
     ${CUSTOMER_SERVICE_PROTO_DIR}/*.proto

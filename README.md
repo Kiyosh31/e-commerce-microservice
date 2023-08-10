@@ -59,11 +59,6 @@ In case you want to use the `development tools` used alongside this project you 
 make dev-tools
 ```
 
-This command will install all dev tools needed to test the project, I will let you a list next
-| Tool | Description |
-|----------|:-------------:|
-| [Evans for gRPC](https://github.com/ktr0731/evans) | This tool acts as a gRPC client for you to test you API with no need of creating one in code
-
 # Wiki!
 
 Please don't forget to visit the [Wiki Page](https://github.com/Kiyosh31/e-commerce-microservice/wiki) to see diagrams, design docs and everything related to the design of this project! :)

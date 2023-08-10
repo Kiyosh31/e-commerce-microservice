@@ -1,6 +1,6 @@
 syntax = "proto3";
 
-package userPb;
+package pb;
 
 option go_package="github.com/Kiyosh31/e-commerce-microservice/customer/proto/pb";
 
