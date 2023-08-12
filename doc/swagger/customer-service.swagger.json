@@ -192,10 +192,19 @@
     "pbCreateUserResponse": {
       "type": "object",
       "properties": {
-        "insertedID": {
-          "type": "string"
+        "result": {
+          "$ref": "#/definitions/pbCreatedResult"
         }
       }
+    },
+    "pbCreatedResult": {
+      "type": "object",
+      "properties": {
+        "insertedId": {
+          "type": "string"
+        }
+      },
+      "title": "Mongodb responses"
     },
     "pbDeleteResult": {
       "type": "object",

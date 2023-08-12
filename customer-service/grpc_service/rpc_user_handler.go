@@ -73,7 +73,9 @@ func (svc *Service) CreateUser(ctx context.Context, in *pb.CreateUserRequest) (*
 	}
 
 	res := &pb.CreateUserResponse{
-		InsertedID: createdUser.InsertedID.(primitive.ObjectID).Hex(),
+		Result: &pb.CreatedResult{
+			InsertedId: createdUser.InsertedID.(primitive.ObjectID).Hex(),
+		},
 	}
 
 	return res, nil
@@ -147,9 +149,6 @@ func (svc *Service) UpdateUser(ctx context.Context, in *pb.UpdateUserRequest) (*
 	// 	return nil, grpcvalidators.InvalidArgumentError(violations)
 	// }
 
-	log.Info().Msgf("aqui1: %v", in.GetUserId())
-	log.Info().Msgf("aqui2: %v", in.GetUser())
-
 	hashedPassword, err := utils.HashPassword(in.GetUser().GetPassword())
 	if err != nil {
 		return nil, fmt.Errorf("Failed to hash password: %v", err)
@@ -157,7 +156,6 @@ func (svc *Service) UpdateUser(ctx context.Context, in *pb.UpdateUserRequest) (*
 	in.User.Password = hashedPassword
 
 	userToUpdate, err := createUserTypeWithId(in.GetUserId(), in.GetUser())
-	log.Info().Msgf("aqui: %v", userToUpdate)
 	if err != nil {
 		return nil, fmt.Errorf("Error parsing user to db: %v", err)
 	}
