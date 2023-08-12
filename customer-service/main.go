@@ -9,9 +9,9 @@ import (
 
 	"github.com/Kiyosh31/e-commerce-microservice-common/database"
 	"github.com/Kiyosh31/e-commerce-microservice-common/logger"
-	"github.com/Kiyosh31/e-commerce-microservice/customer/api"
 	"github.com/Kiyosh31/e-commerce-microservice/customer/config"
-	grpcserver "github.com/Kiyosh31/e-commerce-microservice/customer/grpc_server"
+	grpcservice "github.com/Kiyosh31/e-commerce-microservice/customer/grpc_service"
+	httpservice "github.com/Kiyosh31/e-commerce-microservice/customer/http_service"
 	"github.com/Kiyosh31/e-commerce-microservice/customer/proto/pb"
 	"github.com/Kiyosh31/e-commerce-microservice/customer/store"
 	"github.com/grpc-ecosystem/grpc-gateway/v2/runtime"
@@ -42,7 +42,7 @@ func main() {
 }
 
 func runGatewayServer(userStore store.UserStore, addressStore store.AddressStore, cardStore store.CardStore) {
-	service, err := grpcserver.NewService(userStore, addressStore, cardStore)
+	service, err := grpcservice.NewService(userStore, addressStore, cardStore)
 	if err != nil {
 		log.Fatal().Msgf("Error creating service: %v", err)
 	}
@@ -73,7 +73,7 @@ func runGatewayServer(userStore store.UserStore, addressStore store.AddressStore
 }
 
 func runGrpcServer(userStore store.UserStore, addressStore store.AddressStore, cardStore store.CardStore) {
-	service, err := grpcserver.NewService(userStore, addressStore, cardStore)
+	service, err := grpcservice.NewService(userStore, addressStore, cardStore)
 	if err != nil {
 		log.Fatal().Msgf("Error creating service: %v", err)
 	}
@@ -100,7 +100,7 @@ func runGrpcServer(userStore store.UserStore, addressStore store.AddressStore, c
 
 func runGinService(userStore store.UserStore, addressStore store.AddressStore, cardStore store.CardStore) {
 
-	service, err := api.NewService(userStore, cardStore, addressStore, config.EnvVar.HttpPort)
+	service, err := httpservice.NewService(userStore, cardStore, addressStore, config.EnvVar.HttpPort)
 	if err != nil {
 		log.Fatal().Msgf("Error creating service: %v", err)
 	}

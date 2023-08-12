@@ -1,4 +1,4 @@
-package api
+package httpservice
 
 import (
 	"github.com/Kiyosh31/e-commerce-microservice-common/middlewares"
