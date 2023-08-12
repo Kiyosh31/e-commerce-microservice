@@ -26,6 +26,11 @@ spec:
                 secretKeyRef:
                   name: secrets
                   key: APP_ENV
+            - name: APP_MODE
+              valueFrom:
+                secretKeyRef:
+                  name: secrets
+                  key: APP_MODE
             - name: TOKEN_EXPIRATION
               valueFrom:
                 secretKeyRef:
@@ -81,6 +86,11 @@ spec:
                 secretKeyRef:
                   name: secrets
                   key: CUSTOMER_SERVICE_CARD_COLLECTION
+            - name: lOGGER_COLLECTION
+              valueFrom:
+                secretKeyRef:
+                  name: secrets
+                  key: CUSTOMER_SERVICE_DB_LOGGER_COLLECTION
 ---
 apiVersion: v1
 kind: Service

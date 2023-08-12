@@ -4,8 +4,9 @@ github.com/Kiyosh31/e-commerce-microservice-common v1.0.14 h1:4K+EEi7mHuvwZK2f4/
 github.com/Kiyosh31/e-commerce-microservice-common v1.0.14/go.mod h1:SogiSokyUt6PCXQkdmjYuC80bYx+f7d/ksDPOABn2Gc=
 github.com/Kiyosh31/e-commerce-microservice-common v1.0.17 h1:bIrQz6l0xrS517c6kUkwTV8QQXTSlskpGfQcJWKPJzg=
 github.com/Kiyosh31/e-commerce-microservice-common v1.0.17/go.mod h1:SogiSokyUt6PCXQkdmjYuC80bYx+f7d/ksDPOABn2Gc=
-github.com/Kiyosh31/e-commerce-microservice-common v1.0.23 h1:gvl0LQtqgdJvD+GuJ0z3Vb2+gtIB7UCD2C4cNOYmLp8=
-github.com/Kiyosh31/e-commerce-microservice-common v1.0.23/go.mod h1:Nk/2zNNDytGd2G8t4soDrEz3Qden7EpBBAEDK3733Ig=
+github.com/Kiyosh31/e-commerce-microservice-common v1.0.34 h1:XXCfX0n82l1oYhWxeCt2tKv9kKv2PjQ5LdLX6Tt5RZc=
+github.com/Kiyosh31/e-commerce-microservice-common v1.0.34/go.mod h1:Xh8J0kyVrhCbX/xQLy+7bRqJ9BjRYsZG31xzuTCgMfQ=
+github.com/sirupsen/logrus v1.9.3 h1:dueUQJ1C2q9oE3F7wvmSGAaVtTmUizReu6fjN8uqzbQ=
 golang.org/x/mod v0.8.0/go.mod h1:iBbtSCu2XBx23ZKBPSOrRkjjQPZFPuis4dIYUhu/chs=
 golang.org/x/net v0.10.0/go.mod h1:0qNGK6F8kojg2nk9dLZ2mShWaEBan6FAoqfSigmmuDg=
 golang.org/x/sync v0.1.0 h1:wsuoTGHzEhffawBOhz5CYhcrV4IdKZbEyZjBMuTp12o=

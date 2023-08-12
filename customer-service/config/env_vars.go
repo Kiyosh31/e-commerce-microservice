@@ -8,6 +8,8 @@ import (
 )
 
 type ConfigStruct struct {
+	AppEnv             string
+	AppMode            string
 	HttpPort           string
 	GrpcPort           string
 	MongoUri           string
@@ -18,11 +20,18 @@ type ConfigStruct struct {
 	TokenSecret        string
 	TokenExpiration    string
 	Protocol           string
+	LoggerCollection   string
 }
 
 var (
 	EnvVar      *ConfigStruct
 	MongoClient *mongo.Client
+)
+
+const (
+	AuthHeaderKey  = "Authorization"
+	AuthTypeBearer = "bearer"
+	AuthPayloadKey = "userId"
 )
 
 func handleMissingEnv(err error) {
@@ -32,6 +41,12 @@ func handleMissingEnv(err error) {
 }
 
 func LoadEnvVars() {
+	appEnv, err := utils.GetEnvVar("APP_ENV")
+	handleMissingEnv(err)
+
+	appMode, err := utils.GetEnvVar("APP_MODE")
+	handleMissingEnv(err)
+
 	httpPort, err := utils.GetEnvVar("HTTP_PORT")
 	handleMissingEnv(err)
 
@@ -62,7 +77,12 @@ func LoadEnvVars() {
 	tokSec, err := utils.GetEnvVar("TOKEN_SECRET")
 	handleMissingEnv(err)
 
+	loggCol, err := utils.GetEnvVar("lOGGER_COLLECTION")
+	handleMissingEnv(err)
+
 	EnvVar = &ConfigStruct{
+		AppEnv:             appEnv,
+		AppMode:            appMode,
 		HttpPort:           httpPort,
 		GrpcPort:           grpcPort,
 		MongoUri:           mongoUri,
@@ -73,5 +93,6 @@ func LoadEnvVars() {
 		TokenSecret:        tokSec,
 		TokenExpiration:    tokEx,
 		Protocol:           grpcProtoc,
+		LoggerCollection:   loggCol,
 	}
 }

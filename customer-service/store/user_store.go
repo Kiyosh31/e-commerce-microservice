@@ -26,7 +26,7 @@ func (store *UserStore) getUserCollection() *mongo.Collection {
 	return store.client.Database(store.database).Collection(store.collection)
 }
 
-func (store *UserStore) SigningUser(ctx context.Context, email string) (types.User, error) {
+func (store *UserStore) Signing(ctx context.Context, email string) (types.User, error) {
 	col := store.getUserCollection()
 	filter := bson.D{{Key: "email", Value: email}}
 
@@ -39,7 +39,7 @@ func (store *UserStore) SigningUser(ctx context.Context, email string) (types.Us
 	return user, nil
 }
 
-func (store *UserStore) CreateUser(ctx context.Context, user types.User) (*mongo.InsertOneResult, error) {
+func (store *UserStore) Create(ctx context.Context, user types.User) (*mongo.InsertOneResult, error) {
 	col := store.getUserCollection()
 
 	res, err := col.InsertOne(ctx, user)
@@ -50,7 +50,7 @@ func (store *UserStore) CreateUser(ctx context.Context, user types.User) (*mongo
 	return res, nil
 }
 
-func (store *UserStore) GetOneUser(ctx context.Context, id primitive.ObjectID) (types.User, error) {
+func (store *UserStore) GetOne(ctx context.Context, id primitive.ObjectID) (types.User, error) {
 	col := store.getUserCollection()
 	filter := bson.D{{Key: "_id", Value: id}}
 
@@ -63,7 +63,7 @@ func (store *UserStore) GetOneUser(ctx context.Context, id primitive.ObjectID) (
 	return res, nil
 }
 
-func (store *UserStore) UpdateUser(ctx context.Context, userToUpdate types.User) (*mongo.UpdateResult, error) {
+func (store *UserStore) Update(ctx context.Context, userToUpdate types.User) (*mongo.UpdateResult, error) {
 	col := store.getUserCollection()
 	filter := bson.D{{Key: "_id", Value: userToUpdate.ID}}
 	update := bson.D{{Key: "$set", Value: userToUpdate}}
@@ -76,7 +76,7 @@ func (store *UserStore) UpdateUser(ctx context.Context, userToUpdate types.User)
 	return res, nil
 }
 
-func (store *UserStore) DeleteUser(ctx context.Context, id primitive.ObjectID) (*mongo.DeleteResult, error) {
+func (store *UserStore) Delete(ctx context.Context, id primitive.ObjectID) (*mongo.DeleteResult, error) {
 	col := store.getUserCollection()
 	filter := bson.D{{Key: "_id", Value: id}}
 

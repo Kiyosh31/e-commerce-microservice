@@ -1,3 +1,4 @@
+SWAGGER_FOLDER = doc/swagger
 CUSTOMER_SERVICE_PROTO_DIR = customer-service/proto
 CUSTOMER_SERVICE_PB_DIR = customer-service/proto/pb
 
@@ -7,6 +8,10 @@ dev:
 start-minikube:
 	minikube start
 	minikube tunnel
+
+clean-docker:
+	minikube ssh -- docker system prune
+	docker system prune --force --all
 
 dependencies:
 	cd customer-service
@@ -27,7 +32,10 @@ dev-tools:
 customer-proto:
 	rm -rf ${CUSTOMER_SERVICE_PB_DIR}
 	mkdir ${CUSTOMER_SERVICE_PB_DIR}
+	rm -rf ${SWAGGER_FOLDER}
+	mkdir ${SWAGGER_FOLDER}
 	protoc --proto_path=${CUSTOMER_SERVICE_PROTO_DIR} --go_out=${CUSTOMER_SERVICE_PB_DIR} --go_opt=paths=source_relative \
     --go-grpc_out=${CUSTOMER_SERVICE_PB_DIR} --go-grpc_opt=paths=source_relative \
 		--grpc-gateway_out=${CUSTOMER_SERVICE_PB_DIR} --grpc-gateway_opt=paths=source_relative \
+		--openapiv2_out=${SWAGGER_FOLDER} --openapiv2_opt=allow_merge=true,merge_file_name=customer-service \
     ${CUSTOMER_SERVICE_PROTO_DIR}/*.proto

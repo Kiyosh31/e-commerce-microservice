@@ -28,7 +28,7 @@ func (store *CardStore) getCardCollection() *mongo.Collection {
 	return store.client.Database(store.database).Collection(store.collection)
 }
 
-func (store *CardStore) CreateCard(ctx context.Context, card types.Card) (*mongo.InsertOneResult, error) {
+func (store *CardStore) Create(ctx context.Context, card types.Card) (*mongo.InsertOneResult, error) {
 	col := store.getCardCollection()
 
 	res, err := col.InsertOne(ctx, card)
@@ -39,7 +39,7 @@ func (store *CardStore) CreateCard(ctx context.Context, card types.Card) (*mongo
 	return res, nil
 }
 
-func (store *CardStore) GetCard(ctx context.Context, id primitive.ObjectID) (types.Card, error) {
+func (store *CardStore) GetOne(ctx context.Context, id primitive.ObjectID) (types.Card, error) {
 	col := store.getCardCollection()
 	filter := bson.D{{Key: "_id", Value: id}}
 
@@ -52,7 +52,7 @@ func (store *CardStore) GetCard(ctx context.Context, id primitive.ObjectID) (typ
 	return res, nil
 }
 
-func (store *CardStore) GetAllCards(ctx context.Context, id primitive.ObjectID) ([]types.Card, error) {
+func (store *CardStore) GetAll(ctx context.Context, id primitive.ObjectID) ([]types.Card, error) {
 	col := store.getCardCollection()
 	filter := bson.D{{Key: "userId", Value: id}}
 
@@ -77,7 +77,7 @@ func (store *CardStore) GetAllCards(ctx context.Context, id primitive.ObjectID) 
 	return cards, nil
 }
 
-func (store *CardStore) UpdateCard(ctx context.Context, cardToUpdate types.Card) (*mongo.UpdateResult, error) {
+func (store *CardStore) Update(ctx context.Context, cardToUpdate types.Card) (*mongo.UpdateResult, error) {
 	col := store.getCardCollection()
 	filter := bson.D{{Key: "_id", Value: cardToUpdate.ID}}
 	update := bson.D{{Key: "$set", Value: cardToUpdate}}
@@ -90,7 +90,7 @@ func (store *CardStore) UpdateCard(ctx context.Context, cardToUpdate types.Card)
 	return res, nil
 }
 
-func (store *CardStore) DeleteCard(ctx context.Context, id primitive.ObjectID) (*mongo.DeleteResult, error) {
+func (store *CardStore) Delete(ctx context.Context, id primitive.ObjectID) (*mongo.DeleteResult, error) {
 	col := store.getCardCollection()
 	filter := bson.D{{Key: "_id", Value: id}}
 

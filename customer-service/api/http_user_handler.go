@@ -8,6 +8,7 @@ import (
 	"github.com/Kiyosh31/e-commerce-microservice/customer/config"
 	"github.com/Kiyosh31/e-commerce-microservice/customer/types"
 	"github.com/gin-gonic/gin"
+	"github.com/rs/zerolog/log"
 )
 
 func (s *Service) signinUser(c *gin.Context) {
@@ -18,7 +19,7 @@ func (s *Service) signinUser(c *gin.Context) {
 		return
 	}
 
-	user, err := s.userStore.SigningUser(c, req.Email)
+	user, err := s.userStore.Signing(c, req.Email)
 	if err != nil {
 		c.JSON(http.StatusInternalServerError, errorResponse(err))
 		return
@@ -65,7 +66,7 @@ func (s *Service) createUser(c *gin.Context) {
 
 	req.Password = hashedPassword
 
-	user, err := s.userStore.CreateUser(c, req)
+	user, err := s.userStore.Create(c, req)
 	if err != nil {
 		c.JSON(http.StatusInternalServerError, errorResponse(err))
 		return
@@ -77,11 +78,12 @@ func (s *Service) createUser(c *gin.Context) {
 func (s *Service) getUser(c *gin.Context) {
 	mongoId, err := utils.GetMongoId(c.Param("userId"))
 	if err != nil {
+		log.Info().Msg("fue aqui")
 		c.JSON(http.StatusBadRequest, errorResponse(err))
 		return
 	}
 
-	user, err := s.userStore.GetOneUser(c, mongoId)
+	user, err := s.userStore.GetOne(c, mongoId)
 	if err != nil {
 		c.JSON(http.StatusInternalServerError, errorResponse(err))
 		return
@@ -113,7 +115,7 @@ func (s *Service) updateUser(c *gin.Context) {
 		Password: req.Password,
 	}
 
-	updatedUser, err := s.userStore.UpdateUser(c, userToUpdate)
+	updatedUser, err := s.userStore.Update(c, userToUpdate)
 	if err != nil {
 		c.JSON(http.StatusInternalServerError, errorResponse(err))
 		return
@@ -129,7 +131,7 @@ func (s *Service) deleteUser(c *gin.Context) {
 		return
 	}
 
-	deletedUser, err := s.userStore.DeleteUser(c, mongoId)
+	deletedUser, err := s.userStore.Delete(c, mongoId)
 	if err != nil {
 		c.JSON(http.StatusInternalServerError, errorResponse(err))
 		return

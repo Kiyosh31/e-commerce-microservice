@@ -1,10 +1,10 @@
 package grpcserver
 
 import (
+	"github.com/Kiyosh31/e-commerce-microservice-common/utils"
 	"github.com/Kiyosh31/e-commerce-microservice/customer/proto/pb"
 	"github.com/Kiyosh31/e-commerce-microservice/customer/store"
-	"google.golang.org/grpc/codes"
-	"google.golang.org/grpc/status"
+	"github.com/Kiyosh31/e-commerce-microservice/customer/types"
 )
 
 type Service struct {
@@ -24,6 +24,43 @@ func NewService(userStore store.UserStore, addressStore store.AddressStore, card
 	return service, nil
 }
 
-func errorResponse(message string, err error) error {
-	return status.Errorf(codes.Internal, message+": ", err)
+func createUserTypeNoId(in *pb.User) types.User {
+	user := types.User{
+		Name:     in.GetName(),
+		LastName: in.GetLastName(),
+		Birth:    in.GetBirth(),
+		Email:    in.GetEmail(),
+		Password: in.GetPassword(),
+	}
+
+	return user
+}
+
+func createUserTypeWithId(id string, in *pb.User) (types.User, error) {
+	mongoId, err := utils.GetMongoId(id)
+	if err != nil {
+		return types.User{}, err
+	}
+
+	user := types.User{
+		ID:       mongoId,
+		Name:     in.GetName(),
+		LastName: in.GetLastName(),
+		Birth:    in.GetBirth(),
+		Email:    in.GetEmail(),
+		Password: in.GetPassword(),
+	}
+
+	return user, nil
+}
+
+func createUserPbResponse(in types.User) pb.User {
+	return pb.User{
+		Id:       in.ID.Hex(),
+		Name:     in.Name,
+		LastName: in.LastName,
+		Birth:    in.Birth,
+		Email:    in.Email,
+		Password: in.Password,
+	}
 }

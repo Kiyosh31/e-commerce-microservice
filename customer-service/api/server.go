@@ -1,6 +1,8 @@
 package api
 
 import (
+	"github.com/Kiyosh31/e-commerce-microservice-common/middlewares"
+	"github.com/Kiyosh31/e-commerce-microservice/customer/config"
 	"github.com/Kiyosh31/e-commerce-microservice/customer/store"
 	"github.com/gin-gonic/gin"
 )
@@ -34,11 +36,11 @@ func (s *Service) registerRoutes() {
 	{
 		user.POST("/signin", s.signinUser)
 		user.POST("/", s.createUser)
-		user.GET("/:userId", authMiddleware(s.userStore), s.getUser)
-		user.PUT("/:userId", authMiddleware(s.userStore), s.updateUser)
-		user.DELETE("/:userId", authMiddleware(s.userStore), s.deleteUser)
+		user.GET("/:userId", middlewares.AuthHttpMiddleware(config.EnvVar.TokenSecret), s.getUser)
+		user.PUT("/:userId", middlewares.AuthHttpMiddleware(config.EnvVar.TokenSecret), s.updateUser)
+		user.DELETE("/:userId", middlewares.AuthHttpMiddleware(config.EnvVar.TokenSecret), s.deleteUser)
 
-		card := user.Group("/card").Use(authMiddleware(s.userStore))
+		card := user.Group("/card").Use(middlewares.AuthHttpMiddleware(config.EnvVar.TokenSecret))
 		{
 			card.POST("/", s.createCard)
 			card.GET("/:cardId", s.getCard)
@@ -47,7 +49,7 @@ func (s *Service) registerRoutes() {
 			card.DELETE("/:cardId", s.deleteCard)
 		}
 
-		address := user.Group("/address").Use(authMiddleware(s.userStore))
+		address := user.Group("/address").Use(middlewares.AuthHttpMiddleware(config.EnvVar.TokenSecret))
 		{
 			address.POST("/", s.createAddress)
 			address.GET("/:addressId", s.getAddress)

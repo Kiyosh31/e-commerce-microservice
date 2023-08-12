@@ -28,7 +28,7 @@ func (store *AddressStore) getAddressCollection() *mongo.Collection {
 	return store.client.Database(store.database).Collection(store.collection)
 }
 
-func (store *AddressStore) CreateAddress(ctx context.Context, address types.Address) (*mongo.InsertOneResult, error) {
+func (store *AddressStore) Create(ctx context.Context, address types.Address) (*mongo.InsertOneResult, error) {
 	col := store.getAddressCollection()
 
 	res, err := col.InsertOne(ctx, address)
@@ -39,7 +39,7 @@ func (store *AddressStore) CreateAddress(ctx context.Context, address types.Addr
 	return res, nil
 }
 
-func (store *AddressStore) GetAddress(ctx context.Context, id primitive.ObjectID) (types.Address, error) {
+func (store *AddressStore) GetOne(ctx context.Context, id primitive.ObjectID) (types.Address, error) {
 	col := store.getAddressCollection()
 	filter := bson.D{{Key: "_id", Value: id}}
 
@@ -52,7 +52,7 @@ func (store *AddressStore) GetAddress(ctx context.Context, id primitive.ObjectID
 	return res, nil
 }
 
-func (store *AddressStore) GetAllAddress(ctx context.Context, id primitive.ObjectID) ([]types.Address, error) {
+func (store *AddressStore) GetAll(ctx context.Context, id primitive.ObjectID) ([]types.Address, error) {
 	col := store.getAddressCollection()
 	filter := bson.D{{Key: "userId", Value: id}}
 
@@ -77,7 +77,7 @@ func (store *AddressStore) GetAllAddress(ctx context.Context, id primitive.Objec
 	return cards, nil
 }
 
-func (store *AddressStore) UpdateAddress(ctx context.Context, cardToUpdate types.Address) (*mongo.UpdateResult, error) {
+func (store *AddressStore) Update(ctx context.Context, cardToUpdate types.Address) (*mongo.UpdateResult, error) {
 	col := store.getAddressCollection()
 	filter := bson.D{{Key: "_id", Value: cardToUpdate.ID}}
 	update := bson.D{{Key: "$set", Value: cardToUpdate}}
@@ -90,7 +90,7 @@ func (store *AddressStore) UpdateAddress(ctx context.Context, cardToUpdate types
 	return res, nil
 }
 
-func (store *AddressStore) DeleteAddress(ctx context.Context, id primitive.ObjectID) (*mongo.DeleteResult, error) {
+func (store *AddressStore) Delete(ctx context.Context, id primitive.ObjectID) (*mongo.DeleteResult, error) {
 	col := store.getAddressCollection()
 	filter := bson.D{{Key: "_id", Value: id}}
 

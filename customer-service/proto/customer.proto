@@ -6,6 +6,37 @@ option go_package="github.com/Kiyosh31/e-commerce-microservice/customer/proto/pb
 
 import "google/api/annotations.proto";
 
+service CustomerService {
+  rpc CreateUser(CreateUserRequest) returns (CreateUserResponse) {
+    option (google.api.http) = {
+      post: "/api/user"
+      body: "*"
+    };
+  }
+  rpc SigninUser(SigninUserRequest) returns (SigninUserResponse) {
+    option (google.api.http) = {
+      post: "/api/user/signin"
+      body: "*"
+    };
+  }
+  rpc GetUser(GetUserRequest) returns (GetUserResponse) {
+    option (google.api.http) = {
+      get: "/api/user/{userId}"
+    };
+  }
+  rpc UpdateUser(UpdateUserRequest) returns (UpdateUserResponse) {
+    option (google.api.http) = {
+      put: "/api/user/{userId}"
+      body: "*"
+    };
+  }
+  rpc DeleteUser(DeleteUserRequest) returns (DeleteUserResponse) {
+    option (google.api.http) = {
+      delete: "/api/user/{userId}"
+    };
+  }
+}
+
 message User {
   string id = 1;
   string name = 2;
@@ -13,6 +44,16 @@ message User {
   string birth = 4;
   string email = 5;
   string password = 6;
+}
+
+message UpdateResult {
+  int64 matchedCount = 1;
+  int64 modifiedCount = 2;
+  int64 upsertedCount = 3;
+}
+
+message DeleteResult {
+  int64 deletedCount = 1;
 }
 
 message CreateUserRequest {
@@ -32,17 +73,27 @@ message SigninUserResponse {
   string token = 1;
 }
 
-service CustomerService {
-  rpc CreateUser(CreateUserRequest) returns (CreateUserResponse) {
-    option (google.api.http) = {
-      post: "/api/user"
-      body: "*"
-    };
-  }
-  rpc SigninUser(SigninUserRequest) returns (SigninUserResponse) {
-    option (google.api.http) = {
-      post: "/api/user/signin"
-      body: "*"
-    };
-  }
+message GetUserRequest {
+  string userId = 1;
+}
+
+message GetUserResponse {
+  User user = 1;
+}
+
+message UpdateUserRequest {
+  string userId = 1;
+  User user = 2;
+}
+
+message UpdateUserResponse {
+  UpdateResult result = 1;
+}
+
+message DeleteUserRequest {
+  string userId = 1;
+}
+
+message DeleteUserResponse {
+  DeleteResult result = 1;
 }

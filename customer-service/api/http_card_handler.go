@@ -8,14 +8,15 @@ import (
 	"github.com/gin-gonic/gin"
 )
 
-func (s *Service) createAddress(c *gin.Context) {
-	var req types.Address
+func (s *Service) createCard(c *gin.Context) {
+	var req types.Card
+
 	if err := c.BindJSON(&req); err != nil {
 		c.JSON(http.StatusBadRequest, errorResponse(err))
 		return
 	}
 
-	card, err := s.addresStore.CreateAddress(c, req)
+	card, err := s.cardStore.Create(c, req)
 	if err != nil {
 		c.JSON(http.StatusInternalServerError, errorResponse(err))
 		return
@@ -24,83 +25,83 @@ func (s *Service) createAddress(c *gin.Context) {
 	c.JSON(http.StatusCreated, card)
 }
 
-func (s *Service) getAddress(c *gin.Context) {
-	mongoId, err := utils.GetMongoId(c.Param("addressId"))
+func (s *Service) getCard(c *gin.Context) {
+	mongoId, err := utils.GetMongoId(c.Param("cardId"))
 	if err != nil {
 		c.JSON(http.StatusInternalServerError, errorResponse(err))
 		return
 	}
 
-	address, err := s.addresStore.GetAddress(c, mongoId)
+	card, err := s.cardStore.GetOne(c, mongoId)
 	if err != nil {
 		c.JSON(http.StatusInternalServerError, errorResponse(err))
 		return
 	}
 
-	c.JSON(http.StatusOK, address)
+	c.JSON(http.StatusOK, card)
 }
 
-func (s *Service) getAllAddress(c *gin.Context) {
-
+func (s *Service) getAllCards(c *gin.Context) {
 	mongoId, err := utils.GetMongoId(c.Param("userId"))
 	if err != nil {
 		c.JSON(http.StatusInternalServerError, errorResponse(err))
 		return
 	}
 
-	address, err := s.addresStore.GetAllAddress(c, mongoId)
+	cards, err := s.cardStore.GetAll(c, mongoId)
 	if err != nil {
 		c.JSON(http.StatusInternalServerError, errorResponse(err))
 		return
 	}
 
-	c.JSON(http.StatusOK, address)
+	c.JSON(http.StatusOK, cards)
 }
 
-func (s *Service) updateAddress(c *gin.Context) {
-	cardMongoId, err := utils.GetMongoId(c.Param("addressId"))
+func (s *Service) updateCard(c *gin.Context) {
+	cardMongoId, err := utils.GetMongoId(c.Param("cardId"))
 	if err != nil {
 		c.JSON(http.StatusInternalServerError, errorResponse(err))
 		return
 	}
 
-	var req types.Address
+	var req types.Card
 	if err := c.BindJSON(&req); err != nil {
 		c.JSON(http.StatusBadRequest, errorResponse(err))
 		return
 	}
 
-	cardToUpdate := types.Address{
+	cardToUpdate := types.Card{
 		ID:         cardMongoId,
 		UserId:     req.UserId,
 		Name:       req.Name,
-		Address:    req.Address,
-		PostalCode: req.PostalCode,
-		Phone:      req.Phone,
+		Number:     req.Number,
+		SecretCode: req.SecretCode,
+		Expiration: req.Expiration,
+		Type:       req.Type,
 		Default:    req.Default,
 	}
 
-	updatedAddress, err := s.addresStore.UpdateAddress(c, cardToUpdate)
+	updatedCard, err := s.cardStore.Update(c, cardToUpdate)
 	if err != nil {
 		c.JSON(http.StatusInternalServerError, errorResponse(err))
 		return
 	}
 
-	c.JSON(http.StatusOK, updatedAddress)
+	c.JSON(http.StatusOK, updatedCard)
 }
 
-func (s *Service) deleteAddress(c *gin.Context) {
-	mongoId, err := utils.GetMongoId(c.Param("addressId"))
+func (s *Service) deleteCard(c *gin.Context) {
+	mongoId, err := utils.GetMongoId(c.Param("cardId"))
 	if err != nil {
 		c.JSON(http.StatusBadRequest, errorResponse(err))
 		return
 	}
 
-	deletedAddress, err := s.addresStore.DeleteAddress(c, mongoId)
+	deletedCard, err := s.cardStore.Delete(c, mongoId)
 	if err != nil {
 		c.JSON(http.StatusInternalServerError, errorResponse(err))
 		return
 	}
 
-	c.JSON(http.StatusOK, deletedAddress)
+	c.JSON(http.StatusOK, deletedCard)
 }
