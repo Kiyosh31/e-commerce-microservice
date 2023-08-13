@@ -19,11 +19,21 @@ import (
 const _ = grpc.SupportPackageIsVersion7
 
 const (
-	CustomerService_CreateUser_FullMethodName = "/pb.CustomerService/CreateUser"
-	CustomerService_SigninUser_FullMethodName = "/pb.CustomerService/SigninUser"
-	CustomerService_GetUser_FullMethodName    = "/pb.CustomerService/GetUser"
-	CustomerService_UpdateUser_FullMethodName = "/pb.CustomerService/UpdateUser"
-	CustomerService_DeleteUser_FullMethodName = "/pb.CustomerService/DeleteUser"
+	CustomerService_CreateUser_FullMethodName    = "/pb.CustomerService/CreateUser"
+	CustomerService_SigninUser_FullMethodName    = "/pb.CustomerService/SigninUser"
+	CustomerService_GetUser_FullMethodName       = "/pb.CustomerService/GetUser"
+	CustomerService_UpdateUser_FullMethodName    = "/pb.CustomerService/UpdateUser"
+	CustomerService_DeleteUser_FullMethodName    = "/pb.CustomerService/DeleteUser"
+	CustomerService_CreateAddress_FullMethodName = "/pb.CustomerService/CreateAddress"
+	CustomerService_GetAddress_FullMethodName    = "/pb.CustomerService/GetAddress"
+	CustomerService_GetAllAddress_FullMethodName = "/pb.CustomerService/GetAllAddress"
+	CustomerService_UpdateAddress_FullMethodName = "/pb.CustomerService/UpdateAddress"
+	CustomerService_DeleteAddress_FullMethodName = "/pb.CustomerService/DeleteAddress"
+	CustomerService_CreateCard_FullMethodName    = "/pb.CustomerService/CreateCard"
+	CustomerService_GetCard_FullMethodName       = "/pb.CustomerService/GetCard"
+	CustomerService_GetAllCard_FullMethodName    = "/pb.CustomerService/GetAllCard"
+	CustomerService_UpdateCard_FullMethodName    = "/pb.CustomerService/UpdateCard"
+	CustomerService_DeleteCard_FullMethodName    = "/pb.CustomerService/DeleteCard"
 )
 
 // CustomerServiceClient is the client API for CustomerService service.
@@ -35,6 +45,18 @@ type CustomerServiceClient interface {
 	GetUser(ctx context.Context, in *GetUserRequest, opts ...grpc.CallOption) (*GetUserResponse, error)
 	UpdateUser(ctx context.Context, in *UpdateUserRequest, opts ...grpc.CallOption) (*UpdateUserResponse, error)
 	DeleteUser(ctx context.Context, in *DeleteUserRequest, opts ...grpc.CallOption) (*DeleteUserResponse, error)
+	// ------------------ Address ------------------ //
+	CreateAddress(ctx context.Context, in *CreateAddressRequest, opts ...grpc.CallOption) (*CreateAddressResponse, error)
+	GetAddress(ctx context.Context, in *GetAddressRequest, opts ...grpc.CallOption) (*GetAddressResponse, error)
+	GetAllAddress(ctx context.Context, in *GetAllAddressRequest, opts ...grpc.CallOption) (*GetAllAddressResponse, error)
+	UpdateAddress(ctx context.Context, in *UpdateAddressRequest, opts ...grpc.CallOption) (*UpdateAddressResponse, error)
+	DeleteAddress(ctx context.Context, in *DeleteAddressRequest, opts ...grpc.CallOption) (*DeleteAddressResponse, error)
+	// ------------------ Card ------------------ //
+	CreateCard(ctx context.Context, in *CreateCardRequest, opts ...grpc.CallOption) (*CreateCardResponse, error)
+	GetCard(ctx context.Context, in *GetCardRequest, opts ...grpc.CallOption) (*GetCardResponse, error)
+	GetAllCard(ctx context.Context, in *GetAllCardRequest, opts ...grpc.CallOption) (*GetAllCardResponse, error)
+	UpdateCard(ctx context.Context, in *UpdateCardRequest, opts ...grpc.CallOption) (*UpdateCardResponse, error)
+	DeleteCard(ctx context.Context, in *DeleteCardRequest, opts ...grpc.CallOption) (*DeleteCardResponse, error)
 }
 
 type customerServiceClient struct {
@@ -90,6 +112,96 @@ func (c *customerServiceClient) DeleteUser(ctx context.Context, in *DeleteUserRe
 	return out, nil
 }
 
+func (c *customerServiceClient) CreateAddress(ctx context.Context, in *CreateAddressRequest, opts ...grpc.CallOption) (*CreateAddressResponse, error) {
+	out := new(CreateAddressResponse)
+	err := c.cc.Invoke(ctx, CustomerService_CreateAddress_FullMethodName, in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *customerServiceClient) GetAddress(ctx context.Context, in *GetAddressRequest, opts ...grpc.CallOption) (*GetAddressResponse, error) {
+	out := new(GetAddressResponse)
+	err := c.cc.Invoke(ctx, CustomerService_GetAddress_FullMethodName, in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *customerServiceClient) GetAllAddress(ctx context.Context, in *GetAllAddressRequest, opts ...grpc.CallOption) (*GetAllAddressResponse, error) {
+	out := new(GetAllAddressResponse)
+	err := c.cc.Invoke(ctx, CustomerService_GetAllAddress_FullMethodName, in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *customerServiceClient) UpdateAddress(ctx context.Context, in *UpdateAddressRequest, opts ...grpc.CallOption) (*UpdateAddressResponse, error) {
+	out := new(UpdateAddressResponse)
+	err := c.cc.Invoke(ctx, CustomerService_UpdateAddress_FullMethodName, in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *customerServiceClient) DeleteAddress(ctx context.Context, in *DeleteAddressRequest, opts ...grpc.CallOption) (*DeleteAddressResponse, error) {
+	out := new(DeleteAddressResponse)
+	err := c.cc.Invoke(ctx, CustomerService_DeleteAddress_FullMethodName, in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *customerServiceClient) CreateCard(ctx context.Context, in *CreateCardRequest, opts ...grpc.CallOption) (*CreateCardResponse, error) {
+	out := new(CreateCardResponse)
+	err := c.cc.Invoke(ctx, CustomerService_CreateCard_FullMethodName, in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *customerServiceClient) GetCard(ctx context.Context, in *GetCardRequest, opts ...grpc.CallOption) (*GetCardResponse, error) {
+	out := new(GetCardResponse)
+	err := c.cc.Invoke(ctx, CustomerService_GetCard_FullMethodName, in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *customerServiceClient) GetAllCard(ctx context.Context, in *GetAllCardRequest, opts ...grpc.CallOption) (*GetAllCardResponse, error) {
+	out := new(GetAllCardResponse)
+	err := c.cc.Invoke(ctx, CustomerService_GetAllCard_FullMethodName, in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *customerServiceClient) UpdateCard(ctx context.Context, in *UpdateCardRequest, opts ...grpc.CallOption) (*UpdateCardResponse, error) {
+	out := new(UpdateCardResponse)
+	err := c.cc.Invoke(ctx, CustomerService_UpdateCard_FullMethodName, in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *customerServiceClient) DeleteCard(ctx context.Context, in *DeleteCardRequest, opts ...grpc.CallOption) (*DeleteCardResponse, error) {
+	out := new(DeleteCardResponse)
+	err := c.cc.Invoke(ctx, CustomerService_DeleteCard_FullMethodName, in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 // CustomerServiceServer is the server API for CustomerService service.
 // All implementations must embed UnimplementedCustomerServiceServer
 // for forward compatibility
@@ -99,6 +211,18 @@ type CustomerServiceServer interface {
 	GetUser(context.Context, *GetUserRequest) (*GetUserResponse, error)
 	UpdateUser(context.Context, *UpdateUserRequest) (*UpdateUserResponse, error)
 	DeleteUser(context.Context, *DeleteUserRequest) (*DeleteUserResponse, error)
+	// ------------------ Address ------------------ //
+	CreateAddress(context.Context, *CreateAddressRequest) (*CreateAddressResponse, error)
+	GetAddress(context.Context, *GetAddressRequest) (*GetAddressResponse, error)
+	GetAllAddress(context.Context, *GetAllAddressRequest) (*GetAllAddressResponse, error)
+	UpdateAddress(context.Context, *UpdateAddressRequest) (*UpdateAddressResponse, error)
+	DeleteAddress(context.Context, *DeleteAddressRequest) (*DeleteAddressResponse, error)
+	// ------------------ Card ------------------ //
+	CreateCard(context.Context, *CreateCardRequest) (*CreateCardResponse, error)
+	GetCard(context.Context, *GetCardRequest) (*GetCardResponse, error)
+	GetAllCard(context.Context, *GetAllCardRequest) (*GetAllCardResponse, error)
+	UpdateCard(context.Context, *UpdateCardRequest) (*UpdateCardResponse, error)
+	DeleteCard(context.Context, *DeleteCardRequest) (*DeleteCardResponse, error)
 	mustEmbedUnimplementedCustomerServiceServer()
 }
 
@@ -120,6 +244,36 @@ func (UnimplementedCustomerServiceServer) UpdateUser(context.Context, *UpdateUse
 }
 func (UnimplementedCustomerServiceServer) DeleteUser(context.Context, *DeleteUserRequest) (*DeleteUserResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method DeleteUser not implemented")
+}
+func (UnimplementedCustomerServiceServer) CreateAddress(context.Context, *CreateAddressRequest) (*CreateAddressResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method CreateAddress not implemented")
+}
+func (UnimplementedCustomerServiceServer) GetAddress(context.Context, *GetAddressRequest) (*GetAddressResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method GetAddress not implemented")
+}
+func (UnimplementedCustomerServiceServer) GetAllAddress(context.Context, *GetAllAddressRequest) (*GetAllAddressResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method GetAllAddress not implemented")
+}
+func (UnimplementedCustomerServiceServer) UpdateAddress(context.Context, *UpdateAddressRequest) (*UpdateAddressResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method UpdateAddress not implemented")
+}
+func (UnimplementedCustomerServiceServer) DeleteAddress(context.Context, *DeleteAddressRequest) (*DeleteAddressResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method DeleteAddress not implemented")
+}
+func (UnimplementedCustomerServiceServer) CreateCard(context.Context, *CreateCardRequest) (*CreateCardResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method CreateCard not implemented")
+}
+func (UnimplementedCustomerServiceServer) GetCard(context.Context, *GetCardRequest) (*GetCardResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method GetCard not implemented")
+}
+func (UnimplementedCustomerServiceServer) GetAllCard(context.Context, *GetAllCardRequest) (*GetAllCardResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method GetAllCard not implemented")
+}
+func (UnimplementedCustomerServiceServer) UpdateCard(context.Context, *UpdateCardRequest) (*UpdateCardResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method UpdateCard not implemented")
+}
+func (UnimplementedCustomerServiceServer) DeleteCard(context.Context, *DeleteCardRequest) (*DeleteCardResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method DeleteCard not implemented")
 }
 func (UnimplementedCustomerServiceServer) mustEmbedUnimplementedCustomerServiceServer() {}
 
@@ -224,6 +378,186 @@ func _CustomerService_DeleteUser_Handler(srv interface{}, ctx context.Context, d
 	return interceptor(ctx, in, info, handler)
 }
 
+func _CustomerService_CreateAddress_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(CreateAddressRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(CustomerServiceServer).CreateAddress(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: CustomerService_CreateAddress_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(CustomerServiceServer).CreateAddress(ctx, req.(*CreateAddressRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _CustomerService_GetAddress_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(GetAddressRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(CustomerServiceServer).GetAddress(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: CustomerService_GetAddress_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(CustomerServiceServer).GetAddress(ctx, req.(*GetAddressRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _CustomerService_GetAllAddress_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(GetAllAddressRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(CustomerServiceServer).GetAllAddress(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: CustomerService_GetAllAddress_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(CustomerServiceServer).GetAllAddress(ctx, req.(*GetAllAddressRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _CustomerService_UpdateAddress_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(UpdateAddressRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(CustomerServiceServer).UpdateAddress(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: CustomerService_UpdateAddress_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(CustomerServiceServer).UpdateAddress(ctx, req.(*UpdateAddressRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _CustomerService_DeleteAddress_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(DeleteAddressRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(CustomerServiceServer).DeleteAddress(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: CustomerService_DeleteAddress_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(CustomerServiceServer).DeleteAddress(ctx, req.(*DeleteAddressRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _CustomerService_CreateCard_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(CreateCardRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(CustomerServiceServer).CreateCard(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: CustomerService_CreateCard_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(CustomerServiceServer).CreateCard(ctx, req.(*CreateCardRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _CustomerService_GetCard_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(GetCardRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(CustomerServiceServer).GetCard(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: CustomerService_GetCard_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(CustomerServiceServer).GetCard(ctx, req.(*GetCardRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _CustomerService_GetAllCard_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(GetAllCardRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(CustomerServiceServer).GetAllCard(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: CustomerService_GetAllCard_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(CustomerServiceServer).GetAllCard(ctx, req.(*GetAllCardRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _CustomerService_UpdateCard_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(UpdateCardRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(CustomerServiceServer).UpdateCard(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: CustomerService_UpdateCard_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(CustomerServiceServer).UpdateCard(ctx, req.(*UpdateCardRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _CustomerService_DeleteCard_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(DeleteCardRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(CustomerServiceServer).DeleteCard(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: CustomerService_DeleteCard_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(CustomerServiceServer).DeleteCard(ctx, req.(*DeleteCardRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 // CustomerService_ServiceDesc is the grpc.ServiceDesc for CustomerService service.
 // It's only intended for direct use with grpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
@@ -250,6 +584,46 @@ var CustomerService_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "DeleteUser",
 			Handler:    _CustomerService_DeleteUser_Handler,
+		},
+		{
+			MethodName: "CreateAddress",
+			Handler:    _CustomerService_CreateAddress_Handler,
+		},
+		{
+			MethodName: "GetAddress",
+			Handler:    _CustomerService_GetAddress_Handler,
+		},
+		{
+			MethodName: "GetAllAddress",
+			Handler:    _CustomerService_GetAllAddress_Handler,
+		},
+		{
+			MethodName: "UpdateAddress",
+			Handler:    _CustomerService_UpdateAddress_Handler,
+		},
+		{
+			MethodName: "DeleteAddress",
+			Handler:    _CustomerService_DeleteAddress_Handler,
+		},
+		{
+			MethodName: "CreateCard",
+			Handler:    _CustomerService_CreateCard_Handler,
+		},
+		{
+			MethodName: "GetCard",
+			Handler:    _CustomerService_GetCard_Handler,
+		},
+		{
+			MethodName: "GetAllCard",
+			Handler:    _CustomerService_GetAllCard_Handler,
+		},
+		{
+			MethodName: "UpdateCard",
+			Handler:    _CustomerService_UpdateCard_Handler,
+		},
+		{
+			MethodName: "DeleteCard",
+			Handler:    _CustomerService_DeleteCard_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},

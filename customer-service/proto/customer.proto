@@ -35,6 +35,64 @@ service CustomerService {
       delete: "/api/user/{userId}"
     };
   }
+
+  // ------------------ Address ------------------ //
+  rpc CreateAddress(CreateAddressRequest) returns (CreateAddressResponse) {
+    option (google.api.http) = {
+      post: "/api/user/address"
+      body: "*"
+    };
+  }
+  rpc GetAddress(GetAddressRequest) returns (GetAddressResponse) {
+    option (google.api.http) = {
+      get: "/api/user/address/{addressId}"
+    };
+  }
+  rpc GetAllAddress(GetAllAddressRequest) returns (GetAllAddressResponse) {
+    option (google.api.http) = {
+      get: "/api/user/address/all/{userId}"
+    };
+  }
+  rpc UpdateAddress(UpdateAddressRequest) returns (UpdateAddressResponse) {
+    option (google.api.http) = {
+      put: "/api/user/address/{addressId}"
+      body: "*"
+    };
+  }
+  rpc DeleteAddress(DeleteAddressRequest) returns (DeleteAddressResponse) {
+    option (google.api.http) = {
+      delete: "/api/user/address/{addressId}"
+    };
+  }
+
+  // ------------------ Card ------------------ //
+  rpc CreateCard(CreateCardRequest) returns (CreateCardResponse) {
+    option (google.api.http) = {
+      post: "/api/user/card"
+      body: "*"
+    };
+  }
+  rpc GetCard(GetCardRequest) returns (GetCardResponse) {
+    option (google.api.http) = {
+      get: "/api/user/card/{cardId}"
+    };
+  }
+  rpc GetAllCard(GetAllCardRequest) returns (GetAllCardResponse) {
+    option (google.api.http) = {
+      get: "/api/user/card/all/{userId}"
+    };
+  }
+  rpc UpdateCard(UpdateCardRequest) returns (UpdateCardResponse) {
+    option (google.api.http) = {
+      put: "/api/user/card/{cardId}"
+      body: "*"
+    };
+  }
+  rpc DeleteCard(DeleteCardRequest) returns (DeleteCardResponse) {
+    option (google.api.http) = {
+      delete: "/api/user/card/{cardId}"
+    };
+  }
 }
 
 // Mongodb responses
@@ -42,16 +100,17 @@ message CreatedResult {
   string insertedId = 1;
 }
 
-message UpdateResult {
+message UpdatedResult {
   int64 matchedCount = 1;
   int64 modifiedCount = 2;
   int64 upsertedCount = 3;
 }
 
-message DeleteResult {
+message DeletedResult {
   int64 deletedCount = 1;
 }
 
+// User 
 message User {
   string id = 1;
   string name = 2;
@@ -59,6 +118,7 @@ message User {
   string birth = 4;
   string email = 5;
   string password = 6;
+  string role = 7;
 }
 
 message CreateUserRequest {
@@ -92,7 +152,7 @@ message UpdateUserRequest {
 }
 
 message UpdateUserResponse {
-  UpdateResult result = 1;
+  UpdatedResult result = 1;
 }
 
 message DeleteUserRequest {
@@ -100,5 +160,110 @@ message DeleteUserRequest {
 }
 
 message DeleteUserResponse {
-  DeleteResult result = 1;
+  DeletedResult result = 1;
+}
+
+// Address
+message Address {
+  string id = 1;
+  string userId = 2;
+  string name = 3;
+  string address = 4;
+  int64 postalCode = 5;
+  string phone = 6;
+  bool default = 7;
+}
+
+message CreateAddressRequest {
+  Address address = 1;
+}
+
+message CreateAddressResponse {
+  CreatedResult result = 1;
+}
+
+message GetAddressRequest {
+  string addressId = 1;
+}
+
+message GetAddressResponse {
+  Address address = 1;
+}
+
+message GetAllAddressRequest {
+  string userId = 1;
+}
+
+message GetAllAddressResponse {
+  repeated Address address = 1;
+}
+
+message UpdateAddressRequest {
+  string addressId = 1;
+  Address Address = 2;
+}
+
+message UpdateAddressResponse {
+  UpdatedResult result = 1;
+}
+
+message DeleteAddressRequest {
+  string addressId = 1;
+}
+
+message DeleteAddressResponse {
+  DeletedResult result = 1;
+}
+
+// Card
+message Card {
+  string id = 1;
+  string userId = 2;
+  string name = 3;
+  int64 number = 4;
+  string secretCode = 5;
+  string expiration = 6;
+  string type = 7;
+  bool default = 8;
+}
+
+message CreateCardRequest {
+  Card card = 1;
+}
+
+message CreateCardResponse {
+  CreatedResult result = 1;
+}
+
+message GetCardRequest {
+  string cardId = 1;
+}
+
+message GetCardResponse {
+  Card card = 1;
+}
+
+message GetAllCardRequest {
+  string userId = 1;
+}
+
+message GetAllCardResponse {
+  repeated Card card = 1;
+}
+
+message UpdateCardRequest {
+  string cardId = 1;
+  Card card = 2;
+}
+
+message UpdateCardResponse {
+  UpdatedResult result = 1;
+}
+
+message DeleteCardRequest {
+  string cardId = 1;
+}
+
+message DeleteCardResponse {
+  DeletedResult result = 1;
 }

@@ -1,8 +1,6 @@
 package config
 
 import (
-	"log"
-
 	"github.com/Kiyosh31/e-commerce-microservice-common/utils"
 	"go.mongodb.org/mongo-driver/mongo"
 )
@@ -21,66 +19,82 @@ type ConfigStruct struct {
 	TokenExpiration    string
 	Protocol           string
 	LoggerCollection   string
+	AuthHeaderKey      string
+	AuthTypeBearer     string
+	AuthPayloadKey     string
 }
 
 var (
-	EnvVar      *ConfigStruct
 	MongoClient *mongo.Client
 )
 
-const (
-	AuthHeaderKey  = "Authorization"
-	AuthTypeBearer = "bearer"
-	AuthPayloadKey = "userId"
-)
-
-func handleMissingEnv(err error) {
-	if err != nil {
-		log.Fatal(err)
-	}
-}
-
-func LoadEnvVars() {
+func LoadEnvVars() (ConfigStruct, error) {
 	appEnv, err := utils.GetEnvVar("APP_ENV")
-	handleMissingEnv(err)
+	if err != nil {
+		return ConfigStruct{}, err
+	}
 
 	appMode, err := utils.GetEnvVar("APP_MODE")
-	handleMissingEnv(err)
+	if err != nil {
+		return ConfigStruct{}, err
+	}
 
 	httpPort, err := utils.GetEnvVar("HTTP_PORT")
-	handleMissingEnv(err)
+	if err != nil {
+		return ConfigStruct{}, err
+	}
 
 	grpcPort, err := utils.GetEnvVar("GRPC_PORT")
-	handleMissingEnv(err)
+	if err != nil {
+		return ConfigStruct{}, err
+	}
 
 	grpcProtoc, err := utils.GetEnvVar("PROTOCOL")
-	handleMissingEnv(err)
+	if err != nil {
+		return ConfigStruct{}, err
+	}
 
 	mongoUri, err := utils.GetEnvVar("MONGO_URI")
-	handleMissingEnv(err)
+	if err != nil {
+		return ConfigStruct{}, err
+	}
 
 	dbName, err := utils.GetEnvVar("DATABASE_NAME")
-	handleMissingEnv(err)
+	if err != nil {
+		return ConfigStruct{}, err
+	}
 
 	custColl, err := utils.GetEnvVar("CUSTOMER_COLLECTION")
-	handleMissingEnv(err)
+	if err != nil {
+		return ConfigStruct{}, err
+	}
 
 	addColl, err := utils.GetEnvVar("ADDRESS_COLLECTION")
-	handleMissingEnv(err)
+	if err != nil {
+		return ConfigStruct{}, err
+	}
 
 	cardColl, err := utils.GetEnvVar("CARD_COLLECTION")
-	handleMissingEnv(err)
+	if err != nil {
+		return ConfigStruct{}, err
+	}
 
 	tokEx, err := utils.GetEnvVar("TOKEN_EXPIRATION")
-	handleMissingEnv(err)
+	if err != nil {
+		return ConfigStruct{}, err
+	}
 
 	tokSec, err := utils.GetEnvVar("TOKEN_SECRET")
-	handleMissingEnv(err)
+	if err != nil {
+		return ConfigStruct{}, err
+	}
 
 	loggCol, err := utils.GetEnvVar("lOGGER_COLLECTION")
-	handleMissingEnv(err)
+	if err != nil {
+		return ConfigStruct{}, err
+	}
 
-	EnvVar = &ConfigStruct{
+	env := ConfigStruct{
 		AppEnv:             appEnv,
 		AppMode:            appMode,
 		HttpPort:           httpPort,
@@ -94,5 +108,10 @@ func LoadEnvVars() {
 		TokenExpiration:    tokEx,
 		Protocol:           grpcProtoc,
 		LoggerCollection:   loggCol,
+		AuthHeaderKey:      "Authorization",
+		AuthTypeBearer:     "bearer",
+		AuthPayloadKey:     "userId",
 	}
+
+	return env, nil
 }

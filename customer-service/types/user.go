@@ -9,6 +9,7 @@ type User struct {
 	Birth    string             `bson:"birth" binding:"required"`
 	Email    string             `bson:"email" binding:"required"`
 	Password string             `bson:"password" binding:"required"`
+	Role     string             `bson:"role" binding:"required"`
 }
 
 type SigninUserRequest struct {

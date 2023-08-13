@@ -20,29 +20,31 @@ import (
 )
 
 func main() {
-	config.LoadEnvVars()
-	var err error
+	env, err := config.LoadEnvVars()
+	if err != nil {
+		log.Fatal().Msgf("Could not load env vars: %v", err)
+	}
 
-	config.MongoClient, err = database.ConnectToDB(config.EnvVar.MongoUri)
+	config.MongoClient, err = database.ConnectToDB(env.MongoUri)
 	if err != nil {
 		log.Fatal().Msgf("Could not connect to database: %v", err)
 	}
 	defer database.DisconnectOfDB(config.MongoClient)
 
-	userStore := store.NewUserStore(config.MongoClient, config.EnvVar.DatabaseName, config.EnvVar.CustomerCollection)
-	cardStore := store.NewCardStore(config.MongoClient, config.EnvVar.DatabaseName, config.EnvVar.CardCollection)
-	addressStore := store.NewAddressStore(config.MongoClient, config.EnvVar.DatabaseName, config.EnvVar.AddressCollection)
+	userStore := store.NewUserStore(config.MongoClient, env.DatabaseName, env.CustomerCollection)
+	cardStore := store.NewCardStore(config.MongoClient, env.DatabaseName, env.CardCollection)
+	addressStore := store.NewAddressStore(config.MongoClient, env.DatabaseName, env.AddressCollection)
 
-	if config.EnvVar.AppMode == "grpc" {
-		go runGatewayServer(*userStore, *addressStore, *cardStore)
-		runGrpcServer(*userStore, *addressStore, *cardStore)
+	if env.AppMode == "grpc" {
+		go runGatewayServer(*userStore, *addressStore, *cardStore, env)
+		runGrpcServer(*userStore, *addressStore, *cardStore, env)
 	} else {
-		runGinService(*userStore, *addressStore, *cardStore)
+		runGinService(*userStore, *addressStore, *cardStore, env)
 	}
 }
 
-func runGatewayServer(userStore store.UserStore, addressStore store.AddressStore, cardStore store.CardStore) {
-	service, err := grpcservice.NewService(userStore, addressStore, cardStore)
+func runGatewayServer(userStore store.UserStore, addressStore store.AddressStore, cardStore store.CardStore, env config.ConfigStruct) {
+	service, err := grpcservice.NewService(userStore, addressStore, cardStore, env)
 	if err != nil {
 		log.Fatal().Msgf("Error creating service: %v", err)
 	}
@@ -59,7 +61,7 @@ func runGatewayServer(userStore store.UserStore, addressStore store.AddressStore
 	mux := http.NewServeMux()
 	mux.Handle("/", grpcMux)
 
-	list, err := net.Listen(config.EnvVar.Protocol, config.EnvVar.HttpPort)
+	list, err := net.Listen(env.Protocol, env.HttpPort)
 	if err != nil {
 		log.Fatal().Msgf("Cannot create listener: %v", err)
 	}
@@ -72,8 +74,8 @@ func runGatewayServer(userStore store.UserStore, addressStore store.AddressStore
 	}
 }
 
-func runGrpcServer(userStore store.UserStore, addressStore store.AddressStore, cardStore store.CardStore) {
-	service, err := grpcservice.NewService(userStore, addressStore, cardStore)
+func runGrpcServer(userStore store.UserStore, addressStore store.AddressStore, cardStore store.CardStore, env config.ConfigStruct) {
+	service, err := grpcservice.NewService(userStore, addressStore, cardStore, env)
 	if err != nil {
 		log.Fatal().Msgf("Error creating service: %v", err)
 	}
@@ -86,7 +88,7 @@ func runGrpcServer(userStore store.UserStore, addressStore store.AddressStore, c
 	pb.RegisterCustomerServiceServer(grpcServer, service)
 	reflection.Register(grpcServer)
 
-	list, err := net.Listen(config.EnvVar.Protocol, config.EnvVar.GrpcPort)
+	list, err := net.Listen(env.Protocol, env.GrpcPort)
 	if err != nil {
 		log.Fatal().Msgf("Cannot create listener: %v", err)
 	}
@@ -98,9 +100,9 @@ func runGrpcServer(userStore store.UserStore, addressStore store.AddressStore, c
 	}
 }
 
-func runGinService(userStore store.UserStore, addressStore store.AddressStore, cardStore store.CardStore) {
+func runGinService(userStore store.UserStore, addressStore store.AddressStore, cardStore store.CardStore, env config.ConfigStruct) {
 
-	service, err := httpservice.NewService(userStore, cardStore, addressStore, config.EnvVar.HttpPort)
+	service, err := httpservice.NewService(userStore, cardStore, addressStore, env.HttpPort, env)
 	if err != nil {
 		log.Fatal().Msgf("Error creating service: %v", err)
 	}

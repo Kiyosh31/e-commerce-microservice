@@ -13,14 +13,16 @@ type Service struct {
 	addresStore store.AddressStore
 	listenAddr  string
 	router      *gin.Engine
+	env         config.ConfigStruct
 }
 
-func NewService(userStore store.UserStore, cardStore store.CardStore, addressStore store.AddressStore, listenAddr string) (*Service, error) {
+func NewService(userStore store.UserStore, cardStore store.CardStore, addressStore store.AddressStore, listenAddr string, env config.ConfigStruct) (*Service, error) {
 	server := &Service{
 		userStore:   userStore,
 		cardStore:   cardStore,
 		addresStore: addressStore,
 		listenAddr:  listenAddr,
+		env:         env,
 	}
 
 	server.registerRoutes()
@@ -36,11 +38,11 @@ func (s *Service) registerRoutes() {
 	{
 		user.POST("/signin", s.signinUser)
 		user.POST("/", s.createUser)
-		user.GET("/:userId", middlewares.AuthHttpMiddleware(config.EnvVar.TokenSecret), s.getUser)
-		user.PUT("/:userId", middlewares.AuthHttpMiddleware(config.EnvVar.TokenSecret), s.updateUser)
-		user.DELETE("/:userId", middlewares.AuthHttpMiddleware(config.EnvVar.TokenSecret), s.deleteUser)
+		user.GET("/:userId", middlewares.AuthHttpMiddleware(s.env.TokenSecret), s.getUser)
+		user.PUT("/:userId", middlewares.AuthHttpMiddleware(s.env.TokenSecret), s.updateUser)
+		user.DELETE("/:userId", middlewares.AuthHttpMiddleware(s.env.TokenSecret), s.deleteUser)
 
-		card := user.Group("/card").Use(middlewares.AuthHttpMiddleware(config.EnvVar.TokenSecret))
+		card := user.Group("/card").Use(middlewares.AuthHttpMiddleware(s.env.TokenSecret))
 		{
 			card.POST("/", s.createCard)
 			card.GET("/:cardId", s.getCard)
@@ -49,7 +51,7 @@ func (s *Service) registerRoutes() {
 			card.DELETE("/:cardId", s.deleteCard)
 		}
 
-		address := user.Group("/address").Use(middlewares.AuthHttpMiddleware(config.EnvVar.TokenSecret))
+		address := user.Group("/address").Use(middlewares.AuthHttpMiddleware(s.env.TokenSecret))
 		{
 			address.POST("/", s.createAddress)
 			address.GET("/:addressId", s.getAddress)

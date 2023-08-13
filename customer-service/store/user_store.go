@@ -63,6 +63,19 @@ func (store *UserStore) GetOne(ctx context.Context, id primitive.ObjectID) (type
 	return res, nil
 }
 
+func (store *UserStore) GetOneyEmail(ctx context.Context, email string) (types.User, error) {
+	col := store.getUserCollection()
+	filter := bson.D{{Key: "email", Value: email}}
+
+	var res types.User
+	err := col.FindOne(ctx, filter).Decode(&res)
+	if err != nil {
+		return types.User{}, err
+	}
+
+	return res, nil
+}
+
 func (store *UserStore) Update(ctx context.Context, userToUpdate types.User) (*mongo.UpdateResult, error) {
 	col := store.getUserCollection()
 	filter := bson.D{{Key: "_id", Value: userToUpdate.ID}}

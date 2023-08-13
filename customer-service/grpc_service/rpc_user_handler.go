@@ -8,61 +8,31 @@ import (
 	"github.com/Kiyosh31/e-commerce-microservice-common/middlewares"
 	"github.com/Kiyosh31/e-commerce-microservice-common/token"
 	"github.com/Kiyosh31/e-commerce-microservice-common/utils"
-	"github.com/Kiyosh31/e-commerce-microservice/customer/config"
 	"github.com/Kiyosh31/e-commerce-microservice/customer/proto/pb"
 	"github.com/rs/zerolog/log"
 	"go.mongodb.org/mongo-driver/bson/primitive"
-	"google.golang.org/genproto/googleapis/rpc/errdetails"
 )
 
-func validateUserRequest(in *pb.User) (violations []*errdetails.BadRequest_FieldViolation) {
-	if err := grpcvalidators.ValidateName(in.GetName()); err != nil {
-		violations = append(violations, grpcvalidators.FieldValidation("name", err))
-	}
-
-	if err := grpcvalidators.ValidateName(in.GetLastName()); err != nil {
-		violations = append(violations, grpcvalidators.FieldValidation("lastName", err))
-	}
-
-	if err := grpcvalidators.ValidateName(in.GetBirth()); err != nil {
-		violations = append(violations, grpcvalidators.FieldValidation("birth", err))
-	}
-
-	if err := grpcvalidators.ValidateEmail(in.GetEmail()); err != nil {
-		violations = append(violations, grpcvalidators.FieldValidation("email", err))
-	}
-
-	if err := grpcvalidators.ValidatePassword(in.GetPassword()); err != nil {
-		violations = append(violations, grpcvalidators.FieldValidation("password", err))
-	}
-
-	return violations
-}
-
-func validateSigninUser(req *pb.SigninUserRequest) (violations []*errdetails.BadRequest_FieldViolation) {
-	if err := grpcvalidators.ValidateEmail(req.GetEmail()); err != nil {
-		violations = append(violations, grpcvalidators.FieldValidation("email", err))
-	}
-
-	if err := grpcvalidators.ValidatePassword(req.GetPassword()); err != nil {
-		violations = append(violations, grpcvalidators.FieldValidation("password", err))
-	}
-
-	return violations
-}
-
 func (svc *Service) CreateUser(ctx context.Context, in *pb.CreateUserRequest) (*pb.CreateUserResponse, error) {
-	// violations := validateUserRequest(in.GetUser())
-	// if violations != nil {
-	// 	return nil, grpcvalidators.InvalidArgumentError(violations)
-	// }
+	// validate req
+	violations := validateCreateUserRequest(in.GetUser())
+	if violations != nil {
+		return nil, grpcvalidators.InvalidArgumentError(violations)
+	}
+
+	// check is user with that email exists
+	// if so you cannot create a new one
+	existingUser, err := svc.userStore.GetOneyEmail(ctx, in.GetUser().GetEmail())
+	if err == nil && &existingUser != nil {
+		return nil, fmt.Errorf("User already exists")
+	}
 
 	hashedPassword, err := utils.HashPassword(in.GetUser().GetPassword())
 	if err != nil {
 		return nil, fmt.Errorf("Failed to hash password: %v", err)
 	}
-
 	in.User.Password = hashedPassword
+	in.User.Role = "customer"
 
 	newUser := createUserTypeNoId(in.GetUser())
 
@@ -97,12 +67,12 @@ func (svc *Service) SigninUser(ctx context.Context, in *pb.SigninUserRequest) (*
 		return nil, fmt.Errorf("password incorrect: %v", err)
 	}
 
-	tokenExpiration, err := utils.StringToTimeDuration(config.EnvVar.TokenExpiration)
+	tokenExpiration, err := utils.StringToTimeDuration(svc.env.TokenExpiration)
 	if err != nil {
 		return nil, fmt.Errorf("error parsing token expiration: %v", err)
 	}
 
-	token, err := token.GenerateToken(tokenExpiration, user.ID, config.EnvVar.TokenSecret)
+	token, err := token.GenerateToken(tokenExpiration, user.ID, svc.env.TokenSecret)
 	if err != nil {
 		return nil, fmt.Errorf("error generating token: %v", err)
 	}
@@ -115,9 +85,14 @@ func (svc *Service) SigninUser(ctx context.Context, in *pb.SigninUserRequest) (*
 }
 
 func (svc *Service) GetUser(ctx context.Context, in *pb.GetUserRequest) (*pb.GetUserResponse, error) {
-	err := middlewares.ValidateTokenMatchesUser(ctx, in.GetUserId(), config.EnvVar.TokenSecret)
+	err := middlewares.ValidateTokenMatchesUser(ctx, in.GetUserId(), svc.env.TokenSecret)
 	if err != nil {
 		return nil, err
+	}
+
+	violations := validateGetUser(in)
+	if violations != nil {
+		return nil, grpcvalidators.InvalidArgumentError(violations)
 	}
 
 	mongoId, err := utils.GetMongoId(in.GetUserId())
@@ -139,21 +114,22 @@ func (svc *Service) GetUser(ctx context.Context, in *pb.GetUserRequest) (*pb.Get
 }
 
 func (svc *Service) UpdateUser(ctx context.Context, in *pb.UpdateUserRequest) (*pb.UpdateUserResponse, error) {
-	err := middlewares.ValidateTokenMatchesUser(ctx, in.GetUserId(), config.EnvVar.TokenSecret)
+	err := middlewares.ValidateTokenMatchesUser(ctx, in.GetUserId(), svc.env.TokenSecret)
 	if err != nil {
 		return nil, err
 	}
 
-	// violations := validateUserRequest(in.GetUser())
-	// if violations != nil {
-	// 	return nil, grpcvalidators.InvalidArgumentError(violations)
-	// }
+	violations := validateUpdateUserRequest(in.GetUser())
+	if violations != nil {
+		return nil, grpcvalidators.InvalidArgumentError(violations)
+	}
 
 	hashedPassword, err := utils.HashPassword(in.GetUser().GetPassword())
 	if err != nil {
 		return nil, fmt.Errorf("Failed to hash password: %v", err)
 	}
 	in.User.Password = hashedPassword
+	in.User.Role = "customer"
 
 	userToUpdate, err := createUserTypeWithId(in.GetUserId(), in.GetUser())
 	if err != nil {
@@ -166,7 +142,7 @@ func (svc *Service) UpdateUser(ctx context.Context, in *pb.UpdateUserRequest) (*
 	}
 
 	res := &pb.UpdateUserResponse{
-		Result: &pb.UpdateResult{
+		Result: &pb.UpdatedResult{
 			MatchedCount:  updatedUser.MatchedCount,
 			ModifiedCount: updatedUser.ModifiedCount,
 			UpsertedCount: updatedUser.UpsertedCount,
@@ -177,9 +153,14 @@ func (svc *Service) UpdateUser(ctx context.Context, in *pb.UpdateUserRequest) (*
 }
 
 func (svc *Service) DeleteUser(ctx context.Context, in *pb.DeleteUserRequest) (*pb.DeleteUserResponse, error) {
-	err := middlewares.ValidateTokenMatchesUser(ctx, in.GetUserId(), config.EnvVar.TokenSecret)
+	err := middlewares.ValidateTokenMatchesUser(ctx, in.GetUserId(), svc.env.TokenSecret)
 	if err != nil {
 		return nil, err
+	}
+
+	violations := validateDeleteUserRequest(in)
+	if violations != nil {
+		return nil, grpcvalidators.InvalidArgumentError(violations)
 	}
 
 	mongoId, err := utils.GetMongoId(in.GetUserId())
@@ -193,7 +174,7 @@ func (svc *Service) DeleteUser(ctx context.Context, in *pb.DeleteUserRequest) (*
 	}
 
 	res := &pb.DeleteUserResponse{
-		Result: &pb.DeleteResult{
+		Result: &pb.DeletedResult{
 			DeletedCount: deletedUser.DeletedCount,
 		},
 	}

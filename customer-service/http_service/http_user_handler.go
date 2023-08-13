@@ -5,7 +5,6 @@ import (
 
 	"github.com/Kiyosh31/e-commerce-microservice-common/token"
 	"github.com/Kiyosh31/e-commerce-microservice-common/utils"
-	"github.com/Kiyosh31/e-commerce-microservice/customer/config"
 	"github.com/Kiyosh31/e-commerce-microservice/customer/types"
 	"github.com/gin-gonic/gin"
 	"github.com/rs/zerolog/log"
@@ -31,13 +30,13 @@ func (s *Service) signinUser(c *gin.Context) {
 		return
 	}
 
-	tokenExpiration, err := utils.StringToTimeDuration(config.EnvVar.TokenExpiration)
+	tokenExpiration, err := utils.StringToTimeDuration(s.env.TokenExpiration)
 	if err != nil {
 		c.JSON(http.StatusInternalServerError, errorResponse(err))
 		return
 	}
 
-	token, err := token.GenerateToken(tokenExpiration, user.ID, config.EnvVar.TokenSecret)
+	token, err := token.GenerateToken(tokenExpiration, user.ID, s.env.TokenSecret)
 	if err != nil {
 		c.JSON(http.StatusInternalServerError, errorResponse(err))
 		return
