@@ -24,6 +24,11 @@ const (
 	CustomerService_GetUser_FullMethodName       = "/pb.CustomerService/GetUser"
 	CustomerService_UpdateUser_FullMethodName    = "/pb.CustomerService/UpdateUser"
 	CustomerService_DeleteUser_FullMethodName    = "/pb.CustomerService/DeleteUser"
+	CustomerService_CreateSeller_FullMethodName  = "/pb.CustomerService/CreateSeller"
+	CustomerService_SigninSeller_FullMethodName  = "/pb.CustomerService/SigninSeller"
+	CustomerService_GetSeller_FullMethodName     = "/pb.CustomerService/GetSeller"
+	CustomerService_UpdateSeller_FullMethodName  = "/pb.CustomerService/UpdateSeller"
+	CustomerService_DeleteSeller_FullMethodName  = "/pb.CustomerService/DeleteSeller"
 	CustomerService_CreateAddress_FullMethodName = "/pb.CustomerService/CreateAddress"
 	CustomerService_GetAddress_FullMethodName    = "/pb.CustomerService/GetAddress"
 	CustomerService_GetAllAddress_FullMethodName = "/pb.CustomerService/GetAllAddress"
@@ -40,11 +45,18 @@ const (
 //
 // For semantics around ctx use and closing/ending streaming RPCs, please refer to https://pkg.go.dev/google.golang.org/grpc/?tab=doc#ClientConn.NewStream.
 type CustomerServiceClient interface {
+	// ------------------ User ------------------ //
 	CreateUser(ctx context.Context, in *CreateUserRequest, opts ...grpc.CallOption) (*CreateUserResponse, error)
 	SigninUser(ctx context.Context, in *SigninUserRequest, opts ...grpc.CallOption) (*SigninUserResponse, error)
 	GetUser(ctx context.Context, in *GetUserRequest, opts ...grpc.CallOption) (*GetUserResponse, error)
 	UpdateUser(ctx context.Context, in *UpdateUserRequest, opts ...grpc.CallOption) (*UpdateUserResponse, error)
 	DeleteUser(ctx context.Context, in *DeleteUserRequest, opts ...grpc.CallOption) (*DeleteUserResponse, error)
+	// ------------------ Seller ------------------ //
+	CreateSeller(ctx context.Context, in *CreateUserRequest, opts ...grpc.CallOption) (*CreateUserResponse, error)
+	SigninSeller(ctx context.Context, in *SigninUserRequest, opts ...grpc.CallOption) (*SigninUserResponse, error)
+	GetSeller(ctx context.Context, in *GetUserRequest, opts ...grpc.CallOption) (*GetUserResponse, error)
+	UpdateSeller(ctx context.Context, in *UpdateUserRequest, opts ...grpc.CallOption) (*UpdateUserResponse, error)
+	DeleteSeller(ctx context.Context, in *DeleteUserRequest, opts ...grpc.CallOption) (*DeleteUserResponse, error)
 	// ------------------ Address ------------------ //
 	CreateAddress(ctx context.Context, in *CreateAddressRequest, opts ...grpc.CallOption) (*CreateAddressResponse, error)
 	GetAddress(ctx context.Context, in *GetAddressRequest, opts ...grpc.CallOption) (*GetAddressResponse, error)
@@ -106,6 +118,51 @@ func (c *customerServiceClient) UpdateUser(ctx context.Context, in *UpdateUserRe
 func (c *customerServiceClient) DeleteUser(ctx context.Context, in *DeleteUserRequest, opts ...grpc.CallOption) (*DeleteUserResponse, error) {
 	out := new(DeleteUserResponse)
 	err := c.cc.Invoke(ctx, CustomerService_DeleteUser_FullMethodName, in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *customerServiceClient) CreateSeller(ctx context.Context, in *CreateUserRequest, opts ...grpc.CallOption) (*CreateUserResponse, error) {
+	out := new(CreateUserResponse)
+	err := c.cc.Invoke(ctx, CustomerService_CreateSeller_FullMethodName, in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *customerServiceClient) SigninSeller(ctx context.Context, in *SigninUserRequest, opts ...grpc.CallOption) (*SigninUserResponse, error) {
+	out := new(SigninUserResponse)
+	err := c.cc.Invoke(ctx, CustomerService_SigninSeller_FullMethodName, in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *customerServiceClient) GetSeller(ctx context.Context, in *GetUserRequest, opts ...grpc.CallOption) (*GetUserResponse, error) {
+	out := new(GetUserResponse)
+	err := c.cc.Invoke(ctx, CustomerService_GetSeller_FullMethodName, in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *customerServiceClient) UpdateSeller(ctx context.Context, in *UpdateUserRequest, opts ...grpc.CallOption) (*UpdateUserResponse, error) {
+	out := new(UpdateUserResponse)
+	err := c.cc.Invoke(ctx, CustomerService_UpdateSeller_FullMethodName, in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *customerServiceClient) DeleteSeller(ctx context.Context, in *DeleteUserRequest, opts ...grpc.CallOption) (*DeleteUserResponse, error) {
+	out := new(DeleteUserResponse)
+	err := c.cc.Invoke(ctx, CustomerService_DeleteSeller_FullMethodName, in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
@@ -206,11 +263,18 @@ func (c *customerServiceClient) DeleteCard(ctx context.Context, in *DeleteCardRe
 // All implementations must embed UnimplementedCustomerServiceServer
 // for forward compatibility
 type CustomerServiceServer interface {
+	// ------------------ User ------------------ //
 	CreateUser(context.Context, *CreateUserRequest) (*CreateUserResponse, error)
 	SigninUser(context.Context, *SigninUserRequest) (*SigninUserResponse, error)
 	GetUser(context.Context, *GetUserRequest) (*GetUserResponse, error)
 	UpdateUser(context.Context, *UpdateUserRequest) (*UpdateUserResponse, error)
 	DeleteUser(context.Context, *DeleteUserRequest) (*DeleteUserResponse, error)
+	// ------------------ Seller ------------------ //
+	CreateSeller(context.Context, *CreateUserRequest) (*CreateUserResponse, error)
+	SigninSeller(context.Context, *SigninUserRequest) (*SigninUserResponse, error)
+	GetSeller(context.Context, *GetUserRequest) (*GetUserResponse, error)
+	UpdateSeller(context.Context, *UpdateUserRequest) (*UpdateUserResponse, error)
+	DeleteSeller(context.Context, *DeleteUserRequest) (*DeleteUserResponse, error)
 	// ------------------ Address ------------------ //
 	CreateAddress(context.Context, *CreateAddressRequest) (*CreateAddressResponse, error)
 	GetAddress(context.Context, *GetAddressRequest) (*GetAddressResponse, error)
@@ -244,6 +308,21 @@ func (UnimplementedCustomerServiceServer) UpdateUser(context.Context, *UpdateUse
 }
 func (UnimplementedCustomerServiceServer) DeleteUser(context.Context, *DeleteUserRequest) (*DeleteUserResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method DeleteUser not implemented")
+}
+func (UnimplementedCustomerServiceServer) CreateSeller(context.Context, *CreateUserRequest) (*CreateUserResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method CreateSeller not implemented")
+}
+func (UnimplementedCustomerServiceServer) SigninSeller(context.Context, *SigninUserRequest) (*SigninUserResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method SigninSeller not implemented")
+}
+func (UnimplementedCustomerServiceServer) GetSeller(context.Context, *GetUserRequest) (*GetUserResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method GetSeller not implemented")
+}
+func (UnimplementedCustomerServiceServer) UpdateSeller(context.Context, *UpdateUserRequest) (*UpdateUserResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method UpdateSeller not implemented")
+}
+func (UnimplementedCustomerServiceServer) DeleteSeller(context.Context, *DeleteUserRequest) (*DeleteUserResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method DeleteSeller not implemented")
 }
 func (UnimplementedCustomerServiceServer) CreateAddress(context.Context, *CreateAddressRequest) (*CreateAddressResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method CreateAddress not implemented")
@@ -374,6 +453,96 @@ func _CustomerService_DeleteUser_Handler(srv interface{}, ctx context.Context, d
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
 		return srv.(CustomerServiceServer).DeleteUser(ctx, req.(*DeleteUserRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _CustomerService_CreateSeller_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(CreateUserRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(CustomerServiceServer).CreateSeller(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: CustomerService_CreateSeller_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(CustomerServiceServer).CreateSeller(ctx, req.(*CreateUserRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _CustomerService_SigninSeller_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(SigninUserRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(CustomerServiceServer).SigninSeller(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: CustomerService_SigninSeller_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(CustomerServiceServer).SigninSeller(ctx, req.(*SigninUserRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _CustomerService_GetSeller_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(GetUserRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(CustomerServiceServer).GetSeller(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: CustomerService_GetSeller_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(CustomerServiceServer).GetSeller(ctx, req.(*GetUserRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _CustomerService_UpdateSeller_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(UpdateUserRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(CustomerServiceServer).UpdateSeller(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: CustomerService_UpdateSeller_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(CustomerServiceServer).UpdateSeller(ctx, req.(*UpdateUserRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _CustomerService_DeleteSeller_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(DeleteUserRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(CustomerServiceServer).DeleteSeller(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: CustomerService_DeleteSeller_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(CustomerServiceServer).DeleteSeller(ctx, req.(*DeleteUserRequest))
 	}
 	return interceptor(ctx, in, info, handler)
 }
@@ -584,6 +753,26 @@ var CustomerService_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "DeleteUser",
 			Handler:    _CustomerService_DeleteUser_Handler,
+		},
+		{
+			MethodName: "CreateSeller",
+			Handler:    _CustomerService_CreateSeller_Handler,
+		},
+		{
+			MethodName: "SigninSeller",
+			Handler:    _CustomerService_SigninSeller_Handler,
+		},
+		{
+			MethodName: "GetSeller",
+			Handler:    _CustomerService_GetSeller_Handler,
+		},
+		{
+			MethodName: "UpdateSeller",
+			Handler:    _CustomerService_UpdateSeller_Handler,
+		},
+		{
+			MethodName: "DeleteSeller",
+			Handler:    _CustomerService_DeleteSeller_Handler,
 		},
 		{
 			MethodName: "CreateAddress",

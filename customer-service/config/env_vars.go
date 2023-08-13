@@ -2,7 +2,6 @@ package config
 
 import (
 	"github.com/Kiyosh31/e-commerce-microservice-common/utils"
-	"go.mongodb.org/mongo-driver/mongo"
 )
 
 type ConfigStruct struct {
@@ -23,10 +22,6 @@ type ConfigStruct struct {
 	AuthTypeBearer     string
 	AuthPayloadKey     string
 }
-
-var (
-	MongoClient *mongo.Client
-)
 
 func LoadEnvVars() (ConfigStruct, error) {
 	appEnv, err := utils.GetEnvVar("APP_ENV")

@@ -7,6 +7,7 @@ option go_package="github.com/Kiyosh31/e-commerce-microservice/customer/proto/pb
 import "google/api/annotations.proto";
 
 service CustomerService {
+  // ------------------ User ------------------ //
   rpc CreateUser(CreateUserRequest) returns (CreateUserResponse) {
     option (google.api.http) = {
       post: "/api/user"
@@ -33,6 +34,36 @@ service CustomerService {
   rpc DeleteUser(DeleteUserRequest) returns (DeleteUserResponse) {
     option (google.api.http) = {
       delete: "/api/user/{userId}"
+    };
+  }
+
+  // ------------------ Seller ------------------ //
+  rpc CreateSeller(CreateUserRequest) returns (CreateUserResponse) {
+    option (google.api.http) = {
+      post: "/api/user/seller"
+      body: "*"
+    };
+  }
+  rpc SigninSeller(SigninUserRequest) returns (SigninUserResponse) {
+    option (google.api.http) = {
+      post: "/api/user/seller/signin"
+      body: "*"
+    };
+  }
+  rpc GetSeller(GetUserRequest) returns (GetUserResponse) {
+    option (google.api.http) = {
+      get: "/api/user/seller/{userId}"
+    };
+  }
+  rpc UpdateSeller(UpdateUserRequest) returns (UpdateUserResponse) {
+    option (google.api.http) = {
+      put: "/api/user/seller/{userId}"
+      body: "*"
+    };
+  }
+  rpc DeleteSeller(DeleteUserRequest) returns (DeleteUserResponse) {
+    option (google.api.http) = {
+      delete: "/api/user/seller/{userId}"
     };
   }
 

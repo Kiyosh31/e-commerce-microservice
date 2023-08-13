@@ -18,6 +18,7 @@
   "paths": {
     "/api/user": {
       "post": {
+        "summary": "------------------ User ------------------ //",
         "operationId": "CustomerService_CreateUser",
         "responses": {
           "200": {
@@ -362,6 +363,170 @@
               "properties": {
                 "card": {
                   "$ref": "#/definitions/pbCard"
+                }
+              }
+            }
+          }
+        ],
+        "tags": [
+          "CustomerService"
+        ]
+      }
+    },
+    "/api/user/seller": {
+      "post": {
+        "summary": "------------------ Seller ------------------ //",
+        "operationId": "CustomerService_CreateSeller",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/pbCreateUserResponse"
+            }
+          },
+          "default": {
+            "description": "An unexpected error response.",
+            "schema": {
+              "$ref": "#/definitions/rpcStatus"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/pbCreateUserRequest"
+            }
+          }
+        ],
+        "tags": [
+          "CustomerService"
+        ]
+      }
+    },
+    "/api/user/seller/signin": {
+      "post": {
+        "operationId": "CustomerService_SigninSeller",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/pbSigninUserResponse"
+            }
+          },
+          "default": {
+            "description": "An unexpected error response.",
+            "schema": {
+              "$ref": "#/definitions/rpcStatus"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/pbSigninUserRequest"
+            }
+          }
+        ],
+        "tags": [
+          "CustomerService"
+        ]
+      }
+    },
+    "/api/user/seller/{userId}": {
+      "get": {
+        "operationId": "CustomerService_GetSeller",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/pbGetUserResponse"
+            }
+          },
+          "default": {
+            "description": "An unexpected error response.",
+            "schema": {
+              "$ref": "#/definitions/rpcStatus"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "userId",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "tags": [
+          "CustomerService"
+        ]
+      },
+      "delete": {
+        "operationId": "CustomerService_DeleteSeller",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/pbDeleteUserResponse"
+            }
+          },
+          "default": {
+            "description": "An unexpected error response.",
+            "schema": {
+              "$ref": "#/definitions/rpcStatus"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "userId",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "tags": [
+          "CustomerService"
+        ]
+      },
+      "put": {
+        "operationId": "CustomerService_UpdateSeller",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/pbUpdateUserResponse"
+            }
+          },
+          "default": {
+            "description": "An unexpected error response.",
+            "schema": {
+              "$ref": "#/definitions/rpcStatus"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "userId",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "body",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "type": "object",
+              "properties": {
+                "user": {
+                  "$ref": "#/definitions/pbUser"
                 }
               }
             }

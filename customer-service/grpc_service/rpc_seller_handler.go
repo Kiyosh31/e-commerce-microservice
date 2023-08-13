@@ -13,7 +13,7 @@ import (
 	"go.mongodb.org/mongo-driver/bson/primitive"
 )
 
-func (svc *Service) CreateUser(ctx context.Context, in *pb.CreateUserRequest) (*pb.CreateUserResponse, error) {
+func (svc *Service) CreateSeller(ctx context.Context, in *pb.CreateUserRequest) (*pb.CreateUserResponse, error) {
 	// validate req
 	violations := validateCreateUserRequest(in.GetUser())
 	if violations != nil {
@@ -32,7 +32,7 @@ func (svc *Service) CreateUser(ctx context.Context, in *pb.CreateUserRequest) (*
 		return nil, fmt.Errorf("Failed to hash password: %v", err)
 	}
 	in.User.Password = hashedPassword
-	in.User.Role = "customer"
+	in.User.Role = "seller"
 
 	newUser := createUserTypeNoId(in.GetUser())
 
@@ -51,7 +51,7 @@ func (svc *Service) CreateUser(ctx context.Context, in *pb.CreateUserRequest) (*
 	return res, nil
 }
 
-func (svc *Service) SigninUser(ctx context.Context, in *pb.SigninUserRequest) (*pb.SigninUserResponse, error) {
+func (svc *Service) SigninSeller(ctx context.Context, in *pb.SigninUserRequest) (*pb.SigninUserResponse, error) {
 	violations := validateSigninUser(in)
 	if violations != nil {
 		return nil, grpcvalidators.InvalidArgumentError(violations)
@@ -62,8 +62,8 @@ func (svc *Service) SigninUser(ctx context.Context, in *pb.SigninUserRequest) (*
 		return nil, fmt.Errorf("could not signin: %v", err)
 	}
 
-	if user.Role == "seller" {
-		return nil, fmt.Errorf("This is a seller user please follow the right path /api/user/seller")
+	if user.Role == "customer" {
+		return nil, fmt.Errorf("This is a customer user please follow the right path /api/user/seller")
 	}
 
 	err = utils.CheckPassword(user.Password, in.GetPassword())
@@ -88,7 +88,7 @@ func (svc *Service) SigninUser(ctx context.Context, in *pb.SigninUserRequest) (*
 	return res, nil
 }
 
-func (svc *Service) GetUser(ctx context.Context, in *pb.GetUserRequest) (*pb.GetUserResponse, error) {
+func (svc *Service) GetSeller(ctx context.Context, in *pb.GetUserRequest) (*pb.GetUserResponse, error) {
 	err := middlewares.ValidateTokenMatchesUser(ctx, in.GetUserId(), svc.env.TokenSecret)
 	if err != nil {
 		return nil, err
@@ -117,7 +117,7 @@ func (svc *Service) GetUser(ctx context.Context, in *pb.GetUserRequest) (*pb.Get
 	return res, nil
 }
 
-func (svc *Service) UpdateUser(ctx context.Context, in *pb.UpdateUserRequest) (*pb.UpdateUserResponse, error) {
+func (svc *Service) UpdateSeller(ctx context.Context, in *pb.UpdateUserRequest) (*pb.UpdateUserResponse, error) {
 	err := middlewares.ValidateTokenMatchesUser(ctx, in.GetUserId(), svc.env.TokenSecret)
 	if err != nil {
 		return nil, err
@@ -133,7 +133,7 @@ func (svc *Service) UpdateUser(ctx context.Context, in *pb.UpdateUserRequest) (*
 		return nil, fmt.Errorf("Failed to hash password: %v", err)
 	}
 	in.User.Password = hashedPassword
-	in.User.Role = "customer"
+	in.User.Role = "seller"
 
 	userToUpdate, err := createUserTypeWithId(in.GetUserId(), in.GetUser())
 	if err != nil {
@@ -156,7 +156,7 @@ func (svc *Service) UpdateUser(ctx context.Context, in *pb.UpdateUserRequest) (*
 	return res, nil
 }
 
-func (svc *Service) DeleteUser(ctx context.Context, in *pb.DeleteUserRequest) (*pb.DeleteUserResponse, error) {
+func (svc *Service) DeleteSeller(ctx context.Context, in *pb.DeleteUserRequest) (*pb.DeleteUserResponse, error) {
 	err := middlewares.ValidateTokenMatchesUser(ctx, in.GetUserId(), svc.env.TokenSecret)
 	if err != nil {
 		return nil, err
