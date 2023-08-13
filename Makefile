@@ -1,4 +1,4 @@
-SWAGGER_FOLDER = doc/swagger
+SWAGGER_FOLDER = docs/swagger
 CUSTOMER_SERVICE_PROTO_DIR = customer-service/proto
 CUSTOMER_SERVICE_PB_DIR = customer-service/proto/pb
 
