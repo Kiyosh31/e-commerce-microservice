@@ -22,7 +22,7 @@ func (svc *Service) CreateSeller(ctx context.Context, in *pb.CreateUserRequest) 
 
 	// check is user with that email exists
 	// if so you cannot create a new one
-	existingUser, err := svc.userStore.GetOneyEmail(ctx, in.GetUser().GetEmail())
+	existingUser, err := svc.userStore.GetOneByEmail(ctx, in.GetUser().GetEmail())
 	if err == nil && &existingUser != nil {
 		return nil, fmt.Errorf("User already exists")
 	}

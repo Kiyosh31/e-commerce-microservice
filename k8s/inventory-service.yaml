@@ -66,6 +66,11 @@ spec:
                 secretKeyRef:
                   name: secrets
                   key: INVENTORY_SERVICE_PRODUCT_COLLECTION
+            - name: PRODUCT_COMMENT_COLLECTION
+              valueFrom:
+                secretKeyRef:
+                  name: secrets
+                  key: INVENTORY_SERVICE_PRODUCT_COMMENT_COLLECTION
             - name: LOGGER_COLLECTION
               valueFrom:
                 secretKeyRef:

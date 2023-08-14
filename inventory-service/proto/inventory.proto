@@ -7,6 +7,7 @@ option go_package="github.com/Kiyosh31/e-commerce-microservice/inventory/proto/p
 import "google/api/annotations.proto";
 
 service InventoryService {
+  // ------------------ Product ------------------ //
   rpc CreateProduct(CreateProductRequest) returns (CreateProductResponse) {
     option (google.api.http) = {
       post: "/api/product"
@@ -29,6 +30,24 @@ service InventoryService {
       delete: "/api/product/{productId}"
     };
   }
+
+  // ------------------ Product Comment ------------------ //
+  rpc CreateProductComment(CreateProductCommentRequest) returns (CreateProductCommentResponse) {
+    option (google.api.http) = {
+      post: "/api/product/comment"
+      body: "*"
+    };
+  }
+  rpc GetProductComment(GetProductCommentRequest) returns (GetProductCommentRespone) {
+    option (google.api.http) = {
+      get: "/api/product/comment/{commentId}"
+    };
+  }
+  rpc GetAllProductComment(GetAllProductCommentRequest) returns (GetAllProductCommentRespone) {
+    option (google.api.http) = {
+      get: "/api/product/comment/all/{productId}"
+    };
+  }
 }
 
 // Mongodb responses
@@ -49,12 +68,12 @@ message DeletedResult {
 // Product
 message Product {
   string id = 1;
-  string sellerId = 2;
-	string name = 3;
-	string description = 4;
-	double price = 5;
-	string brand = 6;
-	double stars = 7;
+  string sellerId = 3;
+	string name = 4;
+	string description = 5;
+	double price = 6;
+	string brand = 7;
+	double stars = 8;
 }
 
 message CreateProductRequest {
@@ -88,4 +107,37 @@ message DeleteProductRequest {
 
 message DeleteProductResponse {
   DeletedResult result = 1;
+}
+
+// Product comment
+message ProductComment {
+  string id = 1;
+  string productId = 2;
+  string userName = 3;
+  string comment = 4;
+  double ratingStar = 5;
+}
+
+message CreateProductCommentRequest {
+  ProductComment productComment = 1;
+}
+
+message CreateProductCommentResponse {
+  CreatedResult result = 1;
+}
+
+message GetProductCommentRequest {
+  string commentId = 1;
+}
+
+message GetProductCommentRespone {
+  ProductComment productComment = 1;
+}
+
+message GetAllProductCommentRequest {
+  string productId = 1;
+}
+
+message GetAllProductCommentRespone {
+  repeated ProductComment productComment = 1;
 }

@@ -3,16 +3,17 @@ package config
 import "github.com/Kiyosh31/e-commerce-microservice-common/utils"
 
 type ConfigStruct struct {
-	AppEnv            string
-	ServiceMode       string
-	HttpPort          string
-	GrpcPort          string
-	GrpcProtocol      string
-	MongoUri          string
-	DatabaseName      string
-	ProductCollection string
-	LoggerCollection  string
-	TokenExpiration   string
+	AppEnv                   string
+	ServiceMode              string
+	HttpPort                 string
+	GrpcPort                 string
+	GrpcProtocol             string
+	MongoUri                 string
+	DatabaseName             string
+	ProductCollection        string
+	ProductCommentCollection string
+	LoggerCollection         string
+	TokenExpiration          string
 }
 
 func LoadEnvVars() (ConfigStruct, error) {
@@ -61,22 +62,28 @@ func LoadEnvVars() (ConfigStruct, error) {
 		return ConfigStruct{}, err
 	}
 
+	productComCol, err := utils.GetEnvVar("PRODUCT_COMMENT_COLLECTION")
+	if err != nil {
+		return ConfigStruct{}, err
+	}
+
 	loggerCol, err := utils.GetEnvVar("LOGGER_COLLECTION")
 	if err != nil {
 		return ConfigStruct{}, err
 	}
 
 	env := ConfigStruct{
-		AppEnv:            appEnv,
-		ServiceMode:       serviceMode,
-		HttpPort:          httpPort,
-		GrpcPort:          grpcPort,
-		GrpcProtocol:      grpcProtoc,
-		MongoUri:          mongoUri,
-		DatabaseName:      dbName,
-		ProductCollection: productCol,
-		LoggerCollection:  loggerCol,
-		TokenExpiration:   tokenExp,
+		AppEnv:                   appEnv,
+		ServiceMode:              serviceMode,
+		HttpPort:                 httpPort,
+		GrpcPort:                 grpcPort,
+		GrpcProtocol:             grpcProtoc,
+		MongoUri:                 mongoUri,
+		DatabaseName:             dbName,
+		ProductCollection:        productCol,
+		ProductCommentCollection: productComCol,
+		LoggerCollection:         loggerCol,
+		TokenExpiration:          tokenExp,
 	}
 
 	return env, nil

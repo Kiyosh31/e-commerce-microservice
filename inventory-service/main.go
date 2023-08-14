@@ -30,17 +30,18 @@ func main() {
 	defer database.DisconnectOfDB(config.MongoClient)
 
 	productStore := store.NewProductStore(config.MongoClient, env.DatabaseName, env.ProductCollection)
+	productCommentStore := store.NewProductCommentStore(config.MongoClient, env.DatabaseName, env.ProductCommentCollection)
 
 	if env.ServiceMode == "grpc" {
-		go runGrpcGateway(*productStore, env)
-		runGrpcServer(*productStore, env)
+		go runGrpcGateway(*productStore, *productCommentStore, env)
+		runGrpcServer(*productStore, *productCommentStore, env)
 	} else {
 		log.Fatal().Msg("To start [inventory-service] You must provide an option in SERVICE_MODE env var")
 	}
 }
 
-func runGrpcGateway(productStore store.ProductStore, env config.ConfigStruct) {
-	service, err := grpcservice.NewService(productStore, env)
+func runGrpcGateway(productStore store.ProductStore, productCommentStore store.ProductCommentStore, env config.ConfigStruct) {
+	service, err := grpcservice.NewService(productStore, productCommentStore, env)
 	if err != nil {
 		log.Fatal().Msgf("Error creating service: %v", err)
 	}
@@ -70,8 +71,8 @@ func runGrpcGateway(productStore store.ProductStore, env config.ConfigStruct) {
 	}
 }
 
-func runGrpcServer(productStore store.ProductStore, env config.ConfigStruct) {
-	service, err := grpcservice.NewService(productStore, env)
+func runGrpcServer(productStore store.ProductStore, productCommentStore store.ProductCommentStore, env config.ConfigStruct) {
+	service, err := grpcservice.NewService(productStore, productCommentStore, env)
 	if err != nil {
 		log.Fatal().Msgf("Error creating service: %v", err)
 	}

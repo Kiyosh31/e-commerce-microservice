@@ -19,20 +19,28 @@ import (
 const _ = grpc.SupportPackageIsVersion7
 
 const (
-	InventoryService_CreateProduct_FullMethodName = "/pb.InventoryService/CreateProduct"
-	InventoryService_GetProduct_FullMethodName    = "/pb.InventoryService/GetProduct"
-	InventoryService_UpdateProduct_FullMethodName = "/pb.InventoryService/UpdateProduct"
-	InventoryService_DeleteProduct_FullMethodName = "/pb.InventoryService/DeleteProduct"
+	InventoryService_CreateProduct_FullMethodName        = "/pb.InventoryService/CreateProduct"
+	InventoryService_GetProduct_FullMethodName           = "/pb.InventoryService/GetProduct"
+	InventoryService_UpdateProduct_FullMethodName        = "/pb.InventoryService/UpdateProduct"
+	InventoryService_DeleteProduct_FullMethodName        = "/pb.InventoryService/DeleteProduct"
+	InventoryService_CreateProductComment_FullMethodName = "/pb.InventoryService/CreateProductComment"
+	InventoryService_GetProductComment_FullMethodName    = "/pb.InventoryService/GetProductComment"
+	InventoryService_GetAllProductComment_FullMethodName = "/pb.InventoryService/GetAllProductComment"
 )
 
 // InventoryServiceClient is the client API for InventoryService service.
 //
 // For semantics around ctx use and closing/ending streaming RPCs, please refer to https://pkg.go.dev/google.golang.org/grpc/?tab=doc#ClientConn.NewStream.
 type InventoryServiceClient interface {
+	// ------------------ Product ------------------ //
 	CreateProduct(ctx context.Context, in *CreateProductRequest, opts ...grpc.CallOption) (*CreateProductResponse, error)
 	GetProduct(ctx context.Context, in *GetProductRequest, opts ...grpc.CallOption) (*GetProductResponse, error)
 	UpdateProduct(ctx context.Context, in *UpdateProductRequest, opts ...grpc.CallOption) (*UpdateProductResponse, error)
 	DeleteProduct(ctx context.Context, in *DeleteProductRequest, opts ...grpc.CallOption) (*DeleteProductResponse, error)
+	// ------------------ Product Comment ------------------ //
+	CreateProductComment(ctx context.Context, in *CreateProductCommentRequest, opts ...grpc.CallOption) (*CreateProductCommentResponse, error)
+	GetProductComment(ctx context.Context, in *GetProductCommentRequest, opts ...grpc.CallOption) (*GetProductCommentRespone, error)
+	GetAllProductComment(ctx context.Context, in *GetAllProductCommentRequest, opts ...grpc.CallOption) (*GetAllProductCommentRespone, error)
 }
 
 type inventoryServiceClient struct {
@@ -79,14 +87,46 @@ func (c *inventoryServiceClient) DeleteProduct(ctx context.Context, in *DeletePr
 	return out, nil
 }
 
+func (c *inventoryServiceClient) CreateProductComment(ctx context.Context, in *CreateProductCommentRequest, opts ...grpc.CallOption) (*CreateProductCommentResponse, error) {
+	out := new(CreateProductCommentResponse)
+	err := c.cc.Invoke(ctx, InventoryService_CreateProductComment_FullMethodName, in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *inventoryServiceClient) GetProductComment(ctx context.Context, in *GetProductCommentRequest, opts ...grpc.CallOption) (*GetProductCommentRespone, error) {
+	out := new(GetProductCommentRespone)
+	err := c.cc.Invoke(ctx, InventoryService_GetProductComment_FullMethodName, in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *inventoryServiceClient) GetAllProductComment(ctx context.Context, in *GetAllProductCommentRequest, opts ...grpc.CallOption) (*GetAllProductCommentRespone, error) {
+	out := new(GetAllProductCommentRespone)
+	err := c.cc.Invoke(ctx, InventoryService_GetAllProductComment_FullMethodName, in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 // InventoryServiceServer is the server API for InventoryService service.
 // All implementations must embed UnimplementedInventoryServiceServer
 // for forward compatibility
 type InventoryServiceServer interface {
+	// ------------------ Product ------------------ //
 	CreateProduct(context.Context, *CreateProductRequest) (*CreateProductResponse, error)
 	GetProduct(context.Context, *GetProductRequest) (*GetProductResponse, error)
 	UpdateProduct(context.Context, *UpdateProductRequest) (*UpdateProductResponse, error)
 	DeleteProduct(context.Context, *DeleteProductRequest) (*DeleteProductResponse, error)
+	// ------------------ Product Comment ------------------ //
+	CreateProductComment(context.Context, *CreateProductCommentRequest) (*CreateProductCommentResponse, error)
+	GetProductComment(context.Context, *GetProductCommentRequest) (*GetProductCommentRespone, error)
+	GetAllProductComment(context.Context, *GetAllProductCommentRequest) (*GetAllProductCommentRespone, error)
 	mustEmbedUnimplementedInventoryServiceServer()
 }
 
@@ -105,6 +145,15 @@ func (UnimplementedInventoryServiceServer) UpdateProduct(context.Context, *Updat
 }
 func (UnimplementedInventoryServiceServer) DeleteProduct(context.Context, *DeleteProductRequest) (*DeleteProductResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method DeleteProduct not implemented")
+}
+func (UnimplementedInventoryServiceServer) CreateProductComment(context.Context, *CreateProductCommentRequest) (*CreateProductCommentResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method CreateProductComment not implemented")
+}
+func (UnimplementedInventoryServiceServer) GetProductComment(context.Context, *GetProductCommentRequest) (*GetProductCommentRespone, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method GetProductComment not implemented")
+}
+func (UnimplementedInventoryServiceServer) GetAllProductComment(context.Context, *GetAllProductCommentRequest) (*GetAllProductCommentRespone, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method GetAllProductComment not implemented")
 }
 func (UnimplementedInventoryServiceServer) mustEmbedUnimplementedInventoryServiceServer() {}
 
@@ -191,6 +240,60 @@ func _InventoryService_DeleteProduct_Handler(srv interface{}, ctx context.Contex
 	return interceptor(ctx, in, info, handler)
 }
 
+func _InventoryService_CreateProductComment_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(CreateProductCommentRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(InventoryServiceServer).CreateProductComment(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: InventoryService_CreateProductComment_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(InventoryServiceServer).CreateProductComment(ctx, req.(*CreateProductCommentRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _InventoryService_GetProductComment_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(GetProductCommentRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(InventoryServiceServer).GetProductComment(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: InventoryService_GetProductComment_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(InventoryServiceServer).GetProductComment(ctx, req.(*GetProductCommentRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _InventoryService_GetAllProductComment_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(GetAllProductCommentRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(InventoryServiceServer).GetAllProductComment(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: InventoryService_GetAllProductComment_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(InventoryServiceServer).GetAllProductComment(ctx, req.(*GetAllProductCommentRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 // InventoryService_ServiceDesc is the grpc.ServiceDesc for InventoryService service.
 // It's only intended for direct use with grpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
@@ -213,6 +316,18 @@ var InventoryService_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "DeleteProduct",
 			Handler:    _InventoryService_DeleteProduct_Handler,
+		},
+		{
+			MethodName: "CreateProductComment",
+			Handler:    _InventoryService_CreateProductComment_Handler,
+		},
+		{
+			MethodName: "GetProductComment",
+			Handler:    _InventoryService_GetProductComment_Handler,
+		},
+		{
+			MethodName: "GetAllProductComment",
+			Handler:    _InventoryService_GetAllProductComment_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},

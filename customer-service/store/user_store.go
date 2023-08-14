@@ -63,7 +63,7 @@ func (store *UserStore) GetOne(ctx context.Context, id primitive.ObjectID) (type
 	return res, nil
 }
 
-func (store *UserStore) GetOneyEmail(ctx context.Context, email string) (types.User, error) {
+func (store *UserStore) GetOneByEmail(ctx context.Context, email string) (types.User, error) {
 	col := store.getUserCollection()
 	filter := bson.D{{Key: "email", Value: email}}
 

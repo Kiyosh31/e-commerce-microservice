@@ -10,14 +10,16 @@ import (
 
 type Service struct {
 	pb.UnimplementedInventoryServiceServer
-	productStore store.ProductStore
-	env          config.ConfigStruct
+	productStore        store.ProductStore
+	productCommentStore store.ProductCommentStore
+	env                 config.ConfigStruct
 }
 
-func NewService(productStore store.ProductStore, env config.ConfigStruct) (*Service, error) {
+func NewService(productStore store.ProductStore, productCommentStore store.ProductCommentStore, env config.ConfigStruct) (*Service, error) {
 	service := &Service{
-		productStore: productStore,
-		env:          env,
+		productStore:        productStore,
+		productCommentStore: productCommentStore,
+		env:                 env,
 	}
 
 	return service, nil
@@ -75,4 +77,41 @@ func createProductPbResponse(in types.Product) pb.Product {
 		Brand:       in.Brand,
 		Stars:       in.Stars,
 	}
+}
+
+func createProductCommentTypeNoId(in *pb.ProductComment) (types.ProductComment, error) {
+	productMongoId, err := utils.GetMongoId(in.GetProductId())
+	if err != nil {
+		return types.ProductComment{}, err
+	}
+
+	res := types.ProductComment{
+		ProductId:  productMongoId,
+		UserName:   in.GetUserName(),
+		Comment:    in.GetComment(),
+		RatingStar: in.GetRatingStar(),
+	}
+
+	return res, nil
+}
+
+func createProductCommentPbResponse(in types.ProductComment) pb.ProductComment {
+	return pb.ProductComment{
+		Id:         in.ID.Hex(),
+		ProductId:  in.ProductId.Hex(),
+		UserName:   in.UserName,
+		Comment:    in.Comment,
+		RatingStar: in.RatingStar,
+	}
+}
+
+func createAllProductCommentPbResponse(in []types.ProductComment) []*pb.ProductComment {
+	var productComments []*pb.ProductComment
+
+	for _, prodComm := range in {
+		comm := createProductCommentPbResponse(prodComm)
+		productComments = append(productComments, &comm)
+	}
+
+	return productComments
 }

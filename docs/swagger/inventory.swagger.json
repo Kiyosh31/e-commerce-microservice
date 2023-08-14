@@ -18,6 +18,7 @@
   "paths": {
     "/api/product": {
       "post": {
+        "summary": "------------------ Product ------------------ //",
         "operationId": "InventoryService_CreateProduct",
         "responses": {
           "200": {
@@ -41,6 +42,99 @@
             "schema": {
               "$ref": "#/definitions/pbCreateProductRequest"
             }
+          }
+        ],
+        "tags": [
+          "InventoryService"
+        ]
+      }
+    },
+    "/api/product/comment": {
+      "post": {
+        "summary": "------------------ Product Comment ------------------ //",
+        "operationId": "InventoryService_CreateProductComment",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/pbCreateProductCommentResponse"
+            }
+          },
+          "default": {
+            "description": "An unexpected error response.",
+            "schema": {
+              "$ref": "#/definitions/rpcStatus"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/pbCreateProductCommentRequest"
+            }
+          }
+        ],
+        "tags": [
+          "InventoryService"
+        ]
+      }
+    },
+    "/api/product/comment/all/{productId}": {
+      "get": {
+        "operationId": "InventoryService_GetAllProductComment",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/pbGetAllProductCommentRespone"
+            }
+          },
+          "default": {
+            "description": "An unexpected error response.",
+            "schema": {
+              "$ref": "#/definitions/rpcStatus"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "productId",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "tags": [
+          "InventoryService"
+        ]
+      }
+    },
+    "/api/product/comment/{commentId}": {
+      "get": {
+        "operationId": "InventoryService_GetProductComment",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/pbGetProductCommentRespone"
+            }
+          },
+          "default": {
+            "description": "An unexpected error response.",
+            "schema": {
+              "$ref": "#/definitions/rpcStatus"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "commentId",
+            "in": "path",
+            "required": true,
+            "type": "string"
           }
         ],
         "tags": [
@@ -149,6 +243,22 @@
     }
   },
   "definitions": {
+    "pbCreateProductCommentRequest": {
+      "type": "object",
+      "properties": {
+        "productComment": {
+          "$ref": "#/definitions/pbProductComment"
+        }
+      }
+    },
+    "pbCreateProductCommentResponse": {
+      "type": "object",
+      "properties": {
+        "result": {
+          "$ref": "#/definitions/pbCreatedResult"
+        }
+      }
+    },
     "pbCreateProductRequest": {
       "type": "object",
       "properties": {
@@ -191,6 +301,26 @@
         }
       }
     },
+    "pbGetAllProductCommentRespone": {
+      "type": "object",
+      "properties": {
+        "productComment": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "$ref": "#/definitions/pbProductComment"
+          }
+        }
+      }
+    },
+    "pbGetProductCommentRespone": {
+      "type": "object",
+      "properties": {
+        "productComment": {
+          "$ref": "#/definitions/pbProductComment"
+        }
+      }
+    },
     "pbGetProductResponse": {
       "type": "object",
       "properties": {
@@ -227,6 +357,28 @@
         }
       },
       "title": "Product"
+    },
+    "pbProductComment": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string"
+        },
+        "productId": {
+          "type": "string"
+        },
+        "userName": {
+          "type": "string"
+        },
+        "comment": {
+          "type": "string"
+        },
+        "ratingStar": {
+          "type": "number",
+          "format": "double"
+        }
+      },
+      "title": "Product comment"
     },
     "pbUpdateProductResponse": {
       "type": "object",
