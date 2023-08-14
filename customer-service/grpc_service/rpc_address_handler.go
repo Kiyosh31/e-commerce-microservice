@@ -7,7 +7,6 @@ import (
 	"github.com/Kiyosh31/e-commerce-microservice-common/middlewares"
 	"github.com/Kiyosh31/e-commerce-microservice-common/utils"
 	"github.com/Kiyosh31/e-commerce-microservice/customer/proto/pb"
-	"github.com/rs/zerolog/log"
 	"go.mongodb.org/mongo-driver/bson/primitive"
 )
 
@@ -90,9 +89,6 @@ func (svc *Service) GetAllAddress(ctx context.Context, in *pb.GetAllAddressReque
 }
 
 func (svc *Service) UpdateAddress(ctx context.Context, in *pb.UpdateAddressRequest) (*pb.UpdateAddressResponse, error) {
-	log.Info().Msgf("aqui: %v", in.GetAddressId())
-	log.Info().Msgf("aqui: %v", in.GetAddress())
-
 	userId, err := middlewares.AuthGrpcMiddleware(ctx, svc.env.TokenSecret)
 	if err != nil {
 		return nil, err

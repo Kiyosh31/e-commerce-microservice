@@ -3,7 +3,7 @@ module github.com/Kiyosh31/e-commerce-microservice/customer
 go 1.18
 
 require (
-	github.com/Kiyosh31/e-commerce-microservice-common v1.0.34
+	github.com/Kiyosh31/e-commerce-microservice-common v1.0.36
 	github.com/gin-gonic/gin v1.9.1
 	github.com/grpc-ecosystem/grpc-gateway/v2 v2.16.2
 	github.com/rs/zerolog v1.30.0

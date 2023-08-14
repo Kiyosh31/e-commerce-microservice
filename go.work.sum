@@ -4,8 +4,11 @@ github.com/Kiyosh31/e-commerce-microservice-common v1.0.14 h1:4K+EEi7mHuvwZK2f4/
 github.com/Kiyosh31/e-commerce-microservice-common v1.0.14/go.mod h1:SogiSokyUt6PCXQkdmjYuC80bYx+f7d/ksDPOABn2Gc=
 github.com/Kiyosh31/e-commerce-microservice-common v1.0.17 h1:bIrQz6l0xrS517c6kUkwTV8QQXTSlskpGfQcJWKPJzg=
 github.com/Kiyosh31/e-commerce-microservice-common v1.0.17/go.mod h1:SogiSokyUt6PCXQkdmjYuC80bYx+f7d/ksDPOABn2Gc=
-github.com/Kiyosh31/e-commerce-microservice-common v1.0.34 h1:XXCfX0n82l1oYhWxeCt2tKv9kKv2PjQ5LdLX6Tt5RZc=
-github.com/Kiyosh31/e-commerce-microservice-common v1.0.34/go.mod h1:Xh8J0kyVrhCbX/xQLy+7bRqJ9BjRYsZG31xzuTCgMfQ=
+github.com/Kiyosh31/e-commerce-microservice-common v1.0.36 h1:r5Dxs+jL0cQi+tsv4wiu9qSXQQrtskzRqtUJXKJrXF0=
+github.com/Kiyosh31/e-commerce-microservice-common v1.0.36/go.mod h1:Xh8J0kyVrhCbX/xQLy+7bRqJ9BjRYsZG31xzuTCgMfQ=
+github.com/coreos/go-systemd/v22 v22.3.3-0.20220203105225-a9a7ef127534/go.mod h1:Y58oyj3AT4RCenI/lSvhwexgC+NSVTIJ3seZv2GcEnc=
+github.com/rs/xid v1.4.0/go.mod h1:trrq9SKmegXys3aeAKXMUTdJsYXVwGY3RLcfgqegfbg=
+github.com/rs/zerolog v1.28.0/go.mod h1:NILgTygv/Uej1ra5XxGf82ZFSLk58MFGAUS2o6usyD0=
 github.com/sirupsen/logrus v1.9.3 h1:dueUQJ1C2q9oE3F7wvmSGAaVtTmUizReu6fjN8uqzbQ=
 golang.org/x/mod v0.8.0/go.mod h1:iBbtSCu2XBx23ZKBPSOrRkjjQPZFPuis4dIYUhu/chs=
 golang.org/x/net v0.10.0/go.mod h1:0qNGK6F8kojg2nk9dLZ2mShWaEBan6FAoqfSigmmuDg=

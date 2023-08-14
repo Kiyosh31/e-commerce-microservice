@@ -67,6 +67,7 @@ func runGatewayServer(userStore store.UserStore, addressStore store.AddressStore
 	}
 
 	log.Info().Msgf("Starting HTTP gateway service at: %v", list.Addr().String())
+	// Logger
 	loggerHandler := logger.HttpLogger(mux)
 	err = http.Serve(list, loggerHandler)
 	if err != nil {

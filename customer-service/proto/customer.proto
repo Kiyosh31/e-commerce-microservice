@@ -231,7 +231,7 @@ message GetAllAddressResponse {
 
 message UpdateAddressRequest {
   string addressId = 1;
-  Address Address = 2;
+  Address address = 2;
 }
 
 message UpdateAddressResponse {
