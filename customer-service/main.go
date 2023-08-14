@@ -82,7 +82,7 @@ func runGrpcServer(userStore store.UserStore, addressStore store.AddressStore, c
 	}
 
 	// Logger
-	logger := grpc.UnaryInterceptor(logger.GrpcLogger)
+	logger := grpc.UnaryInterceptor(logger.GrpcLoggerInterceptor)
 
 	// Server
 	grpcServer := grpc.NewServer(logger)
