@@ -35,7 +35,7 @@ func main() {
 	cardStore := store.NewCardStore(config.MongoClient, env.DatabaseName, env.CardCollection)
 	addressStore := store.NewAddressStore(config.MongoClient, env.DatabaseName, env.AddressCollection)
 
-	if env.AppMode == "grpc" {
+	if env.ServiceMode == "grpc" {
 		go runGatewayServer(*userStore, *addressStore, *cardStore, env)
 		runGrpcServer(*userStore, *addressStore, *cardStore, env)
 	} else {
@@ -97,7 +97,7 @@ func runGrpcServer(userStore store.UserStore, addressStore store.AddressStore, c
 	log.Info().Msgf("Starting gRPC server at: %v", list.Addr().String())
 	err = grpcServer.Serve(list)
 	if err != nil {
-		log.Fatal().Msgf("Cannot start gRPC server")
+		log.Fatal().Msgf("Cannot start gRPC server: %v", err)
 	}
 }
 

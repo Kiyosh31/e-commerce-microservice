@@ -8,12 +8,19 @@ metadata:
 spec:
   rules:
     # - host: example.dev
-      - http:
-          paths:
-            - path: /api/user/?(.*)
-              pathType: Prefix
-              backend:
-                service:
-                  name: customers-srv
-                  port:
-                    number: 3000
+    - http:
+        paths:
+          - path: /api/user/?(.*)
+            pathType: Prefix
+            backend:
+              service:
+                name: customers-srv
+                port:
+                  number: 3000
+          - path: /api/product/?(.*)
+            pathType: Prefix
+            backend:
+              service:
+                name: inventory-srv
+                port:
+                  number: 3000

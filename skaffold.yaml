@@ -12,6 +12,14 @@ build:
         manual:
           - dest: "**/*"
             src: .
+    - image: inventory-service
+      context: inventory-service
+      docker:
+        dockerfile: Dockerfile
+      sync:
+        manual:
+          - dest: "**/*"
+            src: .
 manifests:
   rawYaml:
     - k8s/*.yaml

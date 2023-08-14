@@ -1,20 +1,20 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: customers
+  name: inventory
 spec:
   replicas: 1
   selector:
     matchLabels:
-      app: customers
+      app: inventory
   template:
     metadata:
       labels:
-        app: customers
+        app: inventory
     spec:
       containers:
-        - name: customers
-          image: customer-service
+        - name: inventory
+          image: inventory-service
           imagePullPolicy: Never
           resources:
             limits:
@@ -30,76 +30,56 @@ spec:
               valueFrom:
                 secretKeyRef:
                   name: secrets
-                  key: CUSTOMER_SERVICE_MODE
+                  key: INVENTORY_SERVICE_MODE
             - name: TOKEN_EXPIRATION
               valueFrom:
                 secretKeyRef:
                   name: secrets
                   key: TOKEN_EXPIRATION
-            - name: TOKEN_SECRET
-              valueFrom:
-                secretKeyRef:
-                  name: secrets
-                  key: TOKEN_SECRET
             - name: HTTP_PORT
               valueFrom:
                 secretKeyRef:
                   name: secrets
-                  key: CUSTOMER_SERVICE_HTTP_PORT
+                  key: INVENTORY_SERVICE_HTTP_PORT
             - name: GRPC_PORT
               valueFrom:
                 secretKeyRef:
                   name: secrets
-                  key: CUSTOMER_SERVICE_GRPC
-            - name: PROTOCOL
+                  key: INVENTORY_SERVICE_GRPC
+            - name: GRPC_PROTOCOL
               valueFrom:
                 secretKeyRef:
                   name: secrets
-                  key: CUSTOMER_SERVICE_GRPC_PROTOCOL
+                  key: INVENTORY_SERVICE_GRPC_PROTOCOL
             - name: MONGO_URI
               valueFrom:
                 secretKeyRef:
                   name: secrets
-                  key: CUSTOMER_SERVICE_MONGO_URI
-            - name: REDIS_URI
-              valueFrom:
-                secretKeyRef:
-                  name: secrets
-                  key: REDIS_CUSTOMER_SERVICE_REDIS_URI
+                  key: INVENTORY_SERVICE_MONGO_URI
             - name: DATABASE_NAME
               valueFrom:
                 secretKeyRef:
                   name: secrets
-                  key: CUSTOMER_SERVICE_USER_DATABASE
-            - name: CUSTOMER_COLLECTION
+                  key: INVENTORY_SERVICE_DATABASE
+            - name: PRODUCT_COLLECTION
               valueFrom:
                 secretKeyRef:
                   name: secrets
-                  key: CUSTOMER_SERVICE_USER_COLLECTION
-            - name: ADDRESS_COLLECTION
+                  key: INVENTORY_SERVICE_PRODUCT_COLLECTION
+            - name: LOGGER_COLLECTION
               valueFrom:
                 secretKeyRef:
                   name: secrets
-                  key: CUSTOMER_SERVICE_ADDRESS_COLLECTION
-            - name: CARD_COLLECTION
-              valueFrom:
-                secretKeyRef:
-                  name: secrets
-                  key: CUSTOMER_SERVICE_CARD_COLLECTION
-            - name: lOGGER_COLLECTION
-              valueFrom:
-                secretKeyRef:
-                  name: secrets
-                  key: CUSTOMER_SERVICE_DB_LOGGER_COLLECTION
+                  key: INVENTORY_SERVICE_DB_LOGGER_COLLECTION
 ---
 apiVersion: v1
 kind: Service
 metadata:
-  name: customers-srv
+  name: inventory-srv
 spec:
   type: ClusterIP
   selector:
-    app: customers
+    app: inventory
   ports:
     - name: http
       port: 3000

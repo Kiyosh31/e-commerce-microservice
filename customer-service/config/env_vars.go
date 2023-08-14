@@ -6,7 +6,7 @@ import (
 
 type ConfigStruct struct {
 	AppEnv             string
-	AppMode            string
+	ServiceMode        string
 	HttpPort           string
 	GrpcPort           string
 	MongoUri           string
@@ -29,7 +29,7 @@ func LoadEnvVars() (ConfigStruct, error) {
 		return ConfigStruct{}, err
 	}
 
-	appMode, err := utils.GetEnvVar("APP_MODE")
+	serviceMode, err := utils.GetEnvVar("SERVICE_MODE")
 	if err != nil {
 		return ConfigStruct{}, err
 	}
@@ -91,7 +91,7 @@ func LoadEnvVars() (ConfigStruct, error) {
 
 	env := ConfigStruct{
 		AppEnv:             appEnv,
-		AppMode:            appMode,
+		ServiceMode:        serviceMode,
 		HttpPort:           httpPort,
 		GrpcPort:           grpcPort,
 		MongoUri:           mongoUri,

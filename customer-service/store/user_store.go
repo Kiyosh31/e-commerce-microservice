@@ -81,7 +81,7 @@ func (store *UserStore) Update(ctx context.Context, userToUpdate types.User) (*m
 	filter := bson.D{{Key: "_id", Value: userToUpdate.ID}}
 	update := bson.D{{Key: "$set", Value: userToUpdate}}
 
-	res, err := col.UpdateOne(context.TODO(), filter, update)
+	res, err := col.UpdateOne(ctx, filter, update)
 	if err != nil {
 		return &mongo.UpdateResult{}, err
 	}
@@ -93,7 +93,7 @@ func (store *UserStore) Delete(ctx context.Context, id primitive.ObjectID) (*mon
 	col := store.getUserCollection()
 	filter := bson.D{{Key: "_id", Value: id}}
 
-	res, err := col.DeleteOne(context.TODO(), filter)
+	res, err := col.DeleteOne(ctx, filter)
 	if err != nil {
 		return &mongo.DeleteResult{}, err
 	}
