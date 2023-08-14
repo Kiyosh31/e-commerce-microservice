@@ -38,8 +38,10 @@ func main() {
 	if env.ServiceMode == "grpc" {
 		go runGatewayServer(*userStore, *addressStore, *cardStore, env)
 		runGrpcServer(*userStore, *addressStore, *cardStore, env)
-	} else {
+	} else if env.ServiceMode == "http" {
 		runGinService(*userStore, *addressStore, *cardStore, env)
+	} else {
+		log.Fatal().Msg("To start [customer-service] You must provide an option in SERVICE_MODE env var")
 	}
 }
 

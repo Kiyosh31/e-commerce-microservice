@@ -34,6 +34,8 @@ func main() {
 	if env.ServiceMode == "grpc" {
 		go runGrpcGateway(*productStore, env)
 		runGrpcServer(*productStore, env)
+	} else {
+		log.Fatal().Msg("To start [inventory-service] You must provide an option in SERVICE_MODE env var")
 	}
 }
 
