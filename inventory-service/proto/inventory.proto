@@ -1,0 +1,91 @@
+syntax = "proto3";
+
+package pb;
+
+option go_package="github.com/Kiyosh31/e-commerce-microservice/inventory/proto/pb";
+
+import "google/api/annotations.proto";
+
+service InventoryService {
+  rpc CreateProduct(CreateProductRequest) returns (CreateProductResponse) {
+    option (google.api.http) = {
+      post: "/api/product"
+      body: "*"
+    };
+  }
+  rpc GetProduct(GetProductRequest) returns (GetProductResponse) {
+    option (google.api.http) = {
+      get: "/api/product/{productId}"
+    };
+  }
+  rpc UpdateProduct(UpdateProductRequest) returns (UpdateProductResponse) {
+    option (google.api.http) = {
+      put: "/api/product/{productId}"
+      body: "*"
+    };
+  }
+  rpc DeleteProduct(DeleteProductRequest) returns (DeleteProductResponse) {
+    option (google.api.http) = {
+      delete: "/api/product/{productId}"
+    };
+  }
+}
+
+// Mongodb responses
+message CreatedResult {
+  string insertedId = 1;
+}
+
+message UpdatedResult {
+  int64 matchedCount = 1;
+  int64 modifiedCount = 2;
+  int64 upsertedCount = 3;
+}
+
+message DeletedResult {
+  int64 deletedCount = 1;
+}
+
+// Product
+message Product {
+  string id = 1;
+  string sellerId = 2;
+	string name = 3;
+	string description = 4;
+	double price = 5;
+	string brand = 6;
+	double stars = 7;
+}
+
+message CreateProductRequest {
+  Product product = 1;
+}
+
+message CreateProductResponse {
+  CreatedResult result = 1;
+}
+
+message GetProductRequest {
+  string productId = 1;
+}
+
+message GetProductResponse {
+  Product product = 1;
+}
+
+message UpdateProductRequest {
+  string productId = 1;
+  Product product = 2;
+}
+
+message UpdateProductResponse {
+  UpdatedResult result = 1;
+}
+
+message DeleteProductRequest {
+  string productId = 1;
+}
+
+message DeleteProductResponse {
+  DeletedResult result = 1;
+}
