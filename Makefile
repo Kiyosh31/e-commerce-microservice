@@ -41,17 +41,17 @@ customer-proto:
 	mkdir ${CUSTOMER_SERVICE_PB_DIR}
 	rm -f ${CUSTOMER_SERVICE_SWAGGER_FILE}
 	protoc --proto_path=${CUSTOMER_SERVICE_PROTO_DIR} --go_out=${CUSTOMER_SERVICE_PB_DIR} --go_opt=paths=source_relative \
-    --go-grpc_out=${CUSTOMER_SERVICE_PB_DIR} --go-grpc_opt=paths=source_relative \
+		--go-grpc_out=${CUSTOMER_SERVICE_PB_DIR} --go-grpc_opt=paths=source_relative \
 		--grpc-gateway_out=${CUSTOMER_SERVICE_PB_DIR} --grpc-gateway_opt=paths=source_relative \
 		--openapiv2_out=${SWAGGER_FOLDER} \
-    ${CUSTOMER_SERVICE_PROTO_DIR}/*.proto
+		${CUSTOMER_SERVICE_PROTO_DIR}/*.proto
 
 inventory-proto:
 	rm -rf ${INVENTORY_SERVICE_PB_DIR}
 	mkdir ${INVENTORY_SERVICE_PB_DIR}
 	rm -f ${INVENTORY_SERVICE_SWAGGER_FILE}
 	protoc --proto_path=${INVENTORY_SERVICE_PROTO_DIR} --go_out=${INVENTORY_SERVICE_PB_DIR} --go_opt=paths=source_relative \
-    --go-grpc_out=${INVENTORY_SERVICE_PB_DIR} --go-grpc_opt=paths=source_relative \
+		--go-grpc_out=${INVENTORY_SERVICE_PB_DIR} --go-grpc_opt=paths=source_relative \
 		--grpc-gateway_out=${INVENTORY_SERVICE_PB_DIR} --grpc-gateway_opt=paths=source_relative \
 		--openapiv2_out=${SWAGGER_FOLDER} \
-    ${INVENTORY_SERVICE_PROTO_DIR}/*.proto
+		${INVENTORY_SERVICE_PROTO_DIR}/*.proto
