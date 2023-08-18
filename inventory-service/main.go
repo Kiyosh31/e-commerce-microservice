@@ -9,7 +9,7 @@ import (
 	"github.com/Kiyosh31/e-commerce-microservice-common/logger"
 	"github.com/Kiyosh31/e-commerce-microservice/inventory/config"
 	grpcservice "github.com/Kiyosh31/e-commerce-microservice/inventory/grpc_service"
-	"github.com/Kiyosh31/e-commerce-microservice/inventory/proto/pb"
+	"github.com/Kiyosh31/e-commerce-microservice/inventory/proto/inventoryPb"
 	"github.com/Kiyosh31/e-commerce-microservice/inventory/store"
 	"github.com/grpc-ecosystem/grpc-gateway/v2/runtime"
 	"github.com/rs/zerolog/log"
@@ -50,7 +50,7 @@ func runGrpcGateway(productStore store.ProductStore, productCommentStore store.P
 	ctx, cancel := context.WithCancel(context.Background())
 	defer cancel()
 
-	err = pb.RegisterInventoryServiceHandlerServer(ctx, grpcMux, service)
+	err = inventoryPb.RegisterInventoryServiceHandlerServer(ctx, grpcMux, service)
 	if err != nil {
 		log.Fatal().Msgf("Cannot register handler service: %v", err)
 	}
@@ -81,7 +81,7 @@ func runGrpcServer(productStore store.ProductStore, productCommentStore store.Pr
 	logger := grpc.UnaryInterceptor(logger.GrpcLoggerInterceptor)
 
 	grpcServer := grpc.NewServer(logger)
-	pb.RegisterInventoryServiceServer(grpcServer, service)
+	inventoryPb.RegisterInventoryServiceServer(grpcServer, service)
 	reflection.Register(grpcServer)
 
 	list, err := net.Listen(env.GrpcProtocol, env.GrpcPort)

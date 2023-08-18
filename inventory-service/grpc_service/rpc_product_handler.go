@@ -5,11 +5,11 @@ import (
 	"fmt"
 
 	"github.com/Kiyosh31/e-commerce-microservice-common/utils"
-	"github.com/Kiyosh31/e-commerce-microservice/inventory/proto/pb"
+	"github.com/Kiyosh31/e-commerce-microservice/inventory/proto/inventoryPb"
 	"go.mongodb.org/mongo-driver/bson/primitive"
 )
 
-func (svc *Service) CreateProduct(ctx context.Context, in *pb.CreateProductRequest) (*pb.CreateProductResponse, error) {
+func (svc *Service) CreateProduct(ctx context.Context, in *inventoryPb.CreateProductRequest) (*inventoryPb.CreateProductResponse, error) {
 	productToCreate, err := createProductTypeNoId(in.GetProduct())
 	if err != nil {
 		return nil, fmt.Errorf("Could not create product type: %v", err)
@@ -20,8 +20,8 @@ func (svc *Service) CreateProduct(ctx context.Context, in *pb.CreateProductReque
 		return nil, fmt.Errorf("Could not create product into database: %v", err)
 	}
 
-	res := &pb.CreateProductResponse{
-		Result: &pb.CreatedResult{
+	res := &inventoryPb.CreateProductResponse{
+		Result: &inventoryPb.CreatedResult{
 			InsertedId: createdUser.InsertedID.(primitive.ObjectID).Hex(),
 		},
 	}
@@ -29,7 +29,7 @@ func (svc *Service) CreateProduct(ctx context.Context, in *pb.CreateProductReque
 	return res, nil
 }
 
-func (svc *Service) GetProduct(ctx context.Context, in *pb.GetProductRequest) (*pb.GetProductResponse, error) {
+func (svc *Service) GetProduct(ctx context.Context, in *inventoryPb.GetProductRequest) (*inventoryPb.GetProductResponse, error) {
 	mongoId, err := utils.GetMongoId(in.GetProductId())
 	if err != nil {
 		return nil, fmt.Errorf("Could not parse string to mongoId: %v", err)
@@ -41,14 +41,14 @@ func (svc *Service) GetProduct(ctx context.Context, in *pb.GetProductRequest) (*
 	}
 
 	productPb := createProductPbResponse(product)
-	res := &pb.GetProductResponse{
+	res := &inventoryPb.GetProductResponse{
 		Product: &productPb,
 	}
 
 	return res, nil
 }
 
-func (svc *Service) UpdateProduct(ctx context.Context, in *pb.UpdateProductRequest) (*pb.UpdateProductResponse, error) {
+func (svc *Service) UpdateProduct(ctx context.Context, in *inventoryPb.UpdateProductRequest) (*inventoryPb.UpdateProductResponse, error) {
 	productType, err := createProductTypeWithId(in.GetProductId(), in.GetProduct())
 	if err != nil {
 		return nil, fmt.Errorf("Could not create product type: %v", err)
@@ -59,8 +59,8 @@ func (svc *Service) UpdateProduct(ctx context.Context, in *pb.UpdateProductReque
 		return nil, fmt.Errorf("Could not update product in database: %v", err)
 	}
 
-	res := &pb.UpdateProductResponse{
-		Result: &pb.UpdatedResult{
+	res := &inventoryPb.UpdateProductResponse{
+		Result: &inventoryPb.UpdatedResult{
 			MatchedCount:  productToUpdate.MatchedCount,
 			ModifiedCount: productToUpdate.ModifiedCount,
 			UpsertedCount: productToUpdate.UpsertedCount,
@@ -70,7 +70,7 @@ func (svc *Service) UpdateProduct(ctx context.Context, in *pb.UpdateProductReque
 	return res, nil
 }
 
-func (svc *Service) DeleteProduct(ctx context.Context, in *pb.DeleteProductRequest) (*pb.DeleteProductResponse, error) {
+func (svc *Service) DeleteProduct(ctx context.Context, in *inventoryPb.DeleteProductRequest) (*inventoryPb.DeleteProductResponse, error) {
 	mongoId, err := utils.GetMongoId(in.GetProductId())
 	if err != nil {
 		return nil, fmt.Errorf("Error parsing id to mongoId: %v", err)
@@ -81,8 +81,8 @@ func (svc *Service) DeleteProduct(ctx context.Context, in *pb.DeleteProductReque
 		return nil, fmt.Errorf("Could  ot delete product from database: %v", err)
 	}
 
-	res := &pb.DeleteProductResponse{
-		Result: &pb.DeletedResult{
+	res := &inventoryPb.DeleteProductResponse{
+		Result: &inventoryPb.DeletedResult{
 			DeletedCount: deletedProduct.DeletedCount,
 		},
 	}

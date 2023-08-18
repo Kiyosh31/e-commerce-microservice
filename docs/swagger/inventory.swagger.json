@@ -24,7 +24,7 @@
           "200": {
             "description": "A successful response.",
             "schema": {
-              "$ref": "#/definitions/pbCreateProductResponse"
+              "$ref": "#/definitions/inventoryPbCreateProductResponse"
             }
           },
           "default": {
@@ -40,7 +40,7 @@
             "in": "body",
             "required": true,
             "schema": {
-              "$ref": "#/definitions/pbCreateProductRequest"
+              "$ref": "#/definitions/inventoryPbCreateProductRequest"
             }
           }
         ],
@@ -57,7 +57,7 @@
           "200": {
             "description": "A successful response.",
             "schema": {
-              "$ref": "#/definitions/pbCreateProductCommentResponse"
+              "$ref": "#/definitions/inventoryPbCreateProductCommentResponse"
             }
           },
           "default": {
@@ -73,7 +73,7 @@
             "in": "body",
             "required": true,
             "schema": {
-              "$ref": "#/definitions/pbCreateProductCommentRequest"
+              "$ref": "#/definitions/inventoryPbCreateProductCommentRequest"
             }
           }
         ],
@@ -89,7 +89,7 @@
           "200": {
             "description": "A successful response.",
             "schema": {
-              "$ref": "#/definitions/pbGetAllProductCommentRespone"
+              "$ref": "#/definitions/inventoryPbGetAllProductCommentRespone"
             }
           },
           "default": {
@@ -119,7 +119,7 @@
           "200": {
             "description": "A successful response.",
             "schema": {
-              "$ref": "#/definitions/pbGetProductCommentRespone"
+              "$ref": "#/definitions/inventoryPbGetProductCommentRespone"
             }
           },
           "default": {
@@ -149,7 +149,7 @@
           "200": {
             "description": "A successful response.",
             "schema": {
-              "$ref": "#/definitions/pbGetProductResponse"
+              "$ref": "#/definitions/inventoryPbGetProductResponse"
             }
           },
           "default": {
@@ -177,7 +177,7 @@
           "200": {
             "description": "A successful response.",
             "schema": {
-              "$ref": "#/definitions/pbDeleteProductResponse"
+              "$ref": "#/definitions/inventoryPbDeleteProductResponse"
             }
           },
           "default": {
@@ -205,7 +205,7 @@
           "200": {
             "description": "A successful response.",
             "schema": {
-              "$ref": "#/definitions/pbUpdateProductResponse"
+              "$ref": "#/definitions/inventoryPbUpdateProductResponse"
             }
           },
           "default": {
@@ -230,7 +230,7 @@
               "type": "object",
               "properties": {
                 "product": {
-                  "$ref": "#/definitions/pbProduct"
+                  "$ref": "#/definitions/inventoryPbProduct"
                 }
               }
             }
@@ -243,39 +243,39 @@
     }
   },
   "definitions": {
-    "pbCreateProductCommentRequest": {
+    "inventoryPbCreateProductCommentRequest": {
       "type": "object",
       "properties": {
         "productComment": {
-          "$ref": "#/definitions/pbProductComment"
+          "$ref": "#/definitions/inventoryPbProductComment"
         }
       }
     },
-    "pbCreateProductCommentResponse": {
+    "inventoryPbCreateProductCommentResponse": {
       "type": "object",
       "properties": {
         "result": {
-          "$ref": "#/definitions/pbCreatedResult"
+          "$ref": "#/definitions/inventoryPbCreatedResult"
         }
       }
     },
-    "pbCreateProductRequest": {
+    "inventoryPbCreateProductRequest": {
       "type": "object",
       "properties": {
         "product": {
-          "$ref": "#/definitions/pbProduct"
+          "$ref": "#/definitions/inventoryPbProduct"
         }
       }
     },
-    "pbCreateProductResponse": {
+    "inventoryPbCreateProductResponse": {
       "type": "object",
       "properties": {
         "result": {
-          "$ref": "#/definitions/pbCreatedResult"
+          "$ref": "#/definitions/inventoryPbCreatedResult"
         }
       }
     },
-    "pbCreatedResult": {
+    "inventoryPbCreatedResult": {
       "type": "object",
       "properties": {
         "insertedId": {
@@ -284,15 +284,15 @@
       },
       "title": "Mongodb responses"
     },
-    "pbDeleteProductResponse": {
+    "inventoryPbDeleteProductResponse": {
       "type": "object",
       "properties": {
         "result": {
-          "$ref": "#/definitions/pbDeletedResult"
+          "$ref": "#/definitions/inventoryPbDeletedResult"
         }
       }
     },
-    "pbDeletedResult": {
+    "inventoryPbDeletedResult": {
       "type": "object",
       "properties": {
         "deletedCount": {
@@ -301,35 +301,35 @@
         }
       }
     },
-    "pbGetAllProductCommentRespone": {
+    "inventoryPbGetAllProductCommentRespone": {
       "type": "object",
       "properties": {
         "productComment": {
           "type": "array",
           "items": {
             "type": "object",
-            "$ref": "#/definitions/pbProductComment"
+            "$ref": "#/definitions/inventoryPbProductComment"
           }
         }
       }
     },
-    "pbGetProductCommentRespone": {
+    "inventoryPbGetProductCommentRespone": {
       "type": "object",
       "properties": {
         "productComment": {
-          "$ref": "#/definitions/pbProductComment"
+          "$ref": "#/definitions/inventoryPbProductComment"
         }
       }
     },
-    "pbGetProductResponse": {
+    "inventoryPbGetProductResponse": {
       "type": "object",
       "properties": {
         "product": {
-          "$ref": "#/definitions/pbProduct"
+          "$ref": "#/definitions/inventoryPbProduct"
         }
       }
     },
-    "pbProduct": {
+    "inventoryPbProduct": {
       "type": "object",
       "properties": {
         "id": {
@@ -358,7 +358,7 @@
       },
       "title": "Product"
     },
-    "pbProductComment": {
+    "inventoryPbProductComment": {
       "type": "object",
       "properties": {
         "id": {
@@ -380,15 +380,15 @@
       },
       "title": "Product comment"
     },
-    "pbUpdateProductResponse": {
+    "inventoryPbUpdateProductResponse": {
       "type": "object",
       "properties": {
         "result": {
-          "$ref": "#/definitions/pbUpdatedResult"
+          "$ref": "#/definitions/inventoryPbUpdatedResult"
         }
       }
     },
-    "pbUpdatedResult": {
+    "inventoryPbUpdatedResult": {
       "type": "object",
       "properties": {
         "matchedCount": {

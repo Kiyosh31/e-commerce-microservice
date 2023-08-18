@@ -4,7 +4,7 @@
 // - protoc             v3.12.4
 // source: inventory.proto
 
-package pb
+package inventoryPb
 
 import (
 	context "context"
@@ -19,13 +19,13 @@ import (
 const _ = grpc.SupportPackageIsVersion7
 
 const (
-	InventoryService_CreateProduct_FullMethodName        = "/pb.InventoryService/CreateProduct"
-	InventoryService_GetProduct_FullMethodName           = "/pb.InventoryService/GetProduct"
-	InventoryService_UpdateProduct_FullMethodName        = "/pb.InventoryService/UpdateProduct"
-	InventoryService_DeleteProduct_FullMethodName        = "/pb.InventoryService/DeleteProduct"
-	InventoryService_CreateProductComment_FullMethodName = "/pb.InventoryService/CreateProductComment"
-	InventoryService_GetProductComment_FullMethodName    = "/pb.InventoryService/GetProductComment"
-	InventoryService_GetAllProductComment_FullMethodName = "/pb.InventoryService/GetAllProductComment"
+	InventoryService_CreateProduct_FullMethodName        = "/inventoryPb.InventoryService/CreateProduct"
+	InventoryService_GetProduct_FullMethodName           = "/inventoryPb.InventoryService/GetProduct"
+	InventoryService_UpdateProduct_FullMethodName        = "/inventoryPb.InventoryService/UpdateProduct"
+	InventoryService_DeleteProduct_FullMethodName        = "/inventoryPb.InventoryService/DeleteProduct"
+	InventoryService_CreateProductComment_FullMethodName = "/inventoryPb.InventoryService/CreateProductComment"
+	InventoryService_GetProductComment_FullMethodName    = "/inventoryPb.InventoryService/GetProductComment"
+	InventoryService_GetAllProductComment_FullMethodName = "/inventoryPb.InventoryService/GetAllProductComment"
 )
 
 // InventoryServiceClient is the client API for InventoryService service.
@@ -298,7 +298,7 @@ func _InventoryService_GetAllProductComment_Handler(srv interface{}, ctx context
 // It's only intended for direct use with grpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
 var InventoryService_ServiceDesc = grpc.ServiceDesc{
-	ServiceName: "pb.InventoryService",
+	ServiceName: "inventoryPb.InventoryService",
 	HandlerType: (*InventoryServiceServer)(nil),
 	Methods: []grpc.MethodDesc{
 		{

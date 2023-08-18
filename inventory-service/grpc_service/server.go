@@ -3,13 +3,13 @@ package grpcservice
 import (
 	"github.com/Kiyosh31/e-commerce-microservice-common/utils"
 	"github.com/Kiyosh31/e-commerce-microservice/inventory/config"
-	"github.com/Kiyosh31/e-commerce-microservice/inventory/proto/pb"
+	"github.com/Kiyosh31/e-commerce-microservice/inventory/proto/inventoryPb"
 	"github.com/Kiyosh31/e-commerce-microservice/inventory/store"
 	"github.com/Kiyosh31/e-commerce-microservice/inventory/types"
 )
 
 type Service struct {
-	pb.UnimplementedInventoryServiceServer
+	inventoryPb.UnimplementedInventoryServiceServer
 	productStore        store.ProductStore
 	productCommentStore store.ProductCommentStore
 	env                 config.ConfigStruct
@@ -25,7 +25,7 @@ func NewService(productStore store.ProductStore, productCommentStore store.Produ
 	return service, nil
 }
 
-func createProductTypeNoId(in *pb.Product) (types.Product, error) {
+func createProductTypeNoId(in *inventoryPb.Product) (types.Product, error) {
 	sellerMongoId, err := utils.GetMongoId(in.GetSellerId())
 	if err != nil {
 		return types.Product{}, err
@@ -43,7 +43,7 @@ func createProductTypeNoId(in *pb.Product) (types.Product, error) {
 	return product, nil
 }
 
-func createProductTypeWithId(id string, in *pb.Product) (types.Product, error) {
+func createProductTypeWithId(id string, in *inventoryPb.Product) (types.Product, error) {
 	productMongoId, err := utils.GetMongoId(id)
 	if err != nil {
 		return types.Product{}, err
@@ -67,8 +67,8 @@ func createProductTypeWithId(id string, in *pb.Product) (types.Product, error) {
 	return product, nil
 }
 
-func createProductPbResponse(in types.Product) pb.Product {
-	return pb.Product{
+func createProductPbResponse(in types.Product) inventoryPb.Product {
+	return inventoryPb.Product{
 		Id:          in.ID.Hex(),
 		SellerId:    in.SellerId.Hex(),
 		Name:        in.Name,
@@ -79,7 +79,7 @@ func createProductPbResponse(in types.Product) pb.Product {
 	}
 }
 
-func createProductCommentTypeNoId(in *pb.ProductComment) (types.ProductComment, error) {
+func createProductCommentTypeNoId(in *inventoryPb.ProductComment) (types.ProductComment, error) {
 	productMongoId, err := utils.GetMongoId(in.GetProductId())
 	if err != nil {
 		return types.ProductComment{}, err
@@ -95,8 +95,8 @@ func createProductCommentTypeNoId(in *pb.ProductComment) (types.ProductComment, 
 	return res, nil
 }
 
-func createProductCommentPbResponse(in types.ProductComment) pb.ProductComment {
-	return pb.ProductComment{
+func createProductCommentPbResponse(in types.ProductComment) inventoryPb.ProductComment {
+	return inventoryPb.ProductComment{
 		Id:         in.ID.Hex(),
 		ProductId:  in.ProductId.Hex(),
 		UserName:   in.UserName,
@@ -105,8 +105,8 @@ func createProductCommentPbResponse(in types.ProductComment) pb.ProductComment {
 	}
 }
 
-func createAllProductCommentPbResponse(in []types.ProductComment) []*pb.ProductComment {
-	var productComments []*pb.ProductComment
+func createAllProductCommentPbResponse(in []types.ProductComment) []*inventoryPb.ProductComment {
+	var productComments []*inventoryPb.ProductComment
 
 	for _, prodComm := range in {
 		comm := createProductCommentPbResponse(prodComm)

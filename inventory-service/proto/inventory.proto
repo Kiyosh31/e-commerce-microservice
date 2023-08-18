@@ -1,8 +1,8 @@
 syntax = "proto3";
 
-package pb;
+package inventoryPb;
 
-option go_package="github.com/Kiyosh31/e-commerce-microservice/inventory/proto/pb";
+option go_package="github.com/Kiyosh31/e-commerce-microservice/inventory/proto/inventoryPb";
 
 import "google/api/annotations.proto";
 

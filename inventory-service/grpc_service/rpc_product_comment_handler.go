@@ -5,11 +5,11 @@ import (
 	"fmt"
 
 	"github.com/Kiyosh31/e-commerce-microservice-common/utils"
-	"github.com/Kiyosh31/e-commerce-microservice/inventory/proto/pb"
+	"github.com/Kiyosh31/e-commerce-microservice/inventory/proto/inventoryPb"
 	"go.mongodb.org/mongo-driver/bson/primitive"
 )
 
-func (svc *Service) CreateProductComment(ctx context.Context, in *pb.CreateProductCommentRequest) (*pb.CreateProductCommentResponse, error) {
+func (svc *Service) CreateProductComment(ctx context.Context, in *inventoryPb.CreateProductCommentRequest) (*inventoryPb.CreateProductCommentResponse, error) {
 	productCommentToCreate, err := createProductCommentTypeNoId(in.GetProductComment())
 	if err != nil {
 		return nil, fmt.Errorf("Error creating product comment type: %v", err)
@@ -20,8 +20,8 @@ func (svc *Service) CreateProductComment(ctx context.Context, in *pb.CreateProdu
 		return nil, fmt.Errorf("Erorr creating product comment in database: %v", err)
 	}
 
-	res := &pb.CreateProductCommentResponse{
-		Result: &pb.CreatedResult{
+	res := &inventoryPb.CreateProductCommentResponse{
+		Result: &inventoryPb.CreatedResult{
 			InsertedId: createdProductComment.InsertedID.(primitive.ObjectID).Hex(),
 		},
 	}
@@ -29,7 +29,7 @@ func (svc *Service) CreateProductComment(ctx context.Context, in *pb.CreateProdu
 	return res, nil
 }
 
-func (svc *Service) GetProductComment(ctx context.Context, in *pb.GetProductCommentRequest) (*pb.GetProductCommentRespone, error) {
+func (svc *Service) GetProductComment(ctx context.Context, in *inventoryPb.GetProductCommentRequest) (*inventoryPb.GetProductCommentRespone, error) {
 	mongoId, err := utils.GetMongoId(in.GetCommentId())
 	if err != nil {
 		return nil, fmt.Errorf("Could not parse string to mongoId: %v", err)
@@ -41,14 +41,14 @@ func (svc *Service) GetProductComment(ctx context.Context, in *pb.GetProductComm
 	}
 
 	productCommentPb := createProductCommentPbResponse(productComment)
-	res := &pb.GetProductCommentRespone{
+	res := &inventoryPb.GetProductCommentRespone{
 		ProductComment: &productCommentPb,
 	}
 
 	return res, nil
 }
 
-func (svc *Service) GetAllProductComment(ctx context.Context, in *pb.GetAllProductCommentRequest) (*pb.GetAllProductCommentRespone, error) {
+func (svc *Service) GetAllProductComment(ctx context.Context, in *inventoryPb.GetAllProductCommentRequest) (*inventoryPb.GetAllProductCommentRespone, error) {
 	mongoId, err := utils.GetMongoId(in.GetProductId())
 	if err != nil {
 		return nil, fmt.Errorf("Could not parse string to mongoId: %v", err)
@@ -60,7 +60,7 @@ func (svc *Service) GetAllProductComment(ctx context.Context, in *pb.GetAllProdu
 	}
 
 	commentsArray := createAllProductCommentPbResponse(productComments)
-	res := &pb.GetAllProductCommentRespone{
+	res := &inventoryPb.GetAllProductCommentRespone{
 		ProductComment: commentsArray,
 	}
 

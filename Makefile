@@ -1,8 +1,10 @@
 dev:
 	skaffold dev
 
-start-minikube:
+minikube:
 	minikube start
+
+tunnel:
 	minikube tunnel
 
 clean-docker:
@@ -33,7 +35,7 @@ CUSTOMER_SERVICE_PB_DIR = customer-service/proto/pb
 CUSTOMER_SERVICE_SWAGGER_FILE = docs/swagger/customer.swagger.json
 
 INVENTORY_SERVICE_PROTO_DIR = inventory-service/proto
-INVENTORY_SERVICE_PB_DIR = inventory-service/proto/pb
+INVENTORY_SERVICE_PB_DIR = inventory-service/proto/inventoryPb
 INVENTORY_SERVICE_SWAGGER_FILE = docs/swagger/inventory.swagger.json
 
 customer-proto:

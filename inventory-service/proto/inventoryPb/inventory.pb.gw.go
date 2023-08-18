@@ -2,11 +2,11 @@
 // source: inventory.proto
 
 /*
-Package pb is a reverse proxy.
+Package inventoryPb is a reverse proxy.
 
 It translates gRPC into RESTful JSON APIs.
 */
-package pb
+package inventoryPb
 
 import (
 	"context"
@@ -389,7 +389,7 @@ func RegisterInventoryServiceHandlerServer(ctx context.Context, mux *runtime.Ser
 		inboundMarshaler, outboundMarshaler := runtime.MarshalerForRequest(mux, req)
 		var err error
 		var annotatedContext context.Context
-		annotatedContext, err = runtime.AnnotateIncomingContext(ctx, mux, req, "/pb.InventoryService/CreateProduct", runtime.WithHTTPPathPattern("/api/product"))
+		annotatedContext, err = runtime.AnnotateIncomingContext(ctx, mux, req, "/inventoryPb.InventoryService/CreateProduct", runtime.WithHTTPPathPattern("/api/product"))
 		if err != nil {
 			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
 			return
@@ -414,7 +414,7 @@ func RegisterInventoryServiceHandlerServer(ctx context.Context, mux *runtime.Ser
 		inboundMarshaler, outboundMarshaler := runtime.MarshalerForRequest(mux, req)
 		var err error
 		var annotatedContext context.Context
-		annotatedContext, err = runtime.AnnotateIncomingContext(ctx, mux, req, "/pb.InventoryService/GetProduct", runtime.WithHTTPPathPattern("/api/product/{productId}"))
+		annotatedContext, err = runtime.AnnotateIncomingContext(ctx, mux, req, "/inventoryPb.InventoryService/GetProduct", runtime.WithHTTPPathPattern("/api/product/{productId}"))
 		if err != nil {
 			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
 			return
@@ -439,7 +439,7 @@ func RegisterInventoryServiceHandlerServer(ctx context.Context, mux *runtime.Ser
 		inboundMarshaler, outboundMarshaler := runtime.MarshalerForRequest(mux, req)
 		var err error
 		var annotatedContext context.Context
-		annotatedContext, err = runtime.AnnotateIncomingContext(ctx, mux, req, "/pb.InventoryService/UpdateProduct", runtime.WithHTTPPathPattern("/api/product/{productId}"))
+		annotatedContext, err = runtime.AnnotateIncomingContext(ctx, mux, req, "/inventoryPb.InventoryService/UpdateProduct", runtime.WithHTTPPathPattern("/api/product/{productId}"))
 		if err != nil {
 			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
 			return
@@ -464,7 +464,7 @@ func RegisterInventoryServiceHandlerServer(ctx context.Context, mux *runtime.Ser
 		inboundMarshaler, outboundMarshaler := runtime.MarshalerForRequest(mux, req)
 		var err error
 		var annotatedContext context.Context
-		annotatedContext, err = runtime.AnnotateIncomingContext(ctx, mux, req, "/pb.InventoryService/DeleteProduct", runtime.WithHTTPPathPattern("/api/product/{productId}"))
+		annotatedContext, err = runtime.AnnotateIncomingContext(ctx, mux, req, "/inventoryPb.InventoryService/DeleteProduct", runtime.WithHTTPPathPattern("/api/product/{productId}"))
 		if err != nil {
 			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
 			return
@@ -489,7 +489,7 @@ func RegisterInventoryServiceHandlerServer(ctx context.Context, mux *runtime.Ser
 		inboundMarshaler, outboundMarshaler := runtime.MarshalerForRequest(mux, req)
 		var err error
 		var annotatedContext context.Context
-		annotatedContext, err = runtime.AnnotateIncomingContext(ctx, mux, req, "/pb.InventoryService/CreateProductComment", runtime.WithHTTPPathPattern("/api/product/comment"))
+		annotatedContext, err = runtime.AnnotateIncomingContext(ctx, mux, req, "/inventoryPb.InventoryService/CreateProductComment", runtime.WithHTTPPathPattern("/api/product/comment"))
 		if err != nil {
 			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
 			return
@@ -514,7 +514,7 @@ func RegisterInventoryServiceHandlerServer(ctx context.Context, mux *runtime.Ser
 		inboundMarshaler, outboundMarshaler := runtime.MarshalerForRequest(mux, req)
 		var err error
 		var annotatedContext context.Context
-		annotatedContext, err = runtime.AnnotateIncomingContext(ctx, mux, req, "/pb.InventoryService/GetProductComment", runtime.WithHTTPPathPattern("/api/product/comment/{commentId}"))
+		annotatedContext, err = runtime.AnnotateIncomingContext(ctx, mux, req, "/inventoryPb.InventoryService/GetProductComment", runtime.WithHTTPPathPattern("/api/product/comment/{commentId}"))
 		if err != nil {
 			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
 			return
@@ -539,7 +539,7 @@ func RegisterInventoryServiceHandlerServer(ctx context.Context, mux *runtime.Ser
 		inboundMarshaler, outboundMarshaler := runtime.MarshalerForRequest(mux, req)
 		var err error
 		var annotatedContext context.Context
-		annotatedContext, err = runtime.AnnotateIncomingContext(ctx, mux, req, "/pb.InventoryService/GetAllProductComment", runtime.WithHTTPPathPattern("/api/product/comment/all/{productId}"))
+		annotatedContext, err = runtime.AnnotateIncomingContext(ctx, mux, req, "/inventoryPb.InventoryService/GetAllProductComment", runtime.WithHTTPPathPattern("/api/product/comment/all/{productId}"))
 		if err != nil {
 			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
 			return
@@ -603,7 +603,7 @@ func RegisterInventoryServiceHandlerClient(ctx context.Context, mux *runtime.Ser
 		inboundMarshaler, outboundMarshaler := runtime.MarshalerForRequest(mux, req)
 		var err error
 		var annotatedContext context.Context
-		annotatedContext, err = runtime.AnnotateContext(ctx, mux, req, "/pb.InventoryService/CreateProduct", runtime.WithHTTPPathPattern("/api/product"))
+		annotatedContext, err = runtime.AnnotateContext(ctx, mux, req, "/inventoryPb.InventoryService/CreateProduct", runtime.WithHTTPPathPattern("/api/product"))
 		if err != nil {
 			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
 			return
@@ -625,7 +625,7 @@ func RegisterInventoryServiceHandlerClient(ctx context.Context, mux *runtime.Ser
 		inboundMarshaler, outboundMarshaler := runtime.MarshalerForRequest(mux, req)
 		var err error
 		var annotatedContext context.Context
-		annotatedContext, err = runtime.AnnotateContext(ctx, mux, req, "/pb.InventoryService/GetProduct", runtime.WithHTTPPathPattern("/api/product/{productId}"))
+		annotatedContext, err = runtime.AnnotateContext(ctx, mux, req, "/inventoryPb.InventoryService/GetProduct", runtime.WithHTTPPathPattern("/api/product/{productId}"))
 		if err != nil {
 			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
 			return
@@ -647,7 +647,7 @@ func RegisterInventoryServiceHandlerClient(ctx context.Context, mux *runtime.Ser
 		inboundMarshaler, outboundMarshaler := runtime.MarshalerForRequest(mux, req)
 		var err error
 		var annotatedContext context.Context
-		annotatedContext, err = runtime.AnnotateContext(ctx, mux, req, "/pb.InventoryService/UpdateProduct", runtime.WithHTTPPathPattern("/api/product/{productId}"))
+		annotatedContext, err = runtime.AnnotateContext(ctx, mux, req, "/inventoryPb.InventoryService/UpdateProduct", runtime.WithHTTPPathPattern("/api/product/{productId}"))
 		if err != nil {
 			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
 			return
@@ -669,7 +669,7 @@ func RegisterInventoryServiceHandlerClient(ctx context.Context, mux *runtime.Ser
 		inboundMarshaler, outboundMarshaler := runtime.MarshalerForRequest(mux, req)
 		var err error
 		var annotatedContext context.Context
-		annotatedContext, err = runtime.AnnotateContext(ctx, mux, req, "/pb.InventoryService/DeleteProduct", runtime.WithHTTPPathPattern("/api/product/{productId}"))
+		annotatedContext, err = runtime.AnnotateContext(ctx, mux, req, "/inventoryPb.InventoryService/DeleteProduct", runtime.WithHTTPPathPattern("/api/product/{productId}"))
 		if err != nil {
 			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
 			return
@@ -691,7 +691,7 @@ func RegisterInventoryServiceHandlerClient(ctx context.Context, mux *runtime.Ser
 		inboundMarshaler, outboundMarshaler := runtime.MarshalerForRequest(mux, req)
 		var err error
 		var annotatedContext context.Context
-		annotatedContext, err = runtime.AnnotateContext(ctx, mux, req, "/pb.InventoryService/CreateProductComment", runtime.WithHTTPPathPattern("/api/product/comment"))
+		annotatedContext, err = runtime.AnnotateContext(ctx, mux, req, "/inventoryPb.InventoryService/CreateProductComment", runtime.WithHTTPPathPattern("/api/product/comment"))
 		if err != nil {
 			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
 			return
@@ -713,7 +713,7 @@ func RegisterInventoryServiceHandlerClient(ctx context.Context, mux *runtime.Ser
 		inboundMarshaler, outboundMarshaler := runtime.MarshalerForRequest(mux, req)
 		var err error
 		var annotatedContext context.Context
-		annotatedContext, err = runtime.AnnotateContext(ctx, mux, req, "/pb.InventoryService/GetProductComment", runtime.WithHTTPPathPattern("/api/product/comment/{commentId}"))
+		annotatedContext, err = runtime.AnnotateContext(ctx, mux, req, "/inventoryPb.InventoryService/GetProductComment", runtime.WithHTTPPathPattern("/api/product/comment/{commentId}"))
 		if err != nil {
 			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
 			return
@@ -735,7 +735,7 @@ func RegisterInventoryServiceHandlerClient(ctx context.Context, mux *runtime.Ser
 		inboundMarshaler, outboundMarshaler := runtime.MarshalerForRequest(mux, req)
 		var err error
 		var annotatedContext context.Context
-		annotatedContext, err = runtime.AnnotateContext(ctx, mux, req, "/pb.InventoryService/GetAllProductComment", runtime.WithHTTPPathPattern("/api/product/comment/all/{productId}"))
+		annotatedContext, err = runtime.AnnotateContext(ctx, mux, req, "/inventoryPb.InventoryService/GetAllProductComment", runtime.WithHTTPPathPattern("/api/product/comment/all/{productId}"))
 		if err != nil {
 			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
 			return
