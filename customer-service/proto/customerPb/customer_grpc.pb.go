@@ -4,7 +4,7 @@
 // - protoc             v3.12.4
 // source: customer.proto
 
-package pb
+package customerPb
 
 import (
 	context "context"
@@ -19,26 +19,26 @@ import (
 const _ = grpc.SupportPackageIsVersion7
 
 const (
-	CustomerService_CreateUser_FullMethodName    = "/pb.CustomerService/CreateUser"
-	CustomerService_SigninUser_FullMethodName    = "/pb.CustomerService/SigninUser"
-	CustomerService_GetUser_FullMethodName       = "/pb.CustomerService/GetUser"
-	CustomerService_UpdateUser_FullMethodName    = "/pb.CustomerService/UpdateUser"
-	CustomerService_DeleteUser_FullMethodName    = "/pb.CustomerService/DeleteUser"
-	CustomerService_CreateSeller_FullMethodName  = "/pb.CustomerService/CreateSeller"
-	CustomerService_SigninSeller_FullMethodName  = "/pb.CustomerService/SigninSeller"
-	CustomerService_GetSeller_FullMethodName     = "/pb.CustomerService/GetSeller"
-	CustomerService_UpdateSeller_FullMethodName  = "/pb.CustomerService/UpdateSeller"
-	CustomerService_DeleteSeller_FullMethodName  = "/pb.CustomerService/DeleteSeller"
-	CustomerService_CreateAddress_FullMethodName = "/pb.CustomerService/CreateAddress"
-	CustomerService_GetAddress_FullMethodName    = "/pb.CustomerService/GetAddress"
-	CustomerService_GetAllAddress_FullMethodName = "/pb.CustomerService/GetAllAddress"
-	CustomerService_UpdateAddress_FullMethodName = "/pb.CustomerService/UpdateAddress"
-	CustomerService_DeleteAddress_FullMethodName = "/pb.CustomerService/DeleteAddress"
-	CustomerService_CreateCard_FullMethodName    = "/pb.CustomerService/CreateCard"
-	CustomerService_GetCard_FullMethodName       = "/pb.CustomerService/GetCard"
-	CustomerService_GetAllCard_FullMethodName    = "/pb.CustomerService/GetAllCard"
-	CustomerService_UpdateCard_FullMethodName    = "/pb.CustomerService/UpdateCard"
-	CustomerService_DeleteCard_FullMethodName    = "/pb.CustomerService/DeleteCard"
+	CustomerService_CreateUser_FullMethodName    = "/customerPb.CustomerService/CreateUser"
+	CustomerService_SigninUser_FullMethodName    = "/customerPb.CustomerService/SigninUser"
+	CustomerService_GetUser_FullMethodName       = "/customerPb.CustomerService/GetUser"
+	CustomerService_UpdateUser_FullMethodName    = "/customerPb.CustomerService/UpdateUser"
+	CustomerService_DeleteUser_FullMethodName    = "/customerPb.CustomerService/DeleteUser"
+	CustomerService_CreateSeller_FullMethodName  = "/customerPb.CustomerService/CreateSeller"
+	CustomerService_SigninSeller_FullMethodName  = "/customerPb.CustomerService/SigninSeller"
+	CustomerService_GetSeller_FullMethodName     = "/customerPb.CustomerService/GetSeller"
+	CustomerService_UpdateSeller_FullMethodName  = "/customerPb.CustomerService/UpdateSeller"
+	CustomerService_DeleteSeller_FullMethodName  = "/customerPb.CustomerService/DeleteSeller"
+	CustomerService_CreateAddress_FullMethodName = "/customerPb.CustomerService/CreateAddress"
+	CustomerService_GetAddress_FullMethodName    = "/customerPb.CustomerService/GetAddress"
+	CustomerService_GetAllAddress_FullMethodName = "/customerPb.CustomerService/GetAllAddress"
+	CustomerService_UpdateAddress_FullMethodName = "/customerPb.CustomerService/UpdateAddress"
+	CustomerService_DeleteAddress_FullMethodName = "/customerPb.CustomerService/DeleteAddress"
+	CustomerService_CreateCard_FullMethodName    = "/customerPb.CustomerService/CreateCard"
+	CustomerService_GetCard_FullMethodName       = "/customerPb.CustomerService/GetCard"
+	CustomerService_GetAllCard_FullMethodName    = "/customerPb.CustomerService/GetAllCard"
+	CustomerService_UpdateCard_FullMethodName    = "/customerPb.CustomerService/UpdateCard"
+	CustomerService_DeleteCard_FullMethodName    = "/customerPb.CustomerService/DeleteCard"
 )
 
 // CustomerServiceClient is the client API for CustomerService service.
@@ -731,7 +731,7 @@ func _CustomerService_DeleteCard_Handler(srv interface{}, ctx context.Context, d
 // It's only intended for direct use with grpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
 var CustomerService_ServiceDesc = grpc.ServiceDesc{
-	ServiceName: "pb.CustomerService",
+	ServiceName: "customerPb.CustomerService",
 	HandlerType: (*CustomerServiceServer)(nil),
 	Methods: []grpc.MethodDesc{
 		{

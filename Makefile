@@ -31,7 +31,7 @@ dev-tools:
 SWAGGER_FOLDER = docs/swagger
 
 CUSTOMER_SERVICE_PROTO_DIR = customer-service/proto
-CUSTOMER_SERVICE_PB_DIR = customer-service/proto/pb
+CUSTOMER_SERVICE_PB_DIR = customer-service/proto/customerPb
 CUSTOMER_SERVICE_SWAGGER_FILE = docs/swagger/customer.swagger.json
 
 INVENTORY_SERVICE_PROTO_DIR = inventory-service/proto

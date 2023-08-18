@@ -6,11 +6,11 @@ import (
 
 	"github.com/Kiyosh31/e-commerce-microservice-common/middlewares"
 	"github.com/Kiyosh31/e-commerce-microservice-common/utils"
-	"github.com/Kiyosh31/e-commerce-microservice/customer/proto/pb"
+	"github.com/Kiyosh31/e-commerce-microservice/customer/proto/customerPb"
 	"go.mongodb.org/mongo-driver/bson/primitive"
 )
 
-func (svc *Service) CreateCard(ctx context.Context, in *pb.CreateCardRequest) (*pb.CreateCardResponse, error) {
+func (svc *Service) CreateCard(ctx context.Context, in *customerPb.CreateCardRequest) (*customerPb.CreateCardResponse, error) {
 	userId, err := middlewares.AuthGrpcMiddleware(ctx, svc.env.TokenSecret)
 	if err != nil {
 		return nil, err
@@ -31,8 +31,8 @@ func (svc *Service) CreateCard(ctx context.Context, in *pb.CreateCardRequest) (*
 		return nil, fmt.Errorf("Could not create card in database: %v", err)
 	}
 
-	res := &pb.CreateCardResponse{
-		Result: &pb.CreatedResult{
+	res := &customerPb.CreateCardResponse{
+		Result: &customerPb.CreatedResult{
 			InsertedId: card.InsertedID.(primitive.ObjectID).Hex(),
 		},
 	}
@@ -40,7 +40,7 @@ func (svc *Service) CreateCard(ctx context.Context, in *pb.CreateCardRequest) (*
 	return res, nil
 }
 
-func (svc *Service) GetCard(ctx context.Context, in *pb.GetCardRequest) (*pb.GetCardResponse, error) {
+func (svc *Service) GetCard(ctx context.Context, in *customerPb.GetCardRequest) (*customerPb.GetCardResponse, error) {
 	userId, err := middlewares.AuthGrpcMiddleware(ctx, svc.env.TokenSecret)
 	if err != nil {
 		return nil, err
@@ -62,14 +62,14 @@ func (svc *Service) GetCard(ctx context.Context, in *pb.GetCardRequest) (*pb.Get
 	}
 
 	cardPb := createCardPbResponse(card)
-	res := &pb.GetCardResponse{
+	res := &customerPb.GetCardResponse{
 		Card: &cardPb,
 	}
 
 	return res, nil
 }
 
-func (svc *Service) GetAllCard(ctx context.Context, in *pb.GetAllCardRequest) (*pb.GetAllCardResponse, error) {
+func (svc *Service) GetAllCard(ctx context.Context, in *customerPb.GetAllCardRequest) (*customerPb.GetAllCardResponse, error) {
 	err := middlewares.ValidateTokenMatchesUser(ctx, in.GetUserId(), svc.env.TokenSecret)
 	if err != nil {
 		return nil, err
@@ -86,14 +86,14 @@ func (svc *Service) GetAllCard(ctx context.Context, in *pb.GetAllCardRequest) (*
 	}
 
 	cardsArray := createAllCardsPbresponse(cards)
-	res := &pb.GetAllCardResponse{
+	res := &customerPb.GetAllCardResponse{
 		Card: cardsArray,
 	}
 
 	return res, nil
 }
 
-func (svc *Service) UpdateCard(ctx context.Context, in *pb.UpdateCardRequest) (*pb.UpdateCardResponse, error) {
+func (svc *Service) UpdateCard(ctx context.Context, in *customerPb.UpdateCardRequest) (*customerPb.UpdateCardResponse, error) {
 	userId, err := middlewares.AuthGrpcMiddleware(ctx, svc.env.TokenSecret)
 	if err != nil {
 		return nil, err
@@ -114,8 +114,8 @@ func (svc *Service) UpdateCard(ctx context.Context, in *pb.UpdateCardRequest) (*
 		return nil, fmt.Errorf("Error updating card: %v", err)
 	}
 
-	res := &pb.UpdateCardResponse{
-		Result: &pb.UpdatedResult{
+	res := &customerPb.UpdateCardResponse{
+		Result: &customerPb.UpdatedResult{
 			MatchedCount:  updatedCard.MatchedCount,
 			ModifiedCount: updatedCard.ModifiedCount,
 			UpsertedCount: updatedCard.UpsertedCount,
@@ -125,7 +125,7 @@ func (svc *Service) UpdateCard(ctx context.Context, in *pb.UpdateCardRequest) (*
 	return res, nil
 }
 
-func (svc *Service) DeleteCard(ctx context.Context, in *pb.DeleteCardRequest) (*pb.DeleteCardResponse, error) {
+func (svc *Service) DeleteCard(ctx context.Context, in *customerPb.DeleteCardRequest) (*customerPb.DeleteCardResponse, error) {
 	userId, err := middlewares.AuthGrpcMiddleware(ctx, svc.env.TokenSecret)
 	if err != nil {
 		return nil, err
@@ -146,8 +146,8 @@ func (svc *Service) DeleteCard(ctx context.Context, in *pb.DeleteCardRequest) (*
 		return nil, fmt.Errorf("Error deleting card from database: %v", err)
 	}
 
-	res := &pb.DeleteCardResponse{
-		Result: &pb.DeletedResult{
+	res := &customerPb.DeleteCardResponse{
+		Result: &customerPb.DeletedResult{
 			DeletedCount: deletedCard.DeletedCount,
 		},
 	}

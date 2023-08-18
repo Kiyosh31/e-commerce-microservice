@@ -4,7 +4,7 @@ import (
 	"regexp"
 
 	grpcvalidators "github.com/Kiyosh31/e-commerce-microservice-common/grpc_validators"
-	"github.com/Kiyosh31/e-commerce-microservice/customer/proto/pb"
+	"github.com/Kiyosh31/e-commerce-microservice/customer/proto/customerPb"
 	"google.golang.org/genproto/googleapis/rpc/errdetails"
 )
 
@@ -13,7 +13,7 @@ var (
 	isValidDate = regexp.MustCompile(`^\d{4}\-(0?[1-9]|1[012])\-(0?[1-9]|[12][0-9]|3[01])$`).MatchString
 )
 
-func validateCreateUserRequest(in *pb.User) (violations []*errdetails.BadRequest_FieldViolation) {
+func validateCreateUserRequest(in *customerPb.User) (violations []*errdetails.BadRequest_FieldViolation) {
 	if err := grpcvalidators.ValidateName(in.GetName()); err != nil {
 
 		violations = append(violations, grpcvalidators.FieldValidation("name", err))
@@ -38,7 +38,7 @@ func validateCreateUserRequest(in *pb.User) (violations []*errdetails.BadRequest
 	return violations
 }
 
-func validateSigninUser(in *pb.SigninUserRequest) (violations []*errdetails.BadRequest_FieldViolation) {
+func validateSigninUser(in *customerPb.SigninUserRequest) (violations []*errdetails.BadRequest_FieldViolation) {
 	if err := grpcvalidators.ValidateEmail(in.GetEmail()); err != nil {
 		violations = append(violations, grpcvalidators.FieldValidation("email", err))
 	}
@@ -50,7 +50,7 @@ func validateSigninUser(in *pb.SigninUserRequest) (violations []*errdetails.BadR
 	return violations
 }
 
-func validateGetUser(in *pb.GetUserRequest) (violations []*errdetails.BadRequest_FieldViolation) {
+func validateGetUser(in *customerPb.GetUserRequest) (violations []*errdetails.BadRequest_FieldViolation) {
 	if err := grpcvalidators.ValidateMongoId(in.GetUserId()); err != nil {
 		violations = append(violations, grpcvalidators.FieldValidation("password", err))
 	}
@@ -58,7 +58,7 @@ func validateGetUser(in *pb.GetUserRequest) (violations []*errdetails.BadRequest
 	return violations
 }
 
-func validateUpdateUserRequest(in *pb.User) (violations []*errdetails.BadRequest_FieldViolation) {
+func validateUpdateUserRequest(in *customerPb.User) (violations []*errdetails.BadRequest_FieldViolation) {
 	if err := grpcvalidators.ValidateName(in.GetName()); err != nil {
 		violations = append(violations, grpcvalidators.FieldValidation("name", err))
 	}
@@ -82,7 +82,7 @@ func validateUpdateUserRequest(in *pb.User) (violations []*errdetails.BadRequest
 	return violations
 }
 
-func validateDeleteUserRequest(in *pb.DeleteUserRequest) (violations []*errdetails.BadRequest_FieldViolation) {
+func validateDeleteUserRequest(in *customerPb.DeleteUserRequest) (violations []*errdetails.BadRequest_FieldViolation) {
 	if err := grpcvalidators.ValidateMongoId(in.GetUserId()); err != nil {
 		violations = append(violations, grpcvalidators.FieldValidation("password", err))
 	}

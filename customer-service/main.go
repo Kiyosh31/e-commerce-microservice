@@ -12,7 +12,7 @@ import (
 	"github.com/Kiyosh31/e-commerce-microservice/customer/config"
 	grpcservice "github.com/Kiyosh31/e-commerce-microservice/customer/grpc_service"
 	httpservice "github.com/Kiyosh31/e-commerce-microservice/customer/http_service"
-	"github.com/Kiyosh31/e-commerce-microservice/customer/proto/pb"
+	"github.com/Kiyosh31/e-commerce-microservice/customer/proto/customerPb"
 	"github.com/Kiyosh31/e-commerce-microservice/customer/store"
 	"github.com/grpc-ecosystem/grpc-gateway/v2/runtime"
 	"google.golang.org/grpc"
@@ -55,7 +55,7 @@ func runGatewayServer(userStore store.UserStore, addressStore store.AddressStore
 	ctx, cancel := context.WithCancel(context.Background())
 	defer cancel()
 
-	err = pb.RegisterCustomerServiceHandlerServer(ctx, grpcMux, service)
+	err = customerPb.RegisterCustomerServiceHandlerServer(ctx, grpcMux, service)
 	if err != nil {
 		log.Fatal().Msgf("Cannot register handler service: %v", err)
 	}
@@ -88,7 +88,7 @@ func runGrpcServer(userStore store.UserStore, addressStore store.AddressStore, c
 
 	// Server
 	grpcServer := grpc.NewServer(logger)
-	pb.RegisterCustomerServiceServer(grpcServer, service)
+	customerPb.RegisterCustomerServiceServer(grpcServer, service)
 	reflection.Register(grpcServer)
 
 	list, err := net.Listen(env.Protocol, env.GrpcPort)

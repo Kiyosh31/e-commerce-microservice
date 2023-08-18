@@ -5,13 +5,13 @@ import (
 
 	"github.com/Kiyosh31/e-commerce-microservice-common/utils"
 	"github.com/Kiyosh31/e-commerce-microservice/customer/config"
-	"github.com/Kiyosh31/e-commerce-microservice/customer/proto/pb"
+	"github.com/Kiyosh31/e-commerce-microservice/customer/proto/customerPb"
 	"github.com/Kiyosh31/e-commerce-microservice/customer/store"
 	"github.com/Kiyosh31/e-commerce-microservice/customer/types"
 )
 
 type Service struct {
-	pb.UnimplementedCustomerServiceServer
+	customerPb.UnimplementedCustomerServiceServer
 	userStore   store.UserStore
 	cardStore   store.CardStore
 	addresStore store.AddressStore
@@ -29,7 +29,7 @@ func NewService(userStore store.UserStore, addressStore store.AddressStore, card
 	return service, nil
 }
 
-func createUserTypeNoId(in *pb.User) types.User {
+func createUserTypeNoId(in *customerPb.User) types.User {
 	user := types.User{
 		Name:     in.GetName(),
 		LastName: in.GetLastName(),
@@ -42,7 +42,7 @@ func createUserTypeNoId(in *pb.User) types.User {
 	return user
 }
 
-func createUserTypeWithId(id string, in *pb.User) (types.User, error) {
+func createUserTypeWithId(id string, in *customerPb.User) (types.User, error) {
 	mongoId, err := utils.GetMongoId(id)
 	if err != nil {
 		return types.User{}, err
@@ -61,8 +61,8 @@ func createUserTypeWithId(id string, in *pb.User) (types.User, error) {
 	return user, nil
 }
 
-func createUserPbResponse(in types.User) pb.User {
-	return pb.User{
+func createUserPbResponse(in types.User) customerPb.User {
+	return customerPb.User{
 		Id:       in.ID.Hex(),
 		Name:     in.Name,
 		LastName: in.LastName,
@@ -73,7 +73,7 @@ func createUserPbResponse(in types.User) pb.User {
 	}
 }
 
-func createAddressTypeNoId(in *pb.Address) (types.Address, error) {
+func createAddressTypeNoId(in *customerPb.Address) (types.Address, error) {
 	mongoId, err := utils.GetMongoId(in.GetUserId())
 	if err != nil {
 		return types.Address{}, err
@@ -91,7 +91,7 @@ func createAddressTypeNoId(in *pb.Address) (types.Address, error) {
 	return address, nil
 }
 
-func createAddressTypeWithId(addressId string, in *pb.Address) (types.Address, error) {
+func createAddressTypeWithId(addressId string, in *customerPb.Address) (types.Address, error) {
 	addressMongoId, err := utils.GetMongoId(addressId)
 	if err != nil {
 		return types.Address{}, fmt.Errorf("could not parse addressId: %v", err)
@@ -115,8 +115,8 @@ func createAddressTypeWithId(addressId string, in *pb.Address) (types.Address, e
 	return address, nil
 }
 
-func createAddressPbResponse(in types.Address) pb.Address {
-	return pb.Address{
+func createAddressPbResponse(in types.Address) customerPb.Address {
+	return customerPb.Address{
 		Id:         in.ID.Hex(),
 		UserId:     in.UserId.Hex(),
 		Name:       in.Name,
@@ -127,8 +127,8 @@ func createAddressPbResponse(in types.Address) pb.Address {
 	}
 }
 
-func createAllAddressPbResponse(in []types.Address) []*pb.Address {
-	var addressArray []*pb.Address
+func createAllAddressPbResponse(in []types.Address) []*customerPb.Address {
+	var addressArray []*customerPb.Address
 
 	for _, address := range in {
 		addr := createAddressPbResponse(address)
@@ -138,7 +138,7 @@ func createAllAddressPbResponse(in []types.Address) []*pb.Address {
 	return addressArray
 }
 
-func createCardTypeNoId(in *pb.Card) (types.Card, error) {
+func createCardTypeNoId(in *customerPb.Card) (types.Card, error) {
 	userMongoId, err := utils.GetMongoId(in.GetUserId())
 	if err != nil {
 		return types.Card{}, fmt.Errorf("Could not parse userId: %v", err)
@@ -157,7 +157,7 @@ func createCardTypeNoId(in *pb.Card) (types.Card, error) {
 	return card, nil
 }
 
-func createCardTypeWithId(id string, in *pb.Card) (types.Card, error) {
+func createCardTypeWithId(id string, in *customerPb.Card) (types.Card, error) {
 	cardMongoId, err := utils.GetMongoId(id)
 	if err != nil {
 		return types.Card{}, fmt.Errorf("Could not parse userId: %v", err)
@@ -182,8 +182,8 @@ func createCardTypeWithId(id string, in *pb.Card) (types.Card, error) {
 	return card, nil
 }
 
-func createCardPbResponse(in types.Card) pb.Card {
-	return pb.Card{
+func createCardPbResponse(in types.Card) customerPb.Card {
+	return customerPb.Card{
 		Id:         in.ID.Hex(),
 		UserId:     in.UserId.Hex(),
 		Name:       in.Name,
@@ -195,8 +195,8 @@ func createCardPbResponse(in types.Card) pb.Card {
 	}
 }
 
-func createAllCardsPbresponse(in []types.Card) []*pb.Card {
-	var cardsArray []*pb.Card
+func createAllCardsPbresponse(in []types.Card) []*customerPb.Card {
+	var cardsArray []*customerPb.Card
 
 	for _, card := range in {
 		crd := createCardPbResponse(card)

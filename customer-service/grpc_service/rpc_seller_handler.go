@@ -8,12 +8,12 @@ import (
 	"github.com/Kiyosh31/e-commerce-microservice-common/middlewares"
 	"github.com/Kiyosh31/e-commerce-microservice-common/token"
 	"github.com/Kiyosh31/e-commerce-microservice-common/utils"
-	"github.com/Kiyosh31/e-commerce-microservice/customer/proto/pb"
+	"github.com/Kiyosh31/e-commerce-microservice/customer/proto/customerPb"
 	"github.com/rs/zerolog/log"
 	"go.mongodb.org/mongo-driver/bson/primitive"
 )
 
-func (svc *Service) CreateSeller(ctx context.Context, in *pb.CreateUserRequest) (*pb.CreateUserResponse, error) {
+func (svc *Service) CreateSeller(ctx context.Context, in *customerPb.CreateUserRequest) (*customerPb.CreateUserResponse, error) {
 	// validate req
 	violations := validateCreateUserRequest(in.GetUser())
 	if violations != nil {
@@ -42,8 +42,8 @@ func (svc *Service) CreateSeller(ctx context.Context, in *pb.CreateUserRequest) 
 		return nil, fmt.Errorf("Could not create user in database: %v", err)
 	}
 
-	res := &pb.CreateUserResponse{
-		Result: &pb.CreatedResult{
+	res := &customerPb.CreateUserResponse{
+		Result: &customerPb.CreatedResult{
 			InsertedId: createdUser.InsertedID.(primitive.ObjectID).Hex(),
 		},
 	}
@@ -51,7 +51,7 @@ func (svc *Service) CreateSeller(ctx context.Context, in *pb.CreateUserRequest) 
 	return res, nil
 }
 
-func (svc *Service) SigninSeller(ctx context.Context, in *pb.SigninUserRequest) (*pb.SigninUserResponse, error) {
+func (svc *Service) SigninSeller(ctx context.Context, in *customerPb.SigninUserRequest) (*customerPb.SigninUserResponse, error) {
 	violations := validateSigninUser(in)
 	if violations != nil {
 		return nil, grpcvalidators.InvalidArgumentError(violations)
@@ -81,14 +81,14 @@ func (svc *Service) SigninSeller(ctx context.Context, in *pb.SigninUserRequest) 
 		return nil, fmt.Errorf("error generating token: %v", err)
 	}
 
-	res := &pb.SigninUserResponse{
+	res := &customerPb.SigninUserResponse{
 		Token: token,
 	}
 
 	return res, nil
 }
 
-func (svc *Service) GetSeller(ctx context.Context, in *pb.GetUserRequest) (*pb.GetUserResponse, error) {
+func (svc *Service) GetSeller(ctx context.Context, in *customerPb.GetUserRequest) (*customerPb.GetUserResponse, error) {
 	err := middlewares.ValidateTokenMatchesUser(ctx, in.GetUserId(), svc.env.TokenSecret)
 	if err != nil {
 		return nil, err
@@ -110,14 +110,14 @@ func (svc *Service) GetSeller(ctx context.Context, in *pb.GetUserRequest) (*pb.G
 	}
 
 	userPb := createUserPbResponse(user)
-	res := &pb.GetUserResponse{
+	res := &customerPb.GetUserResponse{
 		User: &userPb,
 	}
 
 	return res, nil
 }
 
-func (svc *Service) UpdateSeller(ctx context.Context, in *pb.UpdateUserRequest) (*pb.UpdateUserResponse, error) {
+func (svc *Service) UpdateSeller(ctx context.Context, in *customerPb.UpdateUserRequest) (*customerPb.UpdateUserResponse, error) {
 	err := middlewares.ValidateTokenMatchesUser(ctx, in.GetUserId(), svc.env.TokenSecret)
 	if err != nil {
 		return nil, err
@@ -145,8 +145,8 @@ func (svc *Service) UpdateSeller(ctx context.Context, in *pb.UpdateUserRequest) 
 		return nil, fmt.Errorf("Error updating user in database: %v", err)
 	}
 
-	res := &pb.UpdateUserResponse{
-		Result: &pb.UpdatedResult{
+	res := &customerPb.UpdateUserResponse{
+		Result: &customerPb.UpdatedResult{
 			MatchedCount:  updatedUser.MatchedCount,
 			ModifiedCount: updatedUser.ModifiedCount,
 			UpsertedCount: updatedUser.UpsertedCount,
@@ -156,7 +156,7 @@ func (svc *Service) UpdateSeller(ctx context.Context, in *pb.UpdateUserRequest) 
 	return res, nil
 }
 
-func (svc *Service) DeleteSeller(ctx context.Context, in *pb.DeleteUserRequest) (*pb.DeleteUserResponse, error) {
+func (svc *Service) DeleteSeller(ctx context.Context, in *customerPb.DeleteUserRequest) (*customerPb.DeleteUserResponse, error) {
 	err := middlewares.ValidateTokenMatchesUser(ctx, in.GetUserId(), svc.env.TokenSecret)
 	if err != nil {
 		return nil, err
@@ -177,8 +177,8 @@ func (svc *Service) DeleteSeller(ctx context.Context, in *pb.DeleteUserRequest) 
 		return nil, fmt.Errorf("Error while deleting user from database: %v", err)
 	}
 
-	res := &pb.DeleteUserResponse{
-		Result: &pb.DeletedResult{
+	res := &customerPb.DeleteUserResponse{
+		Result: &customerPb.DeletedResult{
 			DeletedCount: deletedUser.DeletedCount,
 		},
 	}

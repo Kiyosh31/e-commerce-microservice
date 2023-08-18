@@ -24,7 +24,7 @@
           "200": {
             "description": "A successful response.",
             "schema": {
-              "$ref": "#/definitions/pbCreateUserResponse"
+              "$ref": "#/definitions/customerPbCreateUserResponse"
             }
           },
           "default": {
@@ -40,7 +40,7 @@
             "in": "body",
             "required": true,
             "schema": {
-              "$ref": "#/definitions/pbCreateUserRequest"
+              "$ref": "#/definitions/customerPbCreateUserRequest"
             }
           }
         ],
@@ -57,7 +57,7 @@
           "200": {
             "description": "A successful response.",
             "schema": {
-              "$ref": "#/definitions/pbCreateAddressResponse"
+              "$ref": "#/definitions/customerPbCreateAddressResponse"
             }
           },
           "default": {
@@ -73,7 +73,7 @@
             "in": "body",
             "required": true,
             "schema": {
-              "$ref": "#/definitions/pbCreateAddressRequest"
+              "$ref": "#/definitions/customerPbCreateAddressRequest"
             }
           }
         ],
@@ -89,7 +89,7 @@
           "200": {
             "description": "A successful response.",
             "schema": {
-              "$ref": "#/definitions/pbGetAllAddressResponse"
+              "$ref": "#/definitions/customerPbGetAllAddressResponse"
             }
           },
           "default": {
@@ -119,7 +119,7 @@
           "200": {
             "description": "A successful response.",
             "schema": {
-              "$ref": "#/definitions/pbGetAddressResponse"
+              "$ref": "#/definitions/customerPbGetAddressResponse"
             }
           },
           "default": {
@@ -147,7 +147,7 @@
           "200": {
             "description": "A successful response.",
             "schema": {
-              "$ref": "#/definitions/pbDeleteAddressResponse"
+              "$ref": "#/definitions/customerPbDeleteAddressResponse"
             }
           },
           "default": {
@@ -175,7 +175,7 @@
           "200": {
             "description": "A successful response.",
             "schema": {
-              "$ref": "#/definitions/pbUpdateAddressResponse"
+              "$ref": "#/definitions/customerPbUpdateAddressResponse"
             }
           },
           "default": {
@@ -200,7 +200,7 @@
               "type": "object",
               "properties": {
                 "address": {
-                  "$ref": "#/definitions/pbAddress"
+                  "$ref": "#/definitions/customerPbAddress"
                 }
               }
             }
@@ -219,7 +219,7 @@
           "200": {
             "description": "A successful response.",
             "schema": {
-              "$ref": "#/definitions/pbCreateCardResponse"
+              "$ref": "#/definitions/customerPbCreateCardResponse"
             }
           },
           "default": {
@@ -235,7 +235,7 @@
             "in": "body",
             "required": true,
             "schema": {
-              "$ref": "#/definitions/pbCreateCardRequest"
+              "$ref": "#/definitions/customerPbCreateCardRequest"
             }
           }
         ],
@@ -251,7 +251,7 @@
           "200": {
             "description": "A successful response.",
             "schema": {
-              "$ref": "#/definitions/pbGetAllCardResponse"
+              "$ref": "#/definitions/customerPbGetAllCardResponse"
             }
           },
           "default": {
@@ -281,7 +281,7 @@
           "200": {
             "description": "A successful response.",
             "schema": {
-              "$ref": "#/definitions/pbGetCardResponse"
+              "$ref": "#/definitions/customerPbGetCardResponse"
             }
           },
           "default": {
@@ -309,7 +309,7 @@
           "200": {
             "description": "A successful response.",
             "schema": {
-              "$ref": "#/definitions/pbDeleteCardResponse"
+              "$ref": "#/definitions/customerPbDeleteCardResponse"
             }
           },
           "default": {
@@ -337,7 +337,7 @@
           "200": {
             "description": "A successful response.",
             "schema": {
-              "$ref": "#/definitions/pbUpdateCardResponse"
+              "$ref": "#/definitions/customerPbUpdateCardResponse"
             }
           },
           "default": {
@@ -362,7 +362,7 @@
               "type": "object",
               "properties": {
                 "card": {
-                  "$ref": "#/definitions/pbCard"
+                  "$ref": "#/definitions/customerPbCard"
                 }
               }
             }
@@ -381,7 +381,7 @@
           "200": {
             "description": "A successful response.",
             "schema": {
-              "$ref": "#/definitions/pbCreateUserResponse"
+              "$ref": "#/definitions/customerPbCreateUserResponse"
             }
           },
           "default": {
@@ -397,7 +397,7 @@
             "in": "body",
             "required": true,
             "schema": {
-              "$ref": "#/definitions/pbCreateUserRequest"
+              "$ref": "#/definitions/customerPbCreateUserRequest"
             }
           }
         ],
@@ -413,7 +413,7 @@
           "200": {
             "description": "A successful response.",
             "schema": {
-              "$ref": "#/definitions/pbSigninUserResponse"
+              "$ref": "#/definitions/customerPbSigninUserResponse"
             }
           },
           "default": {
@@ -429,7 +429,7 @@
             "in": "body",
             "required": true,
             "schema": {
-              "$ref": "#/definitions/pbSigninUserRequest"
+              "$ref": "#/definitions/customerPbSigninUserRequest"
             }
           }
         ],
@@ -445,7 +445,7 @@
           "200": {
             "description": "A successful response.",
             "schema": {
-              "$ref": "#/definitions/pbGetUserResponse"
+              "$ref": "#/definitions/customerPbGetUserResponse"
             }
           },
           "default": {
@@ -473,7 +473,7 @@
           "200": {
             "description": "A successful response.",
             "schema": {
-              "$ref": "#/definitions/pbDeleteUserResponse"
+              "$ref": "#/definitions/customerPbDeleteUserResponse"
             }
           },
           "default": {
@@ -501,7 +501,7 @@
           "200": {
             "description": "A successful response.",
             "schema": {
-              "$ref": "#/definitions/pbUpdateUserResponse"
+              "$ref": "#/definitions/customerPbUpdateUserResponse"
             }
           },
           "default": {
@@ -526,7 +526,7 @@
               "type": "object",
               "properties": {
                 "user": {
-                  "$ref": "#/definitions/pbUser"
+                  "$ref": "#/definitions/customerPbUser"
                 }
               }
             }
@@ -544,7 +544,7 @@
           "200": {
             "description": "A successful response.",
             "schema": {
-              "$ref": "#/definitions/pbSigninUserResponse"
+              "$ref": "#/definitions/customerPbSigninUserResponse"
             }
           },
           "default": {
@@ -560,7 +560,7 @@
             "in": "body",
             "required": true,
             "schema": {
-              "$ref": "#/definitions/pbSigninUserRequest"
+              "$ref": "#/definitions/customerPbSigninUserRequest"
             }
           }
         ],
@@ -576,7 +576,7 @@
           "200": {
             "description": "A successful response.",
             "schema": {
-              "$ref": "#/definitions/pbGetUserResponse"
+              "$ref": "#/definitions/customerPbGetUserResponse"
             }
           },
           "default": {
@@ -604,7 +604,7 @@
           "200": {
             "description": "A successful response.",
             "schema": {
-              "$ref": "#/definitions/pbDeleteUserResponse"
+              "$ref": "#/definitions/customerPbDeleteUserResponse"
             }
           },
           "default": {
@@ -632,7 +632,7 @@
           "200": {
             "description": "A successful response.",
             "schema": {
-              "$ref": "#/definitions/pbUpdateUserResponse"
+              "$ref": "#/definitions/customerPbUpdateUserResponse"
             }
           },
           "default": {
@@ -657,7 +657,7 @@
               "type": "object",
               "properties": {
                 "user": {
-                  "$ref": "#/definitions/pbUser"
+                  "$ref": "#/definitions/customerPbUser"
                 }
               }
             }
@@ -670,7 +670,7 @@
     }
   },
   "definitions": {
-    "pbAddress": {
+    "customerPbAddress": {
       "type": "object",
       "properties": {
         "id": {
@@ -698,7 +698,7 @@
       },
       "title": "Address"
     },
-    "pbCard": {
+    "customerPbCard": {
       "type": "object",
       "properties": {
         "id": {
@@ -729,55 +729,55 @@
       },
       "title": "Card"
     },
-    "pbCreateAddressRequest": {
+    "customerPbCreateAddressRequest": {
       "type": "object",
       "properties": {
         "address": {
-          "$ref": "#/definitions/pbAddress"
+          "$ref": "#/definitions/customerPbAddress"
         }
       }
     },
-    "pbCreateAddressResponse": {
+    "customerPbCreateAddressResponse": {
       "type": "object",
       "properties": {
         "result": {
-          "$ref": "#/definitions/pbCreatedResult"
+          "$ref": "#/definitions/customerPbCreatedResult"
         }
       }
     },
-    "pbCreateCardRequest": {
+    "customerPbCreateCardRequest": {
       "type": "object",
       "properties": {
         "card": {
-          "$ref": "#/definitions/pbCard"
+          "$ref": "#/definitions/customerPbCard"
         }
       }
     },
-    "pbCreateCardResponse": {
+    "customerPbCreateCardResponse": {
       "type": "object",
       "properties": {
         "result": {
-          "$ref": "#/definitions/pbCreatedResult"
+          "$ref": "#/definitions/customerPbCreatedResult"
         }
       }
     },
-    "pbCreateUserRequest": {
+    "customerPbCreateUserRequest": {
       "type": "object",
       "properties": {
         "user": {
-          "$ref": "#/definitions/pbUser"
+          "$ref": "#/definitions/customerPbUser"
         }
       }
     },
-    "pbCreateUserResponse": {
+    "customerPbCreateUserResponse": {
       "type": "object",
       "properties": {
         "result": {
-          "$ref": "#/definitions/pbCreatedResult"
+          "$ref": "#/definitions/customerPbCreatedResult"
         }
       }
     },
-    "pbCreatedResult": {
+    "customerPbCreatedResult": {
       "type": "object",
       "properties": {
         "insertedId": {
@@ -786,31 +786,31 @@
       },
       "title": "Mongodb responses"
     },
-    "pbDeleteAddressResponse": {
+    "customerPbDeleteAddressResponse": {
       "type": "object",
       "properties": {
         "result": {
-          "$ref": "#/definitions/pbDeletedResult"
+          "$ref": "#/definitions/customerPbDeletedResult"
         }
       }
     },
-    "pbDeleteCardResponse": {
+    "customerPbDeleteCardResponse": {
       "type": "object",
       "properties": {
         "result": {
-          "$ref": "#/definitions/pbDeletedResult"
+          "$ref": "#/definitions/customerPbDeletedResult"
         }
       }
     },
-    "pbDeleteUserResponse": {
+    "customerPbDeleteUserResponse": {
       "type": "object",
       "properties": {
         "result": {
-          "$ref": "#/definitions/pbDeletedResult"
+          "$ref": "#/definitions/customerPbDeletedResult"
         }
       }
     },
-    "pbDeletedResult": {
+    "customerPbDeletedResult": {
       "type": "object",
       "properties": {
         "deletedCount": {
@@ -819,55 +819,55 @@
         }
       }
     },
-    "pbGetAddressResponse": {
+    "customerPbGetAddressResponse": {
       "type": "object",
       "properties": {
         "address": {
-          "$ref": "#/definitions/pbAddress"
+          "$ref": "#/definitions/customerPbAddress"
         }
       }
     },
-    "pbGetAllAddressResponse": {
+    "customerPbGetAllAddressResponse": {
       "type": "object",
       "properties": {
         "address": {
           "type": "array",
           "items": {
             "type": "object",
-            "$ref": "#/definitions/pbAddress"
+            "$ref": "#/definitions/customerPbAddress"
           }
         }
       }
     },
-    "pbGetAllCardResponse": {
+    "customerPbGetAllCardResponse": {
       "type": "object",
       "properties": {
         "card": {
           "type": "array",
           "items": {
             "type": "object",
-            "$ref": "#/definitions/pbCard"
+            "$ref": "#/definitions/customerPbCard"
           }
         }
       }
     },
-    "pbGetCardResponse": {
+    "customerPbGetCardResponse": {
       "type": "object",
       "properties": {
         "card": {
-          "$ref": "#/definitions/pbCard"
+          "$ref": "#/definitions/customerPbCard"
         }
       }
     },
-    "pbGetUserResponse": {
+    "customerPbGetUserResponse": {
       "type": "object",
       "properties": {
         "user": {
-          "$ref": "#/definitions/pbUser"
+          "$ref": "#/definitions/customerPbUser"
         }
       }
     },
-    "pbSigninUserRequest": {
+    "customerPbSigninUserRequest": {
       "type": "object",
       "properties": {
         "email": {
@@ -878,7 +878,7 @@
         }
       }
     },
-    "pbSigninUserResponse": {
+    "customerPbSigninUserResponse": {
       "type": "object",
       "properties": {
         "token": {
@@ -886,31 +886,31 @@
         }
       }
     },
-    "pbUpdateAddressResponse": {
+    "customerPbUpdateAddressResponse": {
       "type": "object",
       "properties": {
         "result": {
-          "$ref": "#/definitions/pbUpdatedResult"
+          "$ref": "#/definitions/customerPbUpdatedResult"
         }
       }
     },
-    "pbUpdateCardResponse": {
+    "customerPbUpdateCardResponse": {
       "type": "object",
       "properties": {
         "result": {
-          "$ref": "#/definitions/pbUpdatedResult"
+          "$ref": "#/definitions/customerPbUpdatedResult"
         }
       }
     },
-    "pbUpdateUserResponse": {
+    "customerPbUpdateUserResponse": {
       "type": "object",
       "properties": {
         "result": {
-          "$ref": "#/definitions/pbUpdatedResult"
+          "$ref": "#/definitions/customerPbUpdatedResult"
         }
       }
     },
-    "pbUpdatedResult": {
+    "customerPbUpdatedResult": {
       "type": "object",
       "properties": {
         "matchedCount": {
@@ -927,7 +927,7 @@
         }
       }
     },
-    "pbUser": {
+    "customerPbUser": {
       "type": "object",
       "properties": {
         "id": {

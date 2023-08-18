@@ -1,8 +1,8 @@
 syntax = "proto3";
 
-package pb;
+package customerPb;
 
-option go_package="github.com/Kiyosh31/e-commerce-microservice/customer/proto/pb";
+option go_package="github.com/Kiyosh31/e-commerce-microservice/customer/proto/customerPb";
 
 import "google/api/annotations.proto";
 
