@@ -27,16 +27,16 @@ This project was made entirely on ubuntu which could make not work in other plat
 
 4. In folder `/k8s` create a `secrets.yaml` like the example file, this file contains all the needed secrets for the project to run
 
-5. Run te project
-
-   ```console
-   make dev
-   ```
-
-6. Start minikube
+5. Start minikube
 
    ```console
    make minikube
+   ```
+
+6. Run te project
+
+   ```console
+   make dev
    ```
 
 7. Run the tunnel
